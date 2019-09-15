@@ -1,0 +1,37 @@
+version: '3.7'
+
+services:
+  backend:
+    build:
+      context: ./services/backend
+      dockerfile: Dockerfile
+    ports:
+      - 5001:5000
+    environment:
+      - FLASK_ENV=development
+      - UPLOAD_FOLDER=/usr/src/app/uploads
+      - DETECT_FOLDER=/usr/src/app/detects
+      - APP_SETTINGS=project.config.DevelopmentConfig
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/data_dev
+    depends_on:
+      - db
+
+  db:
+    build:
+      context: ./services/db
+      dockerfile: Dockerfile
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  nginx:
+    build:
+      context: ./services/nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
