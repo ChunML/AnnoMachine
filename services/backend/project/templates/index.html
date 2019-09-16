@@ -8,8 +8,19 @@
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <style type="text/css">
+    .Site {
+      display: flex;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+    .site-content {
+      flex: 1;
+      margin: 30px auto;
+    }
+  </style>
 </head>
-<body>
+<body class="Site">
   <div class="ui inverted menu">
     <a class="active item", href="/">
       Home
@@ -32,8 +43,8 @@
       </div>
     </div>
   </div>
-  <div class="ui center aligned container">
-    <div class="ui center aligned three column stackable grid" style="margin-top: 30px;">
+  <div class="ui center aligned container site-content">
+    <div class="ui center aligned three column stackable grid">
       <div class="row">
         <form class="ui form" enctype="multipart/form-data" action="{{ url_for('main.index') }}" method="POST">
           <div class="field">
@@ -87,6 +98,11 @@
           </div>
         </div>
       {% endfor %}
+    </div>
+  </div>
+  <div class="ui inverted vertical footer segment">
+    <div class="ui center aligned container">
+      <p>Created by Trung Tran@MachineTalk.org</p>
     </div>
   </div>
 </body>
