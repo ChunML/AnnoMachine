@@ -127,6 +127,6 @@ def test_one_image(img_path, ssd, save_dir, filename):
 
     img, boxes, scores, names = test(ssd, img, default_boxes)
     img = reconstruct_image(img)
-    visualizer.save_image(img, boxes, names, filename)
+    img = visualizer.save_image(img, boxes, names, filename)
 
-    return boxes, scores, names
+    return img, boxes, scores, names

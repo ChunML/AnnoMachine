@@ -8,4 +8,6 @@ done
 
 echo "PostgreSQL started"
 
+python manage.py recreate_db
+
 python manage.py run -h 0.0.0.0

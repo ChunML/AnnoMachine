@@ -34,8 +34,8 @@ class ImageVisualizer(object):
         """
         save_path = os.path.join(self.save_dir, name)
         if len(boxes) == 0:
-            cv2.imwrite(save_path, img)
-            return
+            # cv2.imwrite(save_path, img)
+            return img
 
         for i, box in enumerate(boxes):
             idx = labels[i] - 1
@@ -50,4 +50,6 @@ class ImageVisualizer(object):
                 top_left,
                 fontFace=cv2.FONT_HERSHEY_DUPLEX,
                 fontScale=0.7, color=self.class_colors[idx])
-            cv2.imwrite(save_path, img)
+            # cv2.imwrite(save_path, img)
+
+        return img

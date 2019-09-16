@@ -21,8 +21,16 @@ class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(128), nullable=False)
     uploaded_at = db.Column(db.DateTime, default=func.now(), nullable=False)
+    is_private = db.Column(db.Boolean, default=False, nullable=False)
     # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     boxes = db.relationship('Box', backref='image', lazy='dynamic')
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'created_at': self.created_at
+        }
 
 
 class Box(db.Model):
