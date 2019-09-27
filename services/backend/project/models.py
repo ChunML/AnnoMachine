@@ -9,11 +9,18 @@ class User(db.Model):
     username = db.Column(db.String(128), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
     created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
-    # images = db.relationship('Image', backref='user', lazy='dynamic')
+    images = db.relationship('Image', backref='user', lazy='dynamic')
 
     def __init__(self, username, password):
         self.username = username
         self.password = bcrypt.generate_password_hash(password).decode()
+
+    def to_json(self):
+        return {
+            'id': self.id,
+            'username': self.username,
+            'created_at': self.created_at
+        }
 
 
 class Image(db.Model):
@@ -22,14 +29,14 @@ class Image(db.Model):
     name = db.Column(db.String(128), nullable=False)
     uploaded_at = db.Column(db.DateTime, default=func.now(), nullable=False)
     is_private = db.Column(db.Boolean, default=False, nullable=False)
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     boxes = db.relationship('Box', backref='image', lazy='dynamic')
 
     def to_json(self):
         return {
             'id': self.id,
             'name': self.name,
-            'created_at': self.created_at
+            'uploaded_at': self.uploaded_at
         }
 
 

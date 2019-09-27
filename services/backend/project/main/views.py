@@ -5,7 +5,7 @@ import torch
 import cv2
 from project import ssd, db
 from project.ssd.test_one import test_one_image, idx_to_name
-from project.models import Image, Box
+from project.models import User, Image, Box
 import numpy as np
 import requests
 from sqlalchemy import exc
@@ -13,6 +13,7 @@ from sqlalchemy import exc
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
+    user = User.query.filter_by(username='chun').first()
     filenames = []
     upload_dir = current_app.config['UPLOAD_FOLDER']
     result_dir = current_app.config['DETECT_FOLDER']
@@ -43,7 +44,8 @@ def index():
         try:
             img = Image(
                 name=filename,
-                is_private=request.form.get('is_private') is not None)
+                is_private=request.form.get('is_private') is not None,
+                user=user)
             db.session.add(img)
             for i in range(len(boxes)):
                 db.session.add(Box(
@@ -64,8 +66,12 @@ def index():
     return render_template('index.html', images=images)
 
 
-@main.route('/uploaded/<filename>')
-def image_link(filename):
+@main.route('/<image_type>/<filename>')
+def image_link(image_type, filename):
+    if image_type == 'uploads':
+        return send_from_directory(
+            current_app.config['UPLOAD_FOLDER'],
+            filename)
     return send_from_directory(
         current_app.config['DETECT_FOLDER'],
         filename)

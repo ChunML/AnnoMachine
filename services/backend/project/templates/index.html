@@ -78,7 +78,7 @@
         <div class="column">
           <div class="ui card" style="margin: auto;">
             <div class="image">
-              <img src="{{ url_for('main.image_link', filename=image.name) }}" alt="Some image here" />
+              <img src="{{ url_for('main.image_link', image_type='detects', filename=image.name) }}" alt="Some image here" />
             </div>
             <div class="content">
               <div class="header">{{ image.name }}</div>

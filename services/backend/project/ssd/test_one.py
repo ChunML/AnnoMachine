@@ -126,7 +126,10 @@ def test_one_image(img_path, ssd, save_dir, filename):
         save_dir=save_dir)
 
     img, boxes, scores, names = test(ssd, img, default_boxes)
-    img = reconstruct_image(img)
+    img = cv2.imread(img_path)
+    H, W, _ = img.shape
+    boxes[:, 0::2] = boxes[:, 0::2] * W / 300
+    boxes[:, 1::2] = boxes[:, 1::2] * H / 300
     img = visualizer.save_image(img, boxes, names, filename)
 
     return img, boxes, scores, names

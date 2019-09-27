@@ -4,3 +4,4 @@ __pycache__
 *.jpg
 .DS_Store
 *.sqlite
+node_modules
