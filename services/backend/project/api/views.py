@@ -1,4 +1,4 @@
-from flask import jsonify, request, current_app, url_for
+from flask import jsonify, request, current_app, url_for, send_from_directory
 from . import api_blueprint as api
 from project.models import User
 from project import ssd, db
@@ -97,3 +97,13 @@ def index():
     }
 
     return jsonify(response_object), 200
+
+@api.route('/api/<image_type>/<filename>')
+def image_link(image_type, filename):
+    if image_type == 'uploads':
+        return send_from_directory(
+            current_app.config['UPLOAD_FOLDER'],
+            filename)
+    return send_from_directory(
+        current_app.config['DETECT_FOLDER'],
+        filename)

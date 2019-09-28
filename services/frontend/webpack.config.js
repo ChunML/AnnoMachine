@@ -20,7 +20,7 @@ module.exports = {
       template: './src/index.html'
     }),
     new webpack.DefinePlugin({
-      'process.env.REACT_APP_USERS_SERVICE_URL': JSON.stringify(process.env.REACT_APP_USERS_SERVICE_URL),
+      'process.env.REACT_APP_API_URL': JSON.stringify(process.env.REACT_APP_API_URL),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })
   ]

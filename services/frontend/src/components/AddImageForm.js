@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class AddImageForm extends React.Component {
   constructor(props) {
@@ -82,5 +83,9 @@ class AddImageForm extends React.Component {
     )
   }
 }
+
+AddImageForm.propTypes = {
+  onButtonClick: PropTypes.func.isRequired
+};
 
 export default AddImageForm;

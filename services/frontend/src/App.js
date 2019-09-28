@@ -18,7 +18,7 @@ class App extends React.Component {
   }
 
   getImages() {
-    fetch('http://localhost:5000/api/images/')
+    fetch(`${process.env.REACT_APP_API_URL}/api/images/`)
       .then(res => res.json())
       .then(res => this.setState({images: res.data}))
   }
@@ -28,7 +28,7 @@ class App extends React.Component {
     data.append('image_file', image_file);
     data.append('image_url', image_url);
     fetch(
-      'http://localhost:5000/api/images/', {
+      `${process.env.REACT_APP_API_URL}/api/images/`, {
         method: 'POST',
         body: data,
       }).then(res => this.getImages());

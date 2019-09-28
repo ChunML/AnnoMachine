@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Card extends React.Component {
   constructor(props) {
@@ -16,7 +17,10 @@ class Card extends React.Component {
       <div className="column">
         <div className="ui card" style={{margin: 'auto'}}>
           <div className="image" onClick={() => this.setState(prevState => ({detectImage: !prevState.detectImage}))}>
-            <img src={`http://localhost:5000/${this.state.detectImage ? 'detects': 'uploads'}/${image.name}`} alt="Some image here" />
+            <img
+              src={`${process.env.REACT_APP_API_URL}/api/${this.state.detectImage ? 'detects': 'uploads'}/${image.name}`}
+              alt="Some image here"
+            />
           </div>
           <div className="content">
             <div className="header">Author: { image.user.username }</div>
@@ -32,6 +36,10 @@ class Card extends React.Component {
       </div>
     );
   }
+}
+
+Card.propTypes = {
+  image: PropTypes.object.isRequired
 }
 
 export default Card;

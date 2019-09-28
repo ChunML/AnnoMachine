@@ -7,6 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5001:5000
+    volumes:
+      - ./services/backend:/usr/src/app
     environment:
       - FLASK_ENV=development
       - UPLOAD_FOLDER=/usr/src/app/uploads
@@ -15,6 +17,20 @@ services:
       - DATABASE_URL=postgres://postgres:postgres@db:5432/data_dev
     depends_on:
       - db
+
+  frontend:
+    build:
+      context: ./services/frontend
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8080
+    volumes:
+      - ./services/frontend:/usr/src/app
+    environment:
+      - NODE_ENV=development
+      - REACT_APP_API_URL=http://localhost
+    depends_on:
+      - backend
 
   db:
     build:
