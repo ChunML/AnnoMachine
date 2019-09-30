@@ -4,7 +4,7 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import os
-from .ssd.network import create_ssd
+from ssd.network import create_ssd
 
 
 db = SQLAlchemy()
@@ -14,7 +14,7 @@ cors = CORS()
 
 ssd = create_ssd(
     21, 'ssd300', 'ssd',
-    './project/ssd/models/ssd_epoch_120.pth')
+    './ssd/models/ssd_epoch_120.pth')
 
 
 def create_app(script_info=None):

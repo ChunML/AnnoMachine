@@ -11,7 +11,7 @@ import yaml
 NUM_CLASSES = 21
 MEAN = [123, 117, 104]
 
-with open('./project/ssd/config.yaml', 'r') as f:
+with open('./ssd/config.yaml', 'r') as f:
     cfg = yaml.load(f)
 config = cfg['SSD300']
 

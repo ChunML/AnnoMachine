@@ -11,10 +11,12 @@ services:
       - ./services/backend:/usr/src/app
     environment:
       - FLASK_ENV=development
+      - SECRET_KEY=hahaha
       - UPLOAD_FOLDER=/usr/src/app/uploads
       - DETECT_FOLDER=/usr/src/app/detects
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@db:5432/data_dev
+      - DATABASE_TEST_URL=postgres://postgres:postgres@db:5432/data_test
     depends_on:
       - db
 
@@ -39,7 +41,7 @@ services:
     ports:
       - 5433:5432
     volumes:
-      - ssd_fullstack
+      - /ssd_fullstack
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres

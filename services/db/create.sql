@@ -1,1 +1,3 @@
 CREATE DATABASE data_dev;
+CREATE DATABASE data_test;
+CREATE DATABASE data_prod;

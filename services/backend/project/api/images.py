@@ -2,7 +2,7 @@ from flask import jsonify, request, current_app, url_for, send_from_directory
 from . import api_blueprint as api
 from project.models import User
 from project import ssd, db
-from project.ssd.test_one import test_one_image, idx_to_name
+from ssd.test_one import test_one_image, idx_to_name
 from project.models import User, Image, Box
 import cv2
 import os

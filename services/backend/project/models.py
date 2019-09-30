@@ -1,5 +1,6 @@
 from project import db, bcrypt
 from sqlalchemy.sql import func
+from flask import current_app
 import jwt
 import datetime
 
@@ -39,6 +40,7 @@ class User(db.Model):
                 algorithm='HS256')
 
         except Exception as e:
+            print(e)
             return e
 
     @staticmethod

@@ -4,7 +4,7 @@ import os
 import torch
 import cv2
 from project import ssd, db
-from project.ssd.test_one import test_one_image, idx_to_name
+from ssd.test_one import test_one_image, idx_to_name
 from project.models import User, Image, Box
 import numpy as np
 import requests
