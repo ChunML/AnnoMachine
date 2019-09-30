@@ -1,6 +1,7 @@
 from project import db, bcrypt
 from sqlalchemy.sql import func
-import json
+import jwt
+import datetime
 
 
 class User(db.Model):
@@ -21,6 +22,36 @@ class User(db.Model):
             'username': self.username,
             'created_at': self.created_at
         }
+
+    def encode_auth_token(self):
+        try:
+            payload = {
+                'exp': datetime.datetime.utcnow() + datetime.timedelta(
+                    days=current_app.config.get('TOKEN_EXPIRATION_DAYS'),
+                    seconds=current_app.config.get('TOKEN_EXPIRATION_SECONDS')),
+                'iat': datetime.datetime.utcnow(),
+                'user_id': self.id
+            }
+
+            return jwt.encode(
+                payload,
+                current_app.config.get('SECRET_KEY'),
+                algorithm='HS256')
+
+        except Exception as e:
+            return e
+
+    @staticmethod
+    def decode_auth_token(auth_token):
+        try:
+            payload = jwt.decode(
+                auth_token, current_app.config.get('SECRET_KEY'))
+            return payload['user_id']
+
+        except jwt.ExpiredSignatureError:
+            return 'Signature expired. Log in again to continue.'
+        except jwt.InvalidTokenError:
+            return 'Invalid token. Log in again to continue.'
 
 
 class Image(db.Model):

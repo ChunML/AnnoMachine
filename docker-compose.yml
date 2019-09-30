@@ -38,6 +38,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5433:5432
+    volumes:
+      - ssd_fullstack
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
