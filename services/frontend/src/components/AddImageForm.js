@@ -25,7 +25,6 @@ class AddImageForm extends React.Component {
   }
 
   handleFileUpload(e) {
-    console.log(e.target.files[0]);
     const file = e.target.files[0];
     this.setState({
       image_file: file

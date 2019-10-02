@@ -9,11 +9,11 @@ function CardList(props) {
   ))
   return (
     <React.Fragment>
-      { props.isLoading ? (
+      { props.isLoading && (
         <div className="column">
           <Loader />
         </div>
-      ) : ''}
+      )}
       { cards }
     </React.Fragment>
   );

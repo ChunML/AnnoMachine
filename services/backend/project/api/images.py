@@ -27,11 +27,26 @@ def index():
     if request.method == 'POST':
         upload_dir = current_app.config['UPLOAD_FOLDER']
         result_dir = current_app.config['DETECT_FOLDER']
+        auth_header = request.headers.get('Authorization')
+        response_object = {
+            'status': 'fail',
+            'message': 'Invalid token!'
+        }
+        if not auth_header:
+            return jsonify(response_object), 403
+        auth_token = auth_header.split(' ')[1]
+        auth_resp = User.decode_auth_token(auth_token)
+        if isinstance(auth_resp, str):
+            response_object['message'] = auth_resp
+            return jsonify(response_object), 401
+        user = User.query.filter_by(id=auth_resp).first()
+        if not user:
+            return jsonify(response_object), 401
         if not os.path.exists(upload_dir):
             os.mkdir(upload_dir)
         if not os.path.exists(result_dir):
             os.mkdir(result_dir)
-        user = User.query.filter_by(username='chun').first()
+        # user = User.query.filter_by(username='chun').first()
         if request.form['image_url'] == '' and len(request.files) == 0:
             return redirect(url_for('.index'))
 

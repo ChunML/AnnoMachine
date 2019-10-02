@@ -8,9 +8,11 @@ function Container(props) {
     <div className="ui center aligned container" style={{margin: '30px auto',}}>
         <div className="ui center aligned three column stackable grid">
           <div className="row">
-            <AddImageForm
-              onButtonClick={ props.onButtonClick }
-            />
+            { props.isAuthenticated && (
+              <AddImageForm
+                onButtonClick={ props.onButtonClick }
+              />
+            )}
           </div>
           <CardList
             images={ props.images }

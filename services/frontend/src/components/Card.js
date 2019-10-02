@@ -12,7 +12,6 @@ class Card extends React.Component {
 
   render() {
     const { image } = this.props;
-    console.log(image)
     return (
       <div className="column">
         <div className="ui card" style={{margin: 'auto'}}>
@@ -24,7 +23,10 @@ class Card extends React.Component {
           </div>
           <div className="content">
             <div className="header">Author: { image.user.username }</div>
-            <div className="meta">Uploaded at: { image.uploaded_at }</div>
+            <div className="meta">
+              <div>Author: { image.user.username }</div>
+              <div>Uploaded at: { image.uploaded_at }</div>
+            </div>
             <div className="description">May contain: {image.boxes.length > 0 ?
               [...new Set(image.boxes.map(box => box.label))].map((label, id) => (
                 <div key={ id } className='ui label' style={{background: '#11ee66'}}>{ label }</div>
