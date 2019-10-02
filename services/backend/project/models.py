@@ -21,7 +21,7 @@ class User(db.Model):
         return {
             'id': self.id,
             'username': self.username,
-            'created_at': self.created_at
+            'created_at': self.created_at.strftime('%Y/%m/%d %H:%M')
         }
 
     def encode_auth_token(self):
@@ -70,7 +70,7 @@ class Image(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'uploaded_at': self.uploaded_at
+            'uploaded_at': self.uploaded_at.strftime('%Y/%m/%d %H:%M')
         }
 
 
