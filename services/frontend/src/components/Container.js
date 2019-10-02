@@ -14,6 +14,7 @@ function Container(props) {
           </div>
           <CardList
             images={ props.images }
+            isLoading={ props.isLoading }
           />
         </div>
     </div>
