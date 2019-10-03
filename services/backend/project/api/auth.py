@@ -29,6 +29,7 @@ def register():
         response_object['status'] = 'success'
         response_object['message'] = 'Successfully registered.'
         response_object['auth_token'] = auth_token.decode()
+        response_object['username'] = user.username
         return jsonify(response_object), 201
     except (exc.IntegrityError, ValueError):
         db.session.rollback()
@@ -55,6 +56,30 @@ def login():
         response_object['status'] = 'success'
         response_object['message'] = 'Successfully logged in.'
         response_object['auth_token'] = auth_token.decode()
+        response_object['username'] = user.username
         return jsonify(response_object), 200
     except Exception:
         return jsonify(response_object), 500
+
+
+@api.route('/api/auth/check-status', methods=['POST'])
+def check_login_status():
+    response_object = {
+        'status': 'fail',
+        'message': 'Invalid token.'
+    }
+    auth_header = request.headers.get('Authorization')
+    if not auth_header:
+        return jsonify(response_object), 403
+    auth_token = auth_header.split(' ')[1]
+    resp = User.decode_auth_token(auth_token)
+    if isinstance(resp, str):
+        response_object['message'] = resp
+        return jsonify(response_object), 401
+
+    user = User.query.filter_by(id=resp).first()
+    response_object['status'] = 'success'
+    response_object['message'] = 'Valid token.'
+    response_object['username'] = user.username
+
+    return jsonify(response_object), 200

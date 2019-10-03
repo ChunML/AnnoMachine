@@ -8,31 +8,45 @@ class Card extends React.Component {
     this.state = {
       detectImage: true
     };
+
+    this.handleImageTypeChange = this.handleImageTypeChange.bind(this);
+  }
+
+  handleImageTypeChange() {
+    this.setState(prevState => ({
+      detectImage: !prevState.detectImage
+    }));
   }
 
   render() {
     const { image } = this.props;
     return (
-      <div className="column">
+      <div className="column" style={{textAlign: 'left'}}>
         <div className="ui card" style={{margin: 'auto'}}>
-          <div className="image" onClick={() => this.setState(prevState => ({detectImage: !prevState.detectImage}))}>
+          <div className="image">
             <img
               src={`${process.env.REACT_APP_API_URL}/api/${this.state.detectImage ? 'detects': 'uploads'}/${image.name}`}
               alt="Some image here"
             />
           </div>
           <div className="content">
-            <div className="header">Author: { image.user.username }</div>
-            <div className="meta">
-              <div>Author: { image.user.username }</div>
-              <div>Uploaded at: { image.uploaded_at }</div>
+            <div style={{marginBottom: '5px'}}>
+              <i
+                className="clone icon"
+                style={this.state.detectImage ? {color: '#33ff33'} : {}}
+                onClick={this.handleImageTypeChange}>
+              </i>
+              <i className="edit outline icon"></i>
             </div>
-            <div className="description">May contain: {image.boxes.length > 0 ?
+            <div className="description">This image may contain: {image.boxes.length > 0 ?
               [...new Set(image.boxes.map(box => box.label))].map((label, id) => (
                 <div key={ id } className='ui label' style={{background: '#11ee66'}}>{ label }</div>
               )) :
               <div className='ui label'>nothing</div>}
             </div>
+          </div>
+          <div className="extra content">
+            <div>Uploaded by <span style={{color: 'red'}}>{ image.user.username }</span> at: { image.uploaded_at }</div>
           </div>
         </div>
       </div>

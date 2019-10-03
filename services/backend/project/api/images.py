@@ -45,9 +45,9 @@ class ImagesList(Resource):
         self.upload_dir = current_app.config['UPLOAD_FOLDER']
         self.result_dir = current_app.config['DETECT_FOLDER']
         if not os.path.exists(self.upload_dir):
-            os.mkdir(self.upload_dir)
+            os.makedirs(self.upload_dir)
         if not os.path.exists(self.result_dir):
-            os.mkdir(self.result_dir)
+            os.makedirs(self.result_dir)
 
     def get(self):
         data = []
