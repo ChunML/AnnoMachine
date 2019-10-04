@@ -1,7 +1,6 @@
-from flask import jsonify, request, current_app, url_for, send_from_directory
+from flask import jsonify, request, current_app, send_from_directory
 from flask_restful import Resource, Api
 from . import api_blueprint as api
-from project.models import User
 from project import ssd, db
 from ssd_tf2.test import predict_one_image_from_path, idx_to_name
 from ssd_tf2.image_utils import ImageVisualizer
@@ -44,7 +43,8 @@ class ImagesList(Resource):
     def __init__(self):
         self.upload_dir = current_app.config['UPLOAD_FOLDER']
         self.result_dir = current_app.config['DETECT_FOLDER']
-        self.visualizer = ImageVisualizer(idx_to_name, save_dir=self.result_dir)
+        self.visualizer = ImageVisualizer(idx_to_name,
+                                          save_dir=self.result_dir)
         if not os.path.exists(self.upload_dir):
             os.makedirs(self.upload_dir)
         if not os.path.exists(self.result_dir):
@@ -72,22 +72,30 @@ class ImagesList(Resource):
         return response_object, 200
 
     def post(self, auth_resp):
+        response_object = {
+            'status': 'fail',
+            'message': 'Invalid data!'
+        }
+
         user = User.query.filter_by(id=auth_resp).first()
         if not user:
             return jsonify(response_object), 401
         if request.form['image_url'] == '' and len(request.files) == 0:
-            return redirect(url_for('.index'))
+            return jsonify(response_object), 400
 
         if 'image_file' in request.files.keys():
             upload_img = request.files['image_file']
-            filename = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S') + upload_img.filename
+            filename = (datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S') +
+                        upload_img.filename)
             filename = sha256(filename.encode()).hexdigest() + '.jpg'
             img_path = os.path.join(self.upload_dir, filename)
             upload_img.save(img_path)
         else:
             response = requests.get(request.form['image_url'])
             if response.status_code == 200:
-                filename = datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S') + request.form['image_url']
+                filename = (
+                    datetime.datetime.utcnow().strftime('%Y%m%d%H%M%S') +
+                    request.form['image_url'])
                 filename = sha256(filename.encode()).hexdigest() + '.jpg'
                 img_path = os.path.join(self.upload_dir, filename)
                 with open(img_path, 'wb') as f:
@@ -95,11 +103,6 @@ class ImagesList(Resource):
 
         detect_img, boxes, scores, names = predict_one_image_from_path(
             img_path, ssd, current_app.config['ARCH'])
-
-        response_object = {
-            'status': 'fail',
-            'message': 'Invalid data!'
-        }
 
         try:
             img = Image(

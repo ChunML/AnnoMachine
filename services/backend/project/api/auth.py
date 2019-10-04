@@ -19,7 +19,7 @@ def register():
     try:
         user = User.query.filter_by(username=username).first()
         if user:
-            response_object['message'] = f'username {username} was already token!'
+            response_object['message'] = f'username {username} exists!'
             return jsonify(response_object), 400
 
         new_user = User(username=username, password=password)
