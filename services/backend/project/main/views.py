@@ -1,10 +1,9 @@
 from . import main_blueprint as main
 from flask import render_template, request, current_app, send_from_directory, redirect, url_for
 import os
-import torch
 import cv2
 from project import ssd, db
-from ssd.test_one import test_one_image, idx_to_name
+from ssd_tf2.test import predict_one_image_from_path, idx_to_name
 from project.models import User, Image, Box
 import numpy as np
 import requests
@@ -38,8 +37,8 @@ def index():
                 with open(img_path, 'wb') as f:
                     f.write(response.content)
 
-        detect_img, boxes, scores, names = test_one_image(
-            img_path, ssd, result_dir, filename)
+        detect_img, boxes, scores, names = predict_one_image_from_path(
+            img_path, ssd)
 
         try:
             img = Image(

@@ -12,6 +12,10 @@ services:
     environment:
       - FLASK_ENV=development
       - SECRET_KEY=hahaha
+      - ARCH=ssd300
+      - PRETRAINED_TYPE=specified
+      - CHECKPOINT_DIR=""
+      - CHECKPOINT_PATH=./ssd/models/ssd_epoch_120.h5
       - UPLOAD_FOLDER=/usr/src/app/uploads
       - DETECT_FOLDER=/usr/src/app/detects
       - APP_SETTINGS=project.config.DevelopmentConfig

@@ -3,9 +3,9 @@ from flask_restful import Resource, Api
 from . import api_blueprint as api
 from project.models import User
 from project import ssd, db
-from ssd.test_one import test_one_image, idx_to_name
+from ssd_tf2.test import predict_one_image_from_path, idx_to_name
+from ssd_tf2.image_utils import ImageVisualizer
 from project.models import User, Image, Box
-import cv2
 import os
 from sqlalchemy import exc
 import requests
@@ -44,6 +44,7 @@ class ImagesList(Resource):
     def __init__(self):
         self.upload_dir = current_app.config['UPLOAD_FOLDER']
         self.result_dir = current_app.config['DETECT_FOLDER']
+        self.visualizer = ImageVisualizer(idx_to_name, save_dir=self.result_dir)
         if not os.path.exists(self.upload_dir):
             os.makedirs(self.upload_dir)
         if not os.path.exists(self.result_dir):
@@ -92,8 +93,8 @@ class ImagesList(Resource):
                 with open(img_path, 'wb') as f:
                     f.write(response.content)
 
-        detect_img, boxes, scores, names = test_one_image(
-            img_path, ssd, self.result_dir, filename)
+        detect_img, boxes, scores, names = predict_one_image_from_path(
+            img_path, ssd, current_app.config['ARCH'])
 
         response_object = {
             'status': 'fail',
@@ -115,7 +116,7 @@ class ImagesList(Resource):
                     y_max=float(boxes[i][3]),
                     image=img))
             db.session.commit()
-            cv2.imwrite(os.path.join(self.result_dir, filename), detect_img)
+            self.visualizer.save_image(detect_img, boxes, names, filename)
             response_object['status'] = 'success'
             response_object['message'] = 'Successfully uploaded.'
             return response_object, 201

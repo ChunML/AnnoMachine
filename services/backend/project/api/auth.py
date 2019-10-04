@@ -29,7 +29,7 @@ def register():
         response_object['status'] = 'success'
         response_object['message'] = 'Successfully registered.'
         response_object['auth_token'] = auth_token.decode()
-        response_object['username'] = user.username
+        response_object['username'] = new_user.username
         return jsonify(response_object), 201
     except (exc.IntegrityError, ValueError):
         db.session.rollback()
@@ -78,6 +78,8 @@ def check_login_status():
         return jsonify(response_object), 401
 
     user = User.query.filter_by(id=resp).first()
+    if not user:
+        return jsonify(response_object), 401
     response_object['status'] = 'success'
     response_object['message'] = 'Valid token.'
     response_object['username'] = user.username

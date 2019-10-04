@@ -4,7 +4,9 @@ from flask_migrate import Migrate
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import os
-from ssd.network import create_ssd
+import sys
+
+from ssd_tf2.network import create_ssd
 
 
 db = SQLAlchemy()
@@ -12,10 +14,13 @@ migrate = Migrate()
 bcrypt = Bcrypt()
 cors = CORS()
 
-ssd = create_ssd(
-    21, 'ssd300', 'ssd',
-    './ssd/models/ssd_epoch_120.pth')
-
+try:
+    ssd = create_ssd(21, os.getenv('ARCH'), os.getenv('PRETRAINED_TYPE'),
+                     os.getenv('CHECKPOINT_DIR'), os.getenv('CHECKPOINT_PATH'))
+except Exception as e:
+    print(e)
+    print('The program is exiting...')
+    sys.exit()
 
 def create_app(script_info=None):
     app = Flask(__name__)
