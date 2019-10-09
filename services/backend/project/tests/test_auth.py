@@ -38,7 +38,7 @@ class TestAuthBlueprint(BaseTestCase):
         data = json.loads(response.data.decode())
         self.assertEqual(response.status_code, 400)
         self.assertEqual(data['status'], 'fail')
-        self.assertEqual(data['message'], 'username chun was already token!')
+        self.assertEqual(data['message'], 'username chun exists!')
         self.assertIsNone(data.get('auth_token'))
 
     def test_user_registration_with_blank_data(self):
@@ -101,4 +101,18 @@ class TestAuthBlueprint(BaseTestCase):
         self.assertEqual(response.status_code, 400)
         self.assertEqual(data['status'], 'fail')
         self.assertEqual(data['message'], 'Invalid username or password!')
+        self.assertIsNone(data.get('auth_token'))
+
+    def test_user_login_with_blank_data(self):
+        user = User(username='chun', password='password')
+        db.session.add(user)
+        db.session.commit()
+        response = self.client.post(
+            '/api/auth/login',
+            data=json.dumps({}),
+            content_type='application/json')
+        data = json.loads(response.data.decode())
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['status'], 'fail')
+        self.assertEqual(data['message'], 'Invalid data!')
         self.assertIsNone(data.get('auth_token'))
