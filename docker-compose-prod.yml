@@ -4,22 +4,20 @@ services:
   backend:
     build:
       context: ./services/backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
     ports:
-      - 5001:5000
-    volumes:
-      - ./services/backend:/usr/src/app
+      - "5001:5000"
     environment:
-      - FLASK_ENV=development
-      - SECRET_KEY=hahaha
+      - FLASK_ENV=production
       - ARCH=ssd300
+      - SECRET_KEY=${SECRET_KEY}
       - PRETRAINED_TYPE=specified
       - CHECKPOINT_DIR=""
       - CHECKPOINT_PATH=./ssd_tf2/models/ssd_epoch_120.h5
       - UPLOAD_FOLDER=/usr/src/app/uploads
       - DETECT_FOLDER=/usr/src/app/detects
-      - APP_SETTINGS=project.config.DevelopmentConfig
-      - DATABASE_URL=postgres://postgres:postgres@db:5432/data_dev
+      - APP_SETTINGS=project.config.ProductionConfig
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/data_prod
       - DATABASE_TEST_URL=postgres://postgres:postgres@db:5432/data_test
     depends_on:
       - db
@@ -29,12 +27,10 @@ services:
       context: ./services/frontend
       dockerfile: Dockerfile
     ports:
-      - 8081:8080
-    volumes:
-      - ./services/frontend:/usr/src/app
+      - "8081:8080"
     environment:
       - NODE_ENV=development
-      - REACT_APP_API_URL=http://localhost
+      - REACT_APP_API_URL=${REACT_APP_API_URL}
     depends_on:
       - backend
 
@@ -43,9 +39,7 @@ services:
       context: ./services/db
       dockerfile: Dockerfile
     ports:
-      - 5433:5432
-    volumes:
-      - /ssd_fullstack
+      - "5433:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -53,10 +47,10 @@ services:
   nginx:
     build:
       context: ./services/nginx
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
     restart: always
     ports:
-      - 80:80
+      - "80:80"
     depends_on:
       - backend
       - frontend
