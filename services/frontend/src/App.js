@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Container from './components/Container';
 import RegisterLoginForm from './components/RegisterLoginForm';
@@ -120,7 +120,7 @@ class App extends React.Component {
           isAuthenticated={ this.state.isAuthenticated }
         />
         <Switch>
-          <Route exact path='/' render={() => (
+          <Route path='/images' render={() => (
             <Container
               onButtonClick={ this.handleImageUpload }
               images={ this.state.images }
@@ -148,6 +148,11 @@ class App extends React.Component {
           <Route exact path='/logout' render={() => (
             <LogOut
               onLogoutUser={this.handleLogoutUser}
+            />
+          )} />
+          <Route exact path='/' render={() => (
+            <Redirect
+              to='/images'
             />
           )} />
         </Switch>
