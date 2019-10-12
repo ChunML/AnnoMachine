@@ -45,7 +45,12 @@ function Container(props) {
 
 Container.propTypes = {
   images: PropTypes.array.isRequired,
-  onButtonClick: PropTypes.func.isRequired
+  onButtonClick: PropTypes.func.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  currentUser: PropTypes.string.isRequired,
+  selectedTab: PropTypes.string.isRequired,
+  onTabChange: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 }
 
 export default Container;

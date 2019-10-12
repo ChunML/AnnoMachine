@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 function ImageDetail({ image }) {
+  const [detectImage, toggleDetectImage] = useState(true);
 
   if (image.length === 0) {
     return <div>Loading...</div>
@@ -23,8 +25,9 @@ function ImageDetail({ image }) {
         <div className="column">
           <div className="ui rounded image">
           <img
-            src={`${process.env.REACT_APP_API_URL}/api/detects/${image.name}`}
+            src={`${process.env.REACT_APP_API_URL}/api/${detectImage ? 'detects' : 'uploads'}/${image.name}`}
             alt="Some image here"
+            onClick={() => toggleDetectImage(!detectImage)}
           />
           </div>
           <p></p>
@@ -59,5 +62,9 @@ function ImageDetail({ image }) {
     </div>
   );
 }
+
+ImageDetail.propTypes = {
+  image: PropTypes.object.isRequired
+};
 
 export default ImageDetail;

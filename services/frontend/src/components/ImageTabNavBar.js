@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function ImageTabNavbar({ selectedTab, onTabChange }) {
   return (
@@ -18,5 +19,10 @@ function ImageTabNavbar({ selectedTab, onTabChange }) {
     </div>
   );
 }
+
+ImageTabNavbar.propTypes = {
+  selectedTab: PropTypes.string.isRequired,
+  onTabChange: PropTypes.func.isRequired
+};
 
 export default ImageTabNavbar;

@@ -1,15 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function NavBar({ isAuthenticated }) {
   return (
     <div className="ui inverted menu">
-      <a className="active item" href="/">
-        Home
-      </a>
-      <a className="item">
-        Profile
-      </a>
+      <div className="active item">
+          <Link to='/'>Home</Link>
+      </div>
       <div className="right menu">
         { isAuthenticated && (
           <div className="item">
@@ -36,5 +34,9 @@ function NavBar({ isAuthenticated }) {
     </div>
   )
 }
+
+NavBar.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired
+};
 
 export default NavBar;

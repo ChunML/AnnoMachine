@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 
 class RegisterLoginForm extends React.Component {
@@ -68,5 +69,10 @@ class RegisterLoginForm extends React.Component {
     );
   }
 }
+
+RegisterLoginForm.propTypes = {
+  formType: PropTypes.string.isRequired,
+  onButtonClick: PropTypes.func.isRequired
+};
 
 export default RegisterLoginForm;
