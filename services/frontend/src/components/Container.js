@@ -10,7 +10,11 @@ function Container(props) {
   return (
     <div className="ui center aligned container" style={{margin: '30px auto',}}>
       <Route path='/images/:imageName' render={({ match }) => (
-        <ImageDetail imageName={match.params.imageName} />
+        <ImageDetail
+          image={ props.images.filter(
+            image => image.name === `${match.params.imageName}.jpg`
+          )}
+        />
       )} />
       <Route exact path='/images' render={() => (
         <div className="ui center aligned three column stackable grid">

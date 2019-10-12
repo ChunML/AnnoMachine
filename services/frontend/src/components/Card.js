@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Card extends React.Component {
   constructor(props) {
@@ -23,12 +24,12 @@ class Card extends React.Component {
     return (
       <div className="column" style={{textAlign: 'left'}}>
         <div className="ui card" style={{margin: 'auto'}}>
-          <div className="image">
+          <Link to={`/images/${ image.name.replace('.jpg', '') }`} className='ui image'>
             <img
               src={`${process.env.REACT_APP_API_URL}/api/${this.state.detectImage ? 'detects': 'uploads'}/${image.name}`}
               alt="Some image here"
             />
-          </div>
+          </Link>
           <div className="content">
             <div style={{marginBottom: '5px'}}>
               <i
