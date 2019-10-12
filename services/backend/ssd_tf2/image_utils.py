@@ -1,7 +1,7 @@
 import matplotlib
 matplotlib.use('Agg')
 import os
-from PIL import Image
+from PIL import Image, ImageDraw
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import random
@@ -44,9 +44,8 @@ class ImageVisualizer(object):
             labels: numpy array (num_boxes)
             name: name of image to be saved
         """
-        plt.figure()
-        fig, ax = plt.subplots(1)
-        ax.imshow(img)
+        draw = ImageDraw.Draw(img)
+
         save_path = os.path.join(self.save_dir, name)
 
         for i, box in enumerate(boxes):
@@ -54,25 +53,14 @@ class ImageVisualizer(object):
             cls_name = self.idx_to_name[idx]
             top_left = (box[0], box[1])
             bot_right = (box[2], box[3])
-            ax.add_patch(patches.Rectangle(
-                (box[0], box[1]),
-                box[2] - box[0], box[3] - box[1],
-                linewidth=2, edgecolor=(0., 1., 0.),
-                facecolor="none"))
-            plt.text(
-                box[0],
-                box[1],
-                s=cls_name,
-                color="white",
-                verticalalignment="top",
-                bbox={"color": (0., 1., 0.), "pad": 0},
-            )
+            draw.rectangle(box, outline='lime')
 
-        plt.axis("off")
-        # plt.gca().xaxis.set_major_locator(NullLocator())
-        # plt.gca().yaxis.set_major_locator(NullLocator())
-        plt.savefig(save_path, bbox_inches="tight", pad_inches=0.0)
-        plt.close('all')
+            text_size = draw.textsize(cls_name)
+            text_box = [box[0], box[1], box[0] + text_size[0], box[1] + text_size[1]]
+            draw.rectangle(text_box, fill='lime')
+            draw.text((box[0], box[1]), text=cls_name, fill='white')
+
+        img.save(save_path)
 
 
 def generate_patch(boxes, threshold):
