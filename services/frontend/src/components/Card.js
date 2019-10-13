@@ -6,22 +6,26 @@ function Card({ image }) {
   const [detectImage, toggleDetectImage] = useState(true);
 
   return (
-    <div className="column" style={{textAlign: 'left'}}>
+    <div className="column" style={{ textAlign: 'left' }}>
       <div className="ui card" style={{margin: 'auto'}}>
         <Link to={`/images/${ image.name.replace('.jpg', '') }`} className='ui image'>
           <img
-            src={`${process.env.REACT_APP_API_URL}/api/${detectImage ? 'detects': 'uploads'}/${image.name}`}
+            src={`${process.env.REACT_APP_API_URL}/api/${detectImage ? 'detects': 'uploads'}/${ image.name }`}
             alt="Some image here"
           />
         </Link>
         <div className="content">
-          <div style={{marginBottom: '5px'}}>
+          <div style={{ marginBottom: '5px' }}>
             <i
               className="clone icon"
-              style={detectImage ? {color: '#33ff33'} : {}}
+              style={detectImage ? { color: '#33ff33' } : {}}
               onClick={() => toggleDetectImage(!detectImage)}>
             </i>
-            <i className="hand point up outline icon"></i>
+            <Link to={`/images/${ image.name.replace('.jpg', '') }`} className='ui image'>
+              <i
+                className="hand point up outline icon"
+                style={{ color: 'red' }}
+              ></i></Link>
           </div>
           <div className="description">This image may contain: {image.boxes.length > 0 ?
             [...new Set(image.boxes.map(box => box.label))].map((label, id) => (
