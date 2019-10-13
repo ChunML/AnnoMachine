@@ -13,6 +13,4 @@ RUN chmod +x entrypoint_prod.sh
 
 COPY . /usr/src/app
 
-RUN ls -a
-
 CMD ["./entrypoint_prod.sh"]

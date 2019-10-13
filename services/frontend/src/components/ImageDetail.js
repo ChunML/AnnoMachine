@@ -45,7 +45,7 @@ function ImageDetail({ image }) {
             </div>
             <div className="ui segments">
               {image.boxes.map((box, id) => (
-                <div className="ui left aligned segment">
+                <div className="ui left aligned segment" key={ id }>
                   <div className="ui header">{ box.label }</div>
                   <p>
                     <span style={coordStyle}>{ Math.floor(box.x_min) }</span>
@@ -64,7 +64,7 @@ function ImageDetail({ image }) {
 }
 
 ImageDetail.propTypes = {
-  image: PropTypes.object.isRequired
+  image: PropTypes.array.isRequired
 };
 
 export default ImageDetail;
