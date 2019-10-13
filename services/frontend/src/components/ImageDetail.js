@@ -37,7 +37,7 @@ function ImageDetail({ image }) {
           <div className="ui left aligned red segment">
             <div className="ui center aligned header">Image details</div>
             <p>Author: Chun</p>
-            <p>Uploaded at: 2019/10/11</p>
+            <p>Uploaded at: { image.uploaded_at }</p>
           </div>
           <div className="ui segments">
             <div className="ui left aligned blue segment">
