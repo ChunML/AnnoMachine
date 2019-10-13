@@ -17,6 +17,7 @@ services:
       - CHECKPOINT_DIR=""
       - CHECKPOINT_PATH=./ssd_tf2/models/ssd_epoch_120.h5
       - UPLOAD_FOLDER=/usr/src/app/uploads
+      - ANNO_FOLDER=/usr/src/app/annos
       - DETECT_FOLDER=/usr/src/app/detects
       - APP_SETTINGS=project.config.DevelopmentConfig
       - DATABASE_URL=postgres://postgres:postgres@db:5432/data_dev

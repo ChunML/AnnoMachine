@@ -31,7 +31,9 @@ function ImageDetail({ image }) {
           />
           </div>
           <p></p>
-          <button className="ui primary button">Download annotation</button>
+          <a href={`${process.env.REACT_APP_API_URL}/api/annotations/kitti/${image.name.replace('.jpg', '.txt')}`}>
+            <button className="ui primary button">Download annotation</button>
+          </a>
         </div>
         <div className="column">
           <div className="ui left aligned red segment">

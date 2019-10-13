@@ -8,6 +8,7 @@ class BaseConfig:
     SECRET_KEY = os.environ.get('SECRET_KEY')
     ARCH = os.environ.get('ARCH')
     UPLOAD_FOLDER = os.getenv('UPLOAD_FOLDER')
+    ANNO_FOLDER = os.getenv('ANNO_FOLDER')
     DETECT_FOLDER = os.getenv('DETECT_FOLDER')
     SEND_FILE_MAX_AGE_DEFAULT = 0
     DEBUG_TB_ENABLED = False

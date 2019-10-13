@@ -21,7 +21,7 @@ function Card({ image }) {
               style={detectImage ? {color: '#33ff33'} : {}}
               onClick={() => toggleDetectImage(!detectImage)}>
             </i>
-            <i className="edit outline icon"></i>
+            <i className="hand point up outline icon"></i>
           </div>
           <div className="description">This image may contain: {image.boxes.length > 0 ?
             [...new Set(image.boxes.map(box => box.label))].map((label, id) => (
@@ -31,7 +31,7 @@ function Card({ image }) {
           </div>
         </div>
         <div className="extra content">
-          <div>Uploaded by <span style={{color: 'red'}}>{ image.user.username }</span> at: { image.uploaded_at }</div>
+          <div>Uploaded by <span style={{color: 'red'}}>{ image.user.username }</span> at { image.uploaded_at }</div>
         </div>
       </div>
     </div>

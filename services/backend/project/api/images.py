@@ -1,5 +1,6 @@
 from flask import jsonify, request, current_app, send_from_directory
 from flask_restful import Resource, Api
+import csv
 from . import api_blueprint as api
 from project import ssd, db
 from ssd_tf2.test import predict_one_image_from_path, idx_to_name
@@ -26,6 +27,21 @@ def ping():
     return jsonify(response_object), 200
 
 
+@api.route('/api/annotations/kitti/<filename>')
+def anno_link(filename):
+    image = Image.query.filter_by(name=filename.replace('.txt', '.jpg')).first()
+    boxes = image.boxes
+    with open(os.path.join(current_app.config['ANNO_FOLDER'],
+                           filename), 'w', encoding='utf-8') as f:
+        writer = csv.DictWriter(
+            f, delimiter=' ',
+            fieldnames=['label', 'x_min', 'y_min', 'x_max', 'y_max'])
+        writer.writerows([box.to_json() for box in boxes])
+
+    return send_from_directory(current_app.config['ANNO_FOLDER'],
+                               filename, as_attachment=True)
+
+
 @api.route('/api/<image_type>/<filename>')
 def image_link(image_type, filename):
     if image_type == 'uploads':
@@ -42,13 +58,16 @@ class ImagesList(Resource):
 
     def __init__(self):
         self.upload_dir = current_app.config['UPLOAD_FOLDER']
-        self.result_dir = current_app.config['DETECT_FOLDER']
+        self.anno_dir = current_app.config['ANNO_FOLDER']
+        self.detect_dir = current_app.config['DETECT_FOLDER']
         self.visualizer = ImageVisualizer(idx_to_name,
-                                          save_dir=self.result_dir)
+                                          save_dir=self.detect_dir)
         if not os.path.exists(self.upload_dir):
             os.makedirs(self.upload_dir)
-        if not os.path.exists(self.result_dir):
-            os.makedirs(self.result_dir)
+        if not os.path.exists(self.anno_dir):
+            os.makedirs(self.anno_dir)
+        if not os.path.exists(self.detect_dir):
+            os.makedirs(self.detect_dir)
 
     def get(self):
         data = []

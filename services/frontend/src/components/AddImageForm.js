@@ -60,7 +60,7 @@ class AddImageForm extends React.Component {
           <input
             name="image_url"
             type="text"
-            placeholder="Enter an image URL"
+            placeholder="Or enter an image URL"
             value={ this.state.image_url }
             onChange={ this.handleInputChange }
           />
