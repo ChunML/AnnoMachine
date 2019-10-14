@@ -147,4 +147,43 @@ class ImagesList(Resource):
             return response_object, 400
 
 
+class Images(Resource):
+    method_decorators = {'delete': [authenticate]}
+
+    def __init__(self):
+        self.upload_dir = current_app.config['UPLOAD_FOLDER']
+        self.detect_dir = current_app.config['DETECT_FOLDER']
+
+    def delete(self, auth_resp, image_name):
+        image_name = f'{image_name}.jpg'
+        response_object = {
+            'status': 'fail',
+            'message': 'Invalid payload!'
+        }
+
+        user = User.query.filter_by(id=auth_resp).first()
+        if not user:
+            return response_object, 401
+
+        image = Image.query.filter_by(name=image_name).first()
+        if not image:
+            return response_object, 404
+
+        if image.user != user:
+            return response_object, 403
+
+        try:
+            os.remove(os.path.join(self.upload_dir, image_name))
+            os.remove(os.path.join(self.detect_dir, image_name))
+            db.session.delete(image)
+            db.session.commit()
+            response_object['status'] = 'success'
+            response_object['message'] = 'Image was successfully deleted.'
+            return response_object, 200
+        except exc.IntegrityError:
+            db.session.rollback()
+            return response_object, 400
+
+
 image_api.add_resource(ImagesList, '/api/images/')
+image_api.add_resource(Images, '/api/images/<image_name>')

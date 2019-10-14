@@ -51,3 +51,26 @@ class TestImageModel(BaseTestCase):
         image = add_image(
             name=sha256('test_name'.encode()).hexdigest())
         self.assertTrue(isinstance(image.to_json(), dict))
+
+    def test_remove_image(self):
+        user = add_user(username='chun', password='password')
+        image_1 = add_image(
+            name=sha256('test_name_1'.encode()).hexdigest(),
+            user=user)
+        image_2 = add_image(
+            name=sha256('test_name_2'.encode()).hexdigest(),
+            user=user)
+        self.assertEqual(sha256('test_name_1'.encode()).hexdigest(),
+                         image_1.name)
+        self.assertIsNotNone(image_1.user)
+        self.assertEqual('chun', image_1.user.username)
+        self.assertEqual(sha256('test_name_2'.encode()).hexdigest(),
+                         image_2.name)
+        self.assertIsNotNone(image_2.user)
+        self.assertEqual('chun', image_2.user.username)
+        self.assertEqual(len(user.images.all()), 2)
+
+        db.session.delete(image_2)
+        db.session.commit()
+        self.assertEqual(len(user.images.all()), 1)
+        self.assertEqual(len(Image.query.all()), 1)
