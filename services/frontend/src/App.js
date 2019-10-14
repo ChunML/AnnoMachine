@@ -117,6 +117,7 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <NavBar
+          title="SmartAnnotator"
           isAuthenticated={ this.state.isAuthenticated }
         />
         <Switch>

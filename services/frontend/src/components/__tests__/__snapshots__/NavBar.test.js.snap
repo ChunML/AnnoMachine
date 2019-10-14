@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`When authenticated Navbar renders a snapshot properly 1`] = `
+<div
+  className="ui inverted menu"
+>
+  <div
+    className="header item"
+  >
+    Hi, there!
+  </div>
+  <div
+    className="active item"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      Home
+    </a>
+  </div>
+  <div
+    className="right menu"
+  >
+    <div
+      className="item"
+    >
+      <a
+        href="/logout"
+        onClick={[Function]}
+      >
+        Log Out
+      </a>
+    </div>
+    <div
+      className="item"
+    >
+      <div
+        className="ui icon input"
+      >
+        <input
+          placeholder="Search tag..."
+          type="text"
+        />
+        <i
+          className="search icon"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`When not authenticated Navbar renders a snapshot properly 1`] = `
+<div
+  className="ui inverted menu"
+>
+  <div
+    className="header item"
+  >
+    Hi, there!
+  </div>
+  <div
+    className="active item"
+  >
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      Home
+    </a>
+  </div>
+  <div
+    className="right menu"
+  >
+    <div
+      className="item"
+    >
+      <a
+        href="/register"
+        onClick={[Function]}
+      >
+        Register
+      </a>
+    </div>
+    <div
+      className="item"
+    >
+      <a
+        href="/login"
+        onClick={[Function]}
+      >
+        Log In
+      </a>
+    </div>
+    <div
+      className="item"
+    >
+      <div
+        className="ui icon input"
+      >
+        <input
+          placeholder="Search tag..."
+          type="text"
+        />
+        <i
+          className="search icon"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

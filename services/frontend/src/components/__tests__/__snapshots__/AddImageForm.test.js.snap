@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddImageForm renders a snapshot properly 1`] = `
+<form
+  className="ui form"
+  encType="multipart/form-data"
+>
+  <div
+    className="field"
+  >
+    <input
+      name="image_file"
+      onChange={[Function]}
+      type="file"
+    />
+  </div>
+  <div
+    className="field"
+  >
+    <input
+      name="image_url"
+      onChange={[Function]}
+      placeholder="Enter an image URL"
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="field"
+  >
+    <div
+      className="ui checkbox"
+    >
+      <input
+        name="is_private"
+        type="checkbox"
+      />
+      <label>
+        Private
+      </label>
+    </div>
+  </div>
+  <button
+    className="ui primary button"
+    onClick={[Function]}
+    type="submit"
+  >
+    Submit
+  </button>
+</form>
+`;

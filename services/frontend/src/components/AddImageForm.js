@@ -34,7 +34,9 @@ class AddImageForm extends React.Component {
   handleButtonClick(e) {
     e.preventDefault();
     const data = { ...this.state };
-    this.fileInput.current.value = '';
+    if (this.fileInput.current) {
+      this.fileInput.current.value = '';
+    }
     this.setState({
       image_url: '',
       image_file: null

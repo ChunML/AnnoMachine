@@ -2,9 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function NavBar({ isAuthenticated }) {
+function NavBar({ title, isAuthenticated }) {
   return (
     <div className="ui inverted menu">
+      <div className="header item">
+        { title }
+      </div>
       <div className="active item">
           <Link to='/'>Home</Link>
       </div>
