@@ -19,13 +19,23 @@ function CardList(props) {
   if (props.selectedTab === 'all') {
     cards = props.images.sort((a, b) => b.id - a.id)
       .map(image => (
-        <Card key={ image.id } image={ image } />
+        <Card
+          key={ image.id }
+          image={ image }
+          currentUser={ props.currentUser }
+          onDeleteImage={ props.onDeleteImage }
+        />
       ));
   } else {
     cards = props.images.filter(image => image.user.username === props.currentUser)
       .sort((a, b) => b.id - a.id)
       .map(image => (
-        <Card key={ image.id } image={ image } />
+        <Card
+          key={ image.id }
+          image={ image }
+          currentUser={ props.currentUser }
+          onDeleteImage={ props.onDeleteImage }
+        />
       ));
   }
 
@@ -42,7 +52,11 @@ function CardList(props) {
 }
 
 CardList.propTypes = {
-  images: PropTypes.array.isRequired
-}
+  isLoading: PropTypes.bool.isRequired,
+  selectedTab: PropTypes.string.isRequired,
+  currentUser: PropTypes.string.isRequired,
+  images: PropTypes.array.isRequired,
+  onDeleteImage: PropTypes.func.isRequired
+};
 
 export default CardList;

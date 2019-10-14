@@ -19,6 +19,7 @@ class App extends React.Component {
     this.getImages = this.getImages.bind(this);
     this.getLoginStatus = this.getLoginStatus.bind(this);
     this.handleImageUpload = this.handleImageUpload.bind(this);
+    this.handleDeleteImage = this.handleDeleteImage.bind(this);
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleRegisterLoginUser = this.handleRegisterLoginUser.bind(this);
     this.handleLogoutUser = this.handleLogoutUser.bind(this);
@@ -79,6 +80,22 @@ class App extends React.Component {
         .catch(err => this.setState({isLoading: false}));
   }
 
+  handleDeleteImage(imageName) {
+    const authToken = window.localStorage.authToken;
+    fetch(
+      `${process.env.REACT_APP_API_URL}/api/images/${imageName}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+        }
+      }).then(res => res.json())
+        .then(res => {
+          if (res.status === 'success') {
+            this.getImages();
+          }
+      });
+  }
+
   handleTabChange(selectedTab) {
     this.setState({ selectedTab })
   }
@@ -117,7 +134,7 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <NavBar
-          title="SmartAnnotator"
+          title="AnnoMachine"
           isAuthenticated={ this.state.isAuthenticated }
         />
         <Switch>
@@ -130,6 +147,7 @@ class App extends React.Component {
               selectedTab={ this.state.selectedTab }
               currentUser={ this.state.currentUser }
               onTabChange={ this.handleTabChange }
+              onDeleteImage={ this.handleDeleteImage }
             />
           )} />
           <Route exact path='/register' render={() => (

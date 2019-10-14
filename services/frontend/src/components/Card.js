@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function Card({ image }) {
+function Card({ image, currentUser, onDeleteImage }) {
   const [detectImage, toggleDetectImage] = useState(true);
 
   return (
@@ -26,11 +26,13 @@ function Card({ image }) {
                 className="hand point up outline icon"
                 style={{ color: '#33ff33' }}
               ></i></Link>
-            <i
-              className="trash alternate outline icon"
-              style={{ color: 'red' }}
-            >
-            </i>
+            { currentUser === image.user.username && (<i
+                className="trash alternate outline icon"
+                style={{ color: 'red' }}
+                onClick={ () => onDeleteImage(image.name.replace('.jpg', '')) }
+              >
+              </i>
+            )}
           </div>
           <div className="description">This image may contain: {image.boxes.length > 0 ?
             [...new Set(image.boxes.map(box => box.label))].map((label, id) => (
@@ -48,7 +50,9 @@ function Card({ image }) {
 }
 
 Card.propTypes = {
-  image: PropTypes.object.isRequired
+  image: PropTypes.object.isRequired,
+  onDeleteImage: PropTypes.func.isRequired,
+  currentUser: PropTypes.string.isRequired
 }
 
 export default Card;

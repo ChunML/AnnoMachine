@@ -36,6 +36,7 @@ function Container(props) {
             isLoading={ props.isLoading }
             currentUser={ props.currentUser }
             selectedTab={ props.selectedTab }
+            onDeleteImage={ props.onDeleteImage }
           />
         </div>
       )} />
@@ -50,7 +51,8 @@ Container.propTypes = {
   currentUser: PropTypes.string.isRequired,
   selectedTab: PropTypes.string.isRequired,
   onTabChange: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired
-}
+  isAuthenticated: PropTypes.bool.isRequired,
+  onDeleteImage: PropTypes.func.isRequired
+};
 
 export default Container;
