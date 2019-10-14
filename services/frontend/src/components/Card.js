@@ -24,8 +24,13 @@ function Card({ image }) {
             <Link to={`/images/${ image.name.replace('.jpg', '') }`} className='ui image'>
               <i
                 className="hand point up outline icon"
-                style={{ color: 'red' }}
+                style={{ color: '#33ff33' }}
               ></i></Link>
+            <i
+              className="trash alternate outline icon"
+              style={{ color: 'red' }}
+            >
+            </i>
           </div>
           <div className="description">This image may contain: {image.boxes.length > 0 ?
             [...new Set(image.boxes.map(box => box.label))].map((label, id) => (
