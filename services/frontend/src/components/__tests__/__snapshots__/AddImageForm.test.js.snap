@@ -20,7 +20,7 @@ exports[`AddImageForm renders a snapshot properly 1`] = `
     <input
       name="image_url"
       onChange={[Function]}
-      placeholder="Enter an image URL"
+      placeholder="Or enter an image URL"
       type="text"
       value=""
     />
