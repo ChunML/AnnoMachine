@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 function ImageDetail({ image }) {
   const [drawBoxes, setDrawBoxes] = useState([]);
   const [scale, setScale] = useState(1);
-  const [svgWidth, setSvgWidth] = useState(image.width);
-  const [svgHeight, setSvgHeight] = useState(image.height);
+  const [svgWidth, setSvgWidth] = useState(0);
+  const [svgHeight, setSvgHeight] = useState(0);
   const ref = useRef(null);
 
   useEffect(() => {
@@ -13,6 +13,9 @@ function ImageDetail({ image }) {
       setScale(ref.current.offsetWidth / image.width);
       setSvgWidth(ref.current.offsetWidth);
       setSvgHeight(scale * image.height);
+    } else {
+      setSvgWidth(image.width);
+      setSvgHeight(image.height);
     }
   });
 
@@ -43,6 +46,7 @@ function ImageDetail({ image }) {
           <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
             width={ svgWidth }
             height={ svgHeight }
+            style={{ marginLeft: '-14px' }}
           >
             <image
               xlinkHref={`${process.env.REACT_APP_API_URL}/api/uploads/${image.name}`}
@@ -77,29 +81,21 @@ function ImageDetail({ image }) {
             <div className="ui segments">
               {image.boxes.map(box => (
                 <div className="ui segment" key={ box.id }>
-                  <div className="ui center aligned divided two column grid">
-                    <div className="row">
-                      <span
-                        className="ui left floated header"
-                        style={labelStyle}
-                      >
-                        { box.label }
-                      </span>
-                    </div>
+                  <div className="ui center aligned two column divided grid">
                     <div className="row">
                       <div className="column">
-                        <span style={ coordStyle }>{ Math.floor(box.x_min) }</span>
-                        <span style={ coordStyle }>{ Math.floor(box.y_min) }</span>
-                        <span style={ coordStyle }>{ Math.floor(box.x_max) }</span>
-                        <span style={ coordStyle }>{ Math.floor(box.y_max) }</span>
+                        <span
+                          className="ui header"
+                          style={labelStyle}
+                        >
+                          { box.label }
+                        </span>
                       </div>
                       <div className="column">
-                        <span style={{  }}>
-                          <i
-                            className="eye icon"
+                        <span>
+                          <button
+                            className='circular positive ui icon button'
                             onClick={ () => {
-                              console.log(box.x_min)
-                              console.log(box.x_min * scale)
                               const currentBox = drawBoxes.filter(drawBox => drawBox.id === box.id);
                               if (currentBox.length === 0) {
                                 setDrawBoxes([...drawBoxes, box]);
@@ -108,10 +104,24 @@ function ImageDetail({ image }) {
                                 setDrawBoxes([...otherBoxes]);
                               }
                             }}
-                          ></i>
-                          <i className="edit icon"></i>
+                          >
+                            <i
+                              className="eye icon"
+                            ></i>
+                          </button>
+                          <button
+                            className='circular positive ui icon button'
+                          >
+                            <i className="edit icon"></i>
+                          </button>
                         </span>
                       </div>
+                    </div>
+                    <div className="row">
+                      <span style={ coordStyle }>{ Math.floor(box.x_min) }</span>
+                      <span style={ coordStyle }>{ Math.floor(box.y_min) }</span>
+                      <span style={ coordStyle }>{ Math.floor(box.x_max) }</span>
+                      <span style={ coordStyle }>{ Math.floor(box.y_max) }</span>
                     </div>
                   </div>
                 </div>
