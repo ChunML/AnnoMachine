@@ -1,8 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 function ImageDetail({ image }) {
   const [drawBoxes, setDrawBoxes] = useState([]);
+  const [scale, setScale] = useState(1);
+  const [svgWidth, setSvgWidth] = useState(image.width);
+  const [svgHeight, setSvgHeight] = useState(image.height);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (ref.current && ref.current.offsetWidth < image.width) {
+      setScale(ref.current.offsetWidth / image.width);
+      setSvgWidth(ref.current.offsetWidth);
+      setSvgHeight(scale * image.height);
+    }
+  });
 
   if (image.length === 0) {
     return <div>Loading...</div>
@@ -27,22 +39,22 @@ function ImageDetail({ image }) {
   return (
     <div className="ui center aligned two column stackable grid">
       <div className="row">
-        <div className="column">
+        <div className="column" ref={ ref }>
           <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
-            width={ image.width }
-            height={ image.height }
+            width={ svgWidth }
+            height={ svgHeight }
           >
             <image
               xlinkHref={`${process.env.REACT_APP_API_URL}/api/uploads/${image.name}`}
               x="0" y="0"
               style={ image.width > image.height ? {width: "100%"} : {height: "100%"} } />
-            { drawBoxes.length > 0 && drawBoxes.map((box, id) => (
+            { drawBoxes.length > 0 && drawBoxes.map(box => (
               <rect
                 key={ box.id }
-                x={ box.x_min }
-                y={ box.y_min }
-                width={ box.x_max - box.x_min }
-                height={ box.y_max - box.y_min }
+                x={ box.x_min * scale }
+                y={ box.y_min * scale }
+                width={ (box.x_max - box.x_min) * scale }
+                height={ (box.y_max - box.y_min) * scale }
                 style={{fill: "none", stroke: "lime", strokeWidth: "3"}}
               />
             ))}
@@ -86,6 +98,8 @@ function ImageDetail({ image }) {
                           <i
                             className="eye icon"
                             onClick={ () => {
+                              console.log(box.x_min)
+                              console.log(box.x_min * scale)
                               const currentBox = drawBoxes.filter(drawBox => drawBox.id === box.id);
                               if (currentBox.length === 0) {
                                 setDrawBoxes([...drawBoxes, box]);
