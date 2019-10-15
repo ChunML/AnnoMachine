@@ -98,4 +98,4 @@ def predict_one_image_from_path(img_path, ssd, arch):
 
     boxes *= (original_size * 2) #img.shape[0]
 
-    return original_image, boxes, scores, classes
+    return original_image, original_size, boxes, scores, classes

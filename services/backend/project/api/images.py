@@ -36,7 +36,9 @@ def anno_link(filename):
         writer = csv.DictWriter(
             f, delimiter=' ',
             fieldnames=['label', 'x_min', 'y_min', 'x_max', 'y_max'])
-        writer.writerows([box.to_json() for box in boxes])
+        boxes_json = [{k: v for k, v in box.to_json().items() if k != 'id'}
+                      for box in boxes]
+        writer.writerows(boxes_json)
 
     return send_from_directory(current_app.config['ANNO_FOLDER'],
                                filename, as_attachment=True)
@@ -120,12 +122,14 @@ class ImagesList(Resource):
                 with open(img_path, 'wb') as f:
                     f.write(response.content)
 
-        detect_img, boxes, scores, names = predict_one_image_from_path(
+        detect_img, (width, height), boxes, scores, names = predict_one_image_from_path(
             img_path, ssd, current_app.config['ARCH'])
 
         try:
             img = Image(
                 name=filename,
+                height=height,
+                width=width,
                 is_private=request.form.get('is_private') is not None,
                 user=user)
             db.session.add(img)
