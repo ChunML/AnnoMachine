@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 function UploadInfo({ username, uploaded_at }) {
   return (
     <div className="ui left aligned red segment">
-      <div className="ui center aligned header">Image details</div>
+      {/* <div className="ui center aligned header">Image details</div> */}
       <p>Author: <span style={{color: "tomato", fontSize: "1.6rem"}}>{ username }</span></p>
       <p>Uploaded at: <span style={{color: "chocolate", fontStyle: "italic"}}>{ uploaded_at }</span></p>
     </div>

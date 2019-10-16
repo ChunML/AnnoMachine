@@ -5,7 +5,9 @@ function BoxEditForm({ coords, onInputChange }) {
   const inputStyle = {
     border: 'none',
     outline: 'none',
-    borderBottom: '1px solid gray'
+    borderBottom: '1px solid #38ACEC',
+    borderRadius: '0',
+    color: '#38ACEC'
   };
 
   const { x_min, y_min, x_max, y_max } = coords;
