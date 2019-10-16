@@ -33,7 +33,7 @@ class BoxDetail extends React.Component {
         ...prev.coords,
         [name]: parseFloat(value) || 0
       }
-    }));
+    }), () => this.props.onCheckIconClick(this.state.coords));
   }
 
   handleEyeIconClick() {
