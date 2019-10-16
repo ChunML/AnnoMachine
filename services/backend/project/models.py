@@ -65,7 +65,6 @@ class Image(db.Model):
     height = db.Column(db.Integer, nullable=False)
     width = db.Column(db.Integer, nullable=False)
     uploaded_at = db.Column(db.DateTime, default=func.now(), nullable=False)
-    is_private = db.Column(db.Boolean, default=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     boxes = db.relationship('Box', backref='image', lazy='dynamic')
 

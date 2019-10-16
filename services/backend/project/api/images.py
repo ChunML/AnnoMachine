@@ -130,7 +130,6 @@ class ImagesList(Resource):
                 name=filename,
                 height=height,
                 width=width,
-                is_private=request.form.get('is_private') is not None,
                 user=user)
             db.session.add(img)
             for i in range(len(boxes)):

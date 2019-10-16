@@ -67,12 +67,6 @@ class AddImageForm extends React.Component {
             onChange={ this.handleInputChange }
           />
         </div>
-        <div className="field">
-          <div className="ui checkbox">
-            <input name="is_private" type="checkbox" />
-            <label>Private</label>
-          </div>
-        </div>
         <button
           className="ui primary button"
           type="submit"
