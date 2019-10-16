@@ -8,18 +8,20 @@ class BoxDetail extends React.Component {
     super(props);
 
     this.state = {
+      boxIsDrawn: false,
       editMode: false,
       coords: {
         id: props.box.id,
         label: props.box.label,
-        x_min: props.box.x_min,
-        y_min: props.box.y_min,
-        x_max: props.box.x_max,
-        y_max: props.box.y_max,
+        x_min: Math.floor(props.box.x_min),
+        y_min: Math.floor(props.box.y_min),
+        x_max: Math.floor(props.box.x_max),
+        y_max: Math.floor(props.box.y_max),
       }
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleEyeIconClick = this.handleEyeIconClick.bind(this);
     this.handleCheckIconClick = this.handleCheckIconClick.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
   }
@@ -29,9 +31,18 @@ class BoxDetail extends React.Component {
     this.setState(prev => ({
       coords: {
         ...prev.coords,
-        [name]: parseInt(value)
+        [name]: parseFloat(value) || 0
       }
     }));
+  }
+
+  handleEyeIconClick() {
+    const { box, onEyeIconClick } = this.props;
+    this.setState(prev => ({
+      boxIsDrawn: !prev.boxIsDrawn
+    }));
+
+    onEyeIconClick(box);
   }
 
   handleCheckIconClick() {
@@ -46,7 +57,7 @@ class BoxDetail extends React.Component {
   }
 
   render() {
-    const { box, onEyeIconClick } = this.props;
+    const { box } = this.props;
 
     const { editMode, coords } = this.state;
 
@@ -58,7 +69,7 @@ class BoxDetail extends React.Component {
     return (
       <div className="ui segment" key={ box.id }>
         <div className="ui center aligned two column divided grid">
-          <div className="row">
+          <div className="row" style={{ alignItems: 'center' }}>
             <div className="column">
               <span
                 className="ui header"
@@ -70,8 +81,8 @@ class BoxDetail extends React.Component {
             <div className="column">
               <span>
                 <button
-                  className='circular positive ui icon button'
-                  onClick={ () => onEyeIconClick(box) }
+                  className={`circular ${this.state.boxIsDrawn ? 'positive' : 'grey'} ui icon button`}
+                  onClick={ this.handleEyeIconClick }
                 >
                   <i
                     className="eye icon"
@@ -85,7 +96,7 @@ class BoxDetail extends React.Component {
                     <i className="check icon"></i>
                   </button> ) : (
                   <button
-                    className='circular positive ui icon button'
+                    className='circular red ui icon button'
                     onClick={ this.toggleEditMode }
                   >
                     <i className="edit icon"></i>
@@ -94,7 +105,7 @@ class BoxDetail extends React.Component {
               </span>
             </div>
           </div>
-          <div className="row">
+          <div className="row" style={{ paddingTop: '0' }}>
             { editMode ? (
               <BoxEditForm
                 coords={ coords }
