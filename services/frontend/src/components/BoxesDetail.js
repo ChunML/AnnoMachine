@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BoxDetail from './BoxDetail';
 
-function BoxesDetail({ image, onEyeIconClick }) {
+function BoxesDetail({ boxes, onEyeIconClick, onCheckIconClick }) {
   return (
     <div className='ui segments'>
-      { image.boxes.map(box => (
+      { boxes.map(box => (
         <BoxDetail
           key={ box.id }
           box={ box }
           onEyeIconClick={ onEyeIconClick }
+          onCheckIconClick={ onCheckIconClick }
         />
       ))}
     </div>
@@ -17,8 +18,9 @@ function BoxesDetail({ image, onEyeIconClick }) {
 }
 
 BoxesDetail.propTypes = {
-  image: PropTypes.object.isRequired,
-  onEyeIconClick: PropTypes.func.isRequired
+  boxes: PropTypes.array.isRequired,
+  onEyeIconClick: PropTypes.func.isRequired,
+  onCheckIconClick: PropTypes.func.isRequired
 };
 
 export default BoxesDetail;

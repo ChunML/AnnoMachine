@@ -6,6 +6,7 @@ import ImageAnnoDisplay from './ImageAnnoDisplay';
 
 function ImageDetail({ image }) {
   const [drawBoxes, setDrawBoxes] = useState([]);
+  const [boxes, setBoxes] = useState([]);
   const [scale, setScale] = useState(1);
   const [svgWidth, setSvgWidth] = useState(0);
   const [svgHeight, setSvgHeight] = useState(0);
@@ -20,15 +21,18 @@ function ImageDetail({ image }) {
       setSvgWidth(image.width);
       setSvgHeight(image.height);
     }
+    if (image.boxes && (!boxes || boxes.length !== image.boxes.length)) {
+      setBoxes(image.boxes.sort((a, b) => b.id > a.id));
+    }
   });
 
   if (image.length === 0) {
     return <div>Loading...</div>
+  } else {
+    image = image[0];
   }
 
-  image = image[0];
-
-  const onEyeIconClick = (box) => {
+  const onEyeIconClick = box => {
     const currentBox = drawBoxes.filter(drawBox => drawBox.id === box.id);
     if (currentBox.length === 0) {
       setDrawBoxes([...drawBoxes, box]);
@@ -36,6 +40,12 @@ function ImageDetail({ image }) {
       const otherBoxes = drawBoxes.filter(drawBox => drawBox.id !== box.id);
       setDrawBoxes([...otherBoxes]);
     }
+  }
+
+  const onCheckIconClick = box => {
+    const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
+    const newBoxes = [ ...otherBoxes, box ]
+    setBoxes(newBoxes.sort((a, b) => b.id > a.id));
   }
 
   return (
@@ -58,7 +68,11 @@ function ImageDetail({ image }) {
         </div>
         <div className="column">
           <UploadInfo username={ image.user.username } uploaded_at={ image.uploaded_at } />
-          <BoxesDetail image={ image } onEyeIconClick={ onEyeIconClick } />
+          <BoxesDetail
+            boxes={ boxes || [] }
+            onEyeIconClick={ onEyeIconClick }
+            onCheckIconClick={ onCheckIconClick }
+          />
         </div>
       </div>
     </div>

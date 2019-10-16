@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-function BoxCoord({ box }) {
+function BoxCoord({ coords }) {
   const coordStyle = {
     padding: '5px 10px',
     color: 'maroon',
@@ -13,16 +13,16 @@ function BoxCoord({ box }) {
 
   return (
     <React.Fragment>
-      <span style={ coordStyle }>{ Math.floor(box.x_min) }</span>
-      <span style={ coordStyle }>{ Math.floor(box.y_min) }</span>
-      <span style={ coordStyle }>{ Math.floor(box.x_max) }</span>
-      <span style={ coordStyle }>{ Math.floor(box.y_max) }</span>
+      <span style={ coordStyle }>{ Math.floor(coords.x_min) }</span>
+      <span style={ coordStyle }>{ Math.floor(coords.y_min) }</span>
+      <span style={ coordStyle }>{ Math.floor(coords.x_max) }</span>
+      <span style={ coordStyle }>{ Math.floor(coords.y_max) }</span>
     </React.Fragment>
   );
 }
 
 BoxCoord.propTypes = {
-  box: PropTypes.object.isRequired
+  coords: PropTypes.object.isRequired
 };
 
 export default BoxCoord;
