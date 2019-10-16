@@ -46,6 +46,12 @@ function ImageDetail({ image }) {
     const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
     const newBoxes = [ ...otherBoxes, box ]
     setBoxes(newBoxes.sort((a, b) => b.id > a.id));
+    setDrawBoxes(drawBoxes.map(drawBox => {
+      if (drawBox.id === box.id) {
+        return box;
+      }
+      return drawBox;
+    }));
   }
 
   return (
