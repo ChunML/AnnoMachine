@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BoxEditForm renders a snapshot properly 1`] = `
+<div
+  className="ui form"
+>
+  <div
+    className="fields"
+    style={
+      Object {
+        "justifyContent": "center",
+      }
+    }
+  >
+    <div
+      className="two wide field"
+    >
+      <input
+        name="x_min"
+        onChange={[MockFunction]}
+        style={
+          Object {
+            "border": "none",
+            "borderBottom": "1px solid #38ACEC",
+            "borderRadius": "0",
+            "color": "#38ACEC",
+            "outline": "none",
+          }
+        }
+        type="text"
+        value={10}
+      />
+    </div>
+    <div
+      className="two wide field"
+    >
+      <input
+        name="y_min"
+        onChange={[MockFunction]}
+        style={
+          Object {
+            "border": "none",
+            "borderBottom": "1px solid #38ACEC",
+            "borderRadius": "0",
+            "color": "#38ACEC",
+            "outline": "none",
+          }
+        }
+        type="text"
+        value={10}
+      />
+    </div>
+    <div
+      className="two wide field"
+    >
+      <input
+        name="x_max"
+        onChange={[MockFunction]}
+        style={
+          Object {
+            "border": "none",
+            "borderBottom": "1px solid #38ACEC",
+            "borderRadius": "0",
+            "color": "#38ACEC",
+            "outline": "none",
+          }
+        }
+        type="text"
+        value={20}
+      />
+    </div>
+    <div
+      className="two wide field"
+    >
+      <input
+        name="y_max"
+        onChange={[MockFunction]}
+        style={
+          Object {
+            "border": "none",
+            "borderBottom": "1px solid #38ACEC",
+            "borderRadius": "0",
+            "color": "#38ACEC",
+            "outline": "none",
+          }
+        }
+        type="text"
+        value={20}
+      />
+    </div>
+  </div>
+</div>
+`;

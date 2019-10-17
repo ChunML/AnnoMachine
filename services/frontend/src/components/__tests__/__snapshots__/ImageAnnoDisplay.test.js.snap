@@ -1,0 +1,103 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Display landscape image ImageAnnoDisplay renders a snapshot properly 1`] = `
+<svg
+  height={100}
+  style={
+    Object {
+      "marginLeft": "-14px",
+    }
+  }
+  width={100}
+  xmlns="http://www.w3.org/2000/svg"
+  xmlnsXlink="http://www.w3.org/1999/xlink"
+>
+  <image
+    style={
+      Object {
+        "width": "100%",
+      }
+    }
+    x="0"
+    xlinkHref="http://localhost:5000/api/uploads/testName"
+    y="0"
+  />
+  <rect
+    height={7}
+    style={
+      Object {
+        "fill": "none",
+        "stroke": "lime",
+        "strokeWidth": "3",
+      }
+    }
+    width={7}
+    x={7}
+    y={7}
+  />
+  <rect
+    height={7}
+    style={
+      Object {
+        "fill": "none",
+        "stroke": "lime",
+        "strokeWidth": "3",
+      }
+    }
+    width={7}
+    x={14}
+    y={14}
+  />
+</svg>
+`;
+
+exports[`Display portrait image ImageAnnoDisplay renders a snapshot properly 1`] = `
+<svg
+  height={100}
+  style={
+    Object {
+      "marginLeft": "-14px",
+    }
+  }
+  width={100}
+  xmlns="http://www.w3.org/2000/svg"
+  xmlnsXlink="http://www.w3.org/1999/xlink"
+>
+  <image
+    style={
+      Object {
+        "height": "100%",
+      }
+    }
+    x="0"
+    xlinkHref="http://localhost:5000/api/uploads/testName"
+    y="0"
+  />
+  <rect
+    height={7}
+    style={
+      Object {
+        "fill": "none",
+        "stroke": "lime",
+        "strokeWidth": "3",
+      }
+    }
+    width={7}
+    x={7}
+    y={7}
+  />
+  <rect
+    height={7}
+    style={
+      Object {
+        "fill": "none",
+        "stroke": "lime",
+        "strokeWidth": "3",
+      }
+    }
+    width={7}
+    x={14}
+    y={14}
+  />
+</svg>
+`;

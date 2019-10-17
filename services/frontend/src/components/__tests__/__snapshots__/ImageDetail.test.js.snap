@@ -2,7 +2,7 @@
 
 exports[`ImageDetail renders a snapshot properly 1`] = `
 <div
-  className="ui two column stackable grid"
+  className="ui center aligned stackable two column grid"
 >
   <div
     className="row"
@@ -10,15 +10,28 @@ exports[`ImageDetail renders a snapshot properly 1`] = `
     <div
       className="column"
     >
-      <div
-        className="ui rounded image"
+      <svg
+        height={0}
+        style={
+          Object {
+            "marginLeft": "-14px",
+          }
+        }
+        width={0}
+        xmlns="http://www.w3.org/2000/svg"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
       >
-        <img
-          alt="Some image here"
-          onClick={[Function]}
-          src="http://localhost:5000/api/detects/testImage"
+        <image
+          style={
+            Object {
+              "height": "100%",
+            }
+          }
+          x="0"
+          xlinkHref="http://localhost:5000/api/uploads/testImage"
+          y="0"
         />
-      </div>
+      </svg>
       <p />
       <a
         href="http://localhost:5000/api/annotations/kitti/testImage"
@@ -36,170 +49,36 @@ exports[`ImageDetail renders a snapshot properly 1`] = `
       <div
         className="ui left aligned red segment"
       >
-        <div
-          className="ui center aligned header"
-        >
-          Image details
-        </div>
         <p>
-          Author: Chun
+          Author: 
+          <span
+            style={
+              Object {
+                "color": "tomato",
+                "fontSize": "1.6rem",
+              }
+            }
+          >
+            testUser
+          </span>
         </p>
         <p>
           Uploaded at: 
-          2000/01/01 01:02
+          <span
+            style={
+              Object {
+                "color": "chocolate",
+                "fontStyle": "italic",
+              }
+            }
+          >
+            2000/01/01 01:02
+          </span>
         </p>
       </div>
       <div
         className="ui segments"
-      >
-        <div
-          className="ui left aligned blue segment"
-        >
-          <div
-            className="ui center aligned header"
-          >
-            Bounding boxes
-          </div>
-        </div>
-        <div
-          className="ui segments"
-        >
-          <div
-            className="ui left aligned segment"
-          >
-            <div
-              className="ui header"
-            >
-              dog
-            </div>
-            <p>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                10
-              </span>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                10
-              </span>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                20
-              </span>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                20
-              </span>
-            </p>
-          </div>
-          <div
-            className="ui left aligned segment"
-          >
-            <div
-              className="ui header"
-            >
-              cat
-            </div>
-            <p>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                20
-              </span>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                20
-              </span>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                40
-              </span>
-              <span
-                style={
-                  Object {
-                    "background": "powderblue",
-                    "borderRadius": "4px",
-                    "color": "maroon",
-                    "letterSpacing": "1px",
-                    "margin": "5px",
-                    "padding": "5px 10px",
-                  }
-                }
-              >
-                40
-              </span>
-            </p>
-          </div>
-        </div>
-      </div>
+      />
     </div>
   </div>
 </div>

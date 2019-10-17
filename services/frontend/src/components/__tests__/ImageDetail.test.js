@@ -1,5 +1,4 @@
 import React from 'react';
-import { MemoryRouter as Router } from 'react-router-dom';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import ImageDetail from '../ImageDetail';
@@ -11,6 +10,8 @@ const image = [{
   user: {
     username: 'testUser'
   },
+  width: 100,
+  height: 100,
   boxes: [
     {
       label: 'dog',
@@ -31,7 +32,7 @@ const image = [{
 
 it('ImageDetail renders properly', () => {
   const wrapper = shallow(<ImageDetail image={ image } />);
-  const columns = wrapper.find('.row.column');
+  const columns = wrapper.find('.row > .column');
   expect(columns.length).toBe(2);
 });
 

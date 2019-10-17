@@ -55,7 +55,7 @@ function ImageDetail({ image }) {
   }
 
   return (
-    <div className="ui center aligned two column stackable grid">
+    <div className="ui center aligned stackable two column grid">
       <div className="row">
         <div className="column" ref={ ref }>
           <ImageAnnoDisplay

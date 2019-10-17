@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tab all images selected ImageTabNavBar renders a snapshot properly 1`] = `
+<div
+  className="ui tabular menu"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <a
+    className="active item"
+    onClick={[Function]}
+  >
+    All Images
+  </a>
+  <a
+    className=" item"
+    onClick={[Function]}
+  >
+    Yours
+  </a>
+</div>
+`;
+
+exports[`Tab your images selected ImageTabNavBar renders a snapshot properly 1`] = `
+<div
+  className="ui tabular menu"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <a
+    className=" item"
+    onClick={[Function]}
+  >
+    All Images
+  </a>
+  <a
+    className="active item"
+    onClick={[Function]}
+  >
+    Yours
+  </a>
+</div>
+`;
