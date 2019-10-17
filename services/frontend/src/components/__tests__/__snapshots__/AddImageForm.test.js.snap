@@ -25,21 +25,6 @@ exports[`AddImageForm renders a snapshot properly 1`] = `
       value=""
     />
   </div>
-  <div
-    className="field"
-  >
-    <div
-      className="ui checkbox"
-    >
-      <input
-        name="is_private"
-        type="checkbox"
-      />
-      <label>
-        Private
-      </label>
-    </div>
-  </div>
   <button
     className="ui primary button"
     onClick={[Function]}

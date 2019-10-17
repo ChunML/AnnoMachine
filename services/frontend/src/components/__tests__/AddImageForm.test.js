@@ -12,13 +12,11 @@ it('AddImageForm renders properly', () => {
   const form = wrapper.find('form');
   expect(form.length).toBe(1);
   const fields = form.find('.field');
-  expect(fields.length).toBe(3);
+  expect(fields.length).toBe(2);
   expect(fields.get(0).props.children.type).toBe('input');
   expect(fields.get(0).props.children.props.name).toBe('image_file');
   expect(fields.get(1).props.children.type).toBe('input');
   expect(fields.get(1).props.children.props.name).toBe('image_url');
-  expect(fields.get(2).props.children.props.children[0].props.type).toBe('checkbox');
-  expect(fields.get(2).props.children.props.children[0].props.name).toBe('is_private');
   expect(onButtonClick).toHaveBeenCalledTimes(0);
 
   const image_url = form.find('input[name="image_url"]');
