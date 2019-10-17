@@ -9,7 +9,7 @@ def add_user(username, password):
     return user
 
 def add_image(name, user=None):
-    image = Image(name=name, user=user)
+    image = Image(name=name, user=user, height=100, width=100)
     db.session.add(image)
     db.session.commit()
     return image
