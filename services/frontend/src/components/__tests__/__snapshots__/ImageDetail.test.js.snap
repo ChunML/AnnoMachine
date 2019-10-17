@@ -28,13 +28,13 @@ exports[`ImageDetail renders a snapshot properly 1`] = `
             }
           }
           x="0"
-          xlinkHref="http://localhost:5000/api/uploads/testImage"
+          xlinkHref="http://localhost/api/uploads/testImage"
           y="0"
         />
       </svg>
       <p />
       <a
-        href="http://localhost:5000/api/annotations/kitti/testImage"
+        href="http://localhost/api/annotations/kitti/testImage"
       >
         <button
           className="ui primary button"

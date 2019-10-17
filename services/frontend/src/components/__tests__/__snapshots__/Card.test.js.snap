@@ -24,7 +24,7 @@ exports[`current user is not the author of the image Card renders a snapshot pro
     >
       <img
         alt="Some image here"
-        src="http://localhost:5000/api/detects/test.jpg"
+        src="http://localhost/api/detects/test.jpg"
       />
     </a>
     <div
@@ -133,7 +133,7 @@ exports[`current user is the author of the image Card renders a snapshot properl
     >
       <img
         alt="Some image here"
-        src="http://localhost:5000/api/detects/test.jpg"
+        src="http://localhost/api/detects/test.jpg"
       />
     </a>
     <div

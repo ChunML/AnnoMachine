@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --host 0.0.0.0",
-    "test": "react-scripts test",
+    "test": "jest",
     "build": "webpack",
     "build-windows": "set NODE_ENV=production && webpack"
   },
@@ -29,10 +29,11 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^24.9.0",
     "prop-types": "^15.7.2",
     "style-loader": "^1.0.0",
-    "webpack": "^4.41.0",
+    "webpack": "^4.41.2",
     "webpack-cli": "^3.3.9",
-    "webpack-dev-server": "^3.8.1"
+    "webpack-dev-server": "^3.8.2"
   }
 }
