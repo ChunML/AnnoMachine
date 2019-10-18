@@ -176,8 +176,10 @@ class Images(Resource):
             return response_object, 403
 
         try:
-            os.remove(os.path.join(self.upload_dir, image_name))
-            os.remove(os.path.join(self.detect_dir, image_name))
+            if os.path.exists(os.path.join(self.upload_dir, image_name)):
+                os.remove(os.path.join(self.upload_dir, image_name))
+            if os.path.exists(os.path.join(self.detect_dir, image_name)):
+                os.remove(os.path.join(self.detect_dir, image_name))
             db.session.delete(image)
             db.session.commit()
             response_object['status'] = 'success'

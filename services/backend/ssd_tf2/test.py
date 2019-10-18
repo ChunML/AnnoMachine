@@ -9,7 +9,6 @@ from PIL import Image
 from .anchor import generate_default_boxes
 from .box_utils import decode, compute_nms
 from .image_utils import ImageVisualizer
-from .network import create_ssd
 
 
 os.environ['CUDA_VISIBLE_DEVICES'] = '-1'

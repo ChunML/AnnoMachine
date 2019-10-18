@@ -115,52 +115,49 @@ class SSD(Model):
         return confs, locs
 
 
-def create_ssd(num_classes, arch, pretrained_type,
-               checkpoint_dir=None,
-               checkpoint_path=None):
-    """ Create SSD model and load pretrained weights
-    Args:
-        num_classes: number of classes
-        pretrained_type: type of pretrained weights, can be either 'VGG16' or 'ssd'
-        weight_path: path to pretrained weights
-    Returns:
-        net: the SSD model
-    """
-    net = SSD(num_classes, arch)
-    net(tf.random.normal((1, 512, 512, 3)))
-    if pretrained_type == 'base':
-        net.init_vgg16()
-    elif pretrained_type == 'latest':
-        try:
-            paths = [os.path.join(checkpoint_dir, path)
-                     for path in os.listdir(checkpoint_dir)]
-            latest = sorted(paths, key=os.path.getmtime)[-1]
-            net.load_weights(latest)
-        except AttributeError as e:
-            print('Please make sure there is at least one checkpoint at {}'.format(
-                checkpoint_dir))
-            print('The model will be loaded from base weights.')
-            net.init_vgg16()
-        except ValueError as e:
-            raise ValueError(
-                'Please check the following\n1./ Is the path correct: {}?\n2./ Is the model architecture correct: {}?'.format(
-                    latest, arch))
-        except Exception as e:
-            print(e)
-            raise ValueError('Please check if checkpoint_dir is specified')
-    elif pretrained_type == 'specified':
-        if not os.path.isfile(checkpoint_path):
-            raise ValueError(
-                'Not a valid checkpoint file: {}'.format(checkpoint_path))
+    def init_weights(self, pretrained_type,
+                        checkpoint_dir=None,
+                        checkpoint_path=None):
+        """ Load pretrained weights
+        Args:
+            net: uninitialized SSD
+            pretrained_type: type of pretrained weights, can be either 'VGG16' or 'ssd'
+            weight_path: path to pretrained weights
+        Returns:
+            net: weight-loaded SSD model
+        """
+        self(tf.random.normal((1, 512, 512, 3)))
+        if pretrained_type == 'base':
+            self.init_vgg16()
+        elif pretrained_type == 'latest':
+            try:
+                paths = [os.path.join(checkpoint_dir, path)
+                        for path in os.listdir(checkpoint_dir)]
+                latest = sorted(paths, key=os.path.getmtime)[-1]
+                self.load_weights(latest)
+            except AttributeError as e:
+                print('Please make sure there is at least one checkpoint at {}'.format(
+                    checkpoint_dir))
+                print('The model will be loaded from base weights.')
+                self.init_vgg16()
+            except ValueError as e:
+                raise ValueError(
+                    'Please check the following\n1./ Is the path correct: {}?\n2./ Is the model architecture correct: {}?'.format(
+                        latest, arch))
+            except Exception as e:
+                print(e)
+                raise ValueError('Please check if checkpoint_dir is specified')
+        elif pretrained_type == 'specified':
+            if not os.path.isfile(checkpoint_path):
+                raise ValueError(
+                    'Not a valid checkpoint file: {}'.format(checkpoint_path))
 
-        try:
-            net.load_weights(os.path.abspath(checkpoint_path))
-        except Exception as e:
-            print(e)
-            raise ValueError(
-                'Please check the following\n1./ Is the path correct: {}?\n2./ Is the model architecture correct: {}?'.format(
-                    checkpoint_path, arch))
-    else:
-        raise ValueError('Unknown pretrained type: {}'.format(pretrained_type))
-    return net
-
+            try:
+                self.load_weights(os.path.abspath(checkpoint_path))
+            except Exception as e:
+                print(e)
+                raise ValueError(
+                    'Please check the following\n1./ Is the path correct: {}?\n2./ Is the model architecture correct: {}?'.format(
+                        checkpoint_path, arch))
+        else:
+            raise ValueError('Unknown pretrained type: {}'.format(pretrained_type))

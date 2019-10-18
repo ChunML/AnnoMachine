@@ -66,7 +66,9 @@ class Image(db.Model):
     width = db.Column(db.Integer, nullable=False)
     uploaded_at = db.Column(db.DateTime, default=func.now(), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    boxes = db.relationship('Box', backref='image', lazy='dynamic')
+    boxes = db.relationship(
+        'Box', backref='image', lazy='dynamic',
+        cascade='all, delete-orphan')
 
     def to_json(self):
         return {

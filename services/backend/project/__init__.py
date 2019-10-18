@@ -6,7 +6,7 @@ from flask_cors import CORS
 import os
 import sys
 
-from ssd_tf2.network import create_ssd
+from ssd_tf2.network import SSD
 
 
 db = SQLAlchemy()
@@ -15,8 +15,7 @@ bcrypt = Bcrypt()
 cors = CORS()
 
 try:
-    ssd = create_ssd(21, os.getenv('ARCH'), os.getenv('PRETRAINED_TYPE'),
-                     os.getenv('CHECKPOINT_DIR'), os.getenv('CHECKPOINT_PATH'))
+    ssd = SSD(21, os.getenv('ARCH'))
 except Exception as e:
     print(e)
     print('The program is exiting...')
@@ -33,6 +32,10 @@ def create_app(script_info=None):
     migrate.init_app(db, migrate)
     bcrypt.init_app(app)
     cors.init_app(app)
+    ssd.init_weights(
+        os.getenv('PRETRAINED_TYPE'),
+        os.getenv('CHECKPOINT_DIR'),
+        os.getenv('CHECKPOINT_PATH'))
 
     from project.api import api_blueprint
     app.register_blueprint(api_blueprint)

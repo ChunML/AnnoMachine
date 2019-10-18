@@ -1,5 +1,7 @@
 from flask_testing import TestCase
 from project import create_app, db
+import shutil
+import os
 
 
 app = create_app()
@@ -17,3 +19,6 @@ class BaseTestCase(TestCase):
     def tearDown(self):
         db.session.remove()
         db.drop_all()
+        file_dir = os.path.join(os.path.dirname(__file__), 'files')
+        if os.path.isdir(file_dir):
+            shutil.rmtree(file_dir)

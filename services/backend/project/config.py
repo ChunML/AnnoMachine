@@ -30,6 +30,10 @@ class TestingConfig(BaseConfig):
     BCRYPT_LOG_ROUNDS = 4
     TOKEN_EXPIRATION_DAYS = 0
     TOKEN_EXPIRATION_SECONDS = 3
+    PRETRAINED_TYPE = 'base'
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'tests', 'files', 'upload')
+    ANNO_FOLDER = os.path.join(os.path.dirname(__file__), 'tests', 'files', 'anno')
+    DETECT_FOLDER = os.path.join(os.path.dirname(__file__), 'tests', 'files', 'detect')
 
 
 class ProductionConfig(BaseConfig):
