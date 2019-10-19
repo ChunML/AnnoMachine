@@ -8,6 +8,8 @@ inspect() {
   fi
 }
 
+export PRETRAINED_TYPE=none
+
 docker-compose up -d --build
 docker-compose exec backend python manage.py test
 inspect $? backend

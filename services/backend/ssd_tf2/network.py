@@ -127,7 +127,9 @@ class SSD(Model):
             net: weight-loaded SSD model
         """
         self(tf.random.normal((1, 512, 512, 3)))
-        if pretrained_type == 'base':
+        if pretrained_type == 'none':
+            return
+        elif pretrained_type == 'base':
             self.init_vgg16()
         elif pretrained_type == 'latest':
             try:

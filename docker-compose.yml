@@ -13,7 +13,7 @@ services:
       - FLASK_ENV=development
       - SECRET_KEY=hahaha
       - ARCH=ssd300
-      - PRETRAINED_TYPE=specified
+      - PRETRAINED_TYPE=${PRETRAINED_TYPE}
       - CHECKPOINT_DIR=""
       - CHECKPOINT_PATH=./ssd_tf2/models/ssd_epoch_120.h5
       - UPLOAD_FOLDER=/usr/src/app/uploads
