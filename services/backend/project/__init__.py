@@ -33,7 +33,7 @@ def create_app(script_info=None):
     bcrypt.init_app(app)
     cors.init_app(app)
     ssd.init_weights(
-        os.getenv('PRETRAINED_TYPE'),
+        os.getenv('PRETRAINED_TYPE') or 'specified',
         os.getenv('CHECKPOINT_DIR'),
         os.getenv('CHECKPOINT_PATH'))
 
