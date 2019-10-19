@@ -13,11 +13,13 @@ exports[`Display landscape image ImageAnnoDisplay renders a snapshot properly 1`
   xmlnsXlink="http://www.w3.org/1999/xlink"
 >
   <image
+    height={100}
     style={
       Object {
         "width": "100%",
       }
     }
+    width={100}
     x="0"
     xlinkHref="http://localhost/api/uploads/testName"
     y="0"
@@ -64,11 +66,13 @@ exports[`Display portrait image ImageAnnoDisplay renders a snapshot properly 1`]
   xmlnsXlink="http://www.w3.org/1999/xlink"
 >
   <image
+    height={100}
     style={
       Object {
         "height": "100%",
       }
     }
+    width={100}
     x="0"
     xlinkHref="http://localhost/api/uploads/testName"
     y="0"

@@ -12,7 +12,7 @@ function ImageAnnoDisplay(props) {
     >
       <image
         xlinkHref={`${process.env.REACT_APP_API_URL}/api/uploads/${name}`}
-        x="0" y="0"
+        x="0" y="0" width={ svgWidth } height={ svgHeight }
         style={ imageWidth > imageHeight ? {width: "100%"} : {height: "100%"} } />
       { drawBoxes.length > 0 && drawBoxes.map(box => (
         <rect

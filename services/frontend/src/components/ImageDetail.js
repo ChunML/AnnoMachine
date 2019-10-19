@@ -22,7 +22,7 @@ function ImageDetail({ image }) {
       setSvgHeight(image.height);
     }
     if (image.boxes && (!boxes || boxes.length !== image.boxes.length)) {
-      setBoxes(image.boxes.sort((a, b) => b.id > a.id));
+      setBoxes(image.boxes.sort((a, b) => a.id - b.id));
     }
   });
 
@@ -44,8 +44,9 @@ function ImageDetail({ image }) {
 
   const onCheckIconClick = box => {
     const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
-    const newBoxes = [ ...otherBoxes, box ]
-    setBoxes(newBoxes.sort((a, b) => b.id > a.id));
+    const newBoxes = [ ...otherBoxes, box ];
+    console.log(newBoxes)
+    setBoxes(newBoxes.sort((a, b) => a.id - b.id));
     setDrawBoxes(drawBoxes.map(drawBox => {
       if (drawBox.id === box.id) {
         return box;
