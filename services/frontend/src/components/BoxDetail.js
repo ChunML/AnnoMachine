@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BoxCoord from './BoxCoord';
 import BoxEditForm from './BoxEditForm';
+import Label from './Label';
+import LabelEditForm from './LabelEditForm';
 
 class BoxDetail extends React.Component {
   constructor(props) {
@@ -31,7 +33,7 @@ class BoxDetail extends React.Component {
     this.setState(prev => ({
       coords: {
         ...prev.coords,
-        [name]: parseFloat(value) || 0
+        [name]: name === 'label' ? value : parseFloat(value) || 0
       }
     }), () => this.props.onCheckIconClick(this.state.coords));
   }
@@ -61,22 +63,18 @@ class BoxDetail extends React.Component {
 
     const { editMode, coords } = this.state;
 
-    const labelStyle = {
-      color: 'firebrick',
-      letterSpacing: '0.25rem'
-    };
-
     return (
       <div className="ui segment" key={ box.id }>
         <div className="ui center aligned two column divided grid">
           <div className="row" style={{ alignItems: 'center' }}>
             <div className="column">
-              <span
-                className="ui header"
-                style={labelStyle}
-              >
-                { box.label }
-              </span>
+              { editMode ? (
+                <LabelEditForm
+                  label={ box.label }
+                  onInputChange={ this.handleInputChange }
+                />) : (
+                <Label label={ box.label } />
+              )}
             </div>
             <div className="column">
               <span>

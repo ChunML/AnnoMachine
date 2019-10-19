@@ -27,7 +27,6 @@ it('BoxDetail renders properly', () => {
   expect(rows.length).toBe(2);
   const columns = rows.at(0).find('.column');
   expect(columns.length).toBe(2);
-  expect(columns.at(0).text()).toEqual('dog');
   expect(columns.at(1).find('button').length).toBe(2);
 });
 
