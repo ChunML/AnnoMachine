@@ -7,6 +7,8 @@ import ImageAnnoDisplay from './ImageAnnoDisplay';
 function ImageDetail({ image }) {
   const [drawBoxes, setDrawBoxes] = useState([]);
   const [boxes, setBoxes] = useState([]);
+  const [editModes, setEditModes] = useState([]);
+  const [addBoxMode, setAddBoxMode] = useState(false);
   const [scale, setScale] = useState(1);
   const [svgWidth, setSvgWidth] = useState(0);
   const [svgHeight, setSvgHeight] = useState(0);
@@ -23,6 +25,7 @@ function ImageDetail({ image }) {
     }
     if (image.boxes) {
       setBoxes(image.boxes.sort((a, b) => a.id - b.id));
+      setEditModes(image.boxes.map(box => false));
     }
   }, [image, scale]);
 
@@ -42,7 +45,18 @@ function ImageDetail({ image }) {
     }
   }
 
+  const onInputChange = box => {
+    updateBoxes(box);
+  }
+
   const onCheckIconClick = box => {
+    if (box.id === Math.max(...boxes.map(box => box.id))) {
+      setAddBoxMode(false);
+    }
+    updateBoxes(box);
+  }
+
+  const updateBoxes = box => {
     const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
     const newBoxes = [ ...otherBoxes, box ];
     setBoxes(newBoxes.sort((a, b) => a.id - b.id));
@@ -52,6 +66,32 @@ function ImageDetail({ image }) {
       }
       return drawBox;
     }));
+  }
+
+  const onAddBoxButtonClick = () => {
+    setAddBoxMode(true);
+    const newBox = {
+      id: Math.max(...boxes.map(box => box.id)) + 1,
+      label: '',
+      x_min: 0,
+      y_min: 0,
+      x_max: 10,
+      y_max: 10
+    };
+    setBoxes([ ...boxes, newBox ]);
+    setDrawBoxes([ ...drawBoxes, newBox ]);
+    setEditModes([ ...editModes, true ]);
+  }
+
+  const onUndoBoxAddingButtonClick = () => {
+    setAddBoxMode(false);
+    const oldBoxes = boxes.filter(
+      box => box.id < Math.max(...boxes.map(box => box.id)));
+    setBoxes([ ...oldBoxes ]);
+    const oldDrawBoxes = drawBoxes.filter(
+      box => box.id < Math.max(...boxes.map(box => box.id)));
+    setDrawBoxes([ ...oldDrawBoxes ]);
+    setEditModes([ ...oldBoxes.map(box => false) ]);
   }
 
   return (
@@ -76,9 +116,24 @@ function ImageDetail({ image }) {
           <UploadInfo username={ image.user.username } uploaded_at={ image.uploaded_at } />
           <BoxesDetail
             boxes={ boxes || [] }
+            editModes= { editModes || [] }
             onEyeIconClick={ onEyeIconClick }
             onCheckIconClick={ onCheckIconClick }
+            onInputChange={ onInputChange }
           />
+          { addBoxMode ? (
+            <button
+              className='ui red circular icon button'
+              onClick={ onUndoBoxAddingButtonClick }
+            >
+              <i className='trash alternate outline icon'></i>
+            </button>) : (
+            <button
+              className='ui circular primary button'
+              onClick={ onAddBoxButtonClick }
+            >
+              Add
+            </button>)}
         </div>
       </div>
     </div>

@@ -81,6 +81,12 @@ exports[`ImageDetail renders a snapshot properly 1`] = `
       <div
         className="ui segments"
       />
+      <button
+        className="ui circular primary button"
+        onClick={[Function]}
+      >
+        Add
+      </button>
     </div>
   </div>
 </div>

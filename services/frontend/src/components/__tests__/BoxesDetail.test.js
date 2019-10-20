@@ -23,9 +23,13 @@ const boxes = [
   },
 ];
 
+const editModes = [false, false];
+
 const component = (
   <BoxesDetail
     boxes={ boxes }
+    editModes={ editModes }
+    onInputChange={ jest.fn() }
     onEyeIconClick={ jest.fn() }
     onCheckIconClick={ jest.fn() }
   />

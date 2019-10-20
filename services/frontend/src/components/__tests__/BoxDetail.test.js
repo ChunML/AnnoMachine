@@ -13,14 +13,17 @@ const box = {
   y_max: 20
 };
 
-const onEyeIconClick = jest.fn();
+const component = (
+  <BoxDetail
+    box={ box }
+    onInputChange={ jest.fn() }
+    onEyeIconClick={ jest.fn() }
+    onCheckIconClick={ jest.fn() }
+  />
+);
 
 it('BoxDetail renders properly', () => {
-  const wrapper = shallow(
-    <BoxDetail
-      box={ box }
-      onEyeIconClick={ onEyeIconClick }
-    />);
+  const wrapper = shallow(component);
   const grid = wrapper.find('.grid');
   expect(grid.length).toBe(1);
   const rows = grid.find('.row');
@@ -31,10 +34,6 @@ it('BoxDetail renders properly', () => {
 });
 
 it('BoxDetail renders a snapshot properly', () => {
-  const tree = renderer.create(
-    <BoxDetail
-      box={ box }
-      onEyeIconClick={ onEyeIconClick }
-    />).toJSON();
+  const tree = renderer.create(component).toJSON();
   expect(tree).toMatchSnapshot();
 });

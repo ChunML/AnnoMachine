@@ -10,8 +10,8 @@ class BoxDetail extends React.Component {
     super(props);
 
     this.state = {
-      boxIsDrawn: false,
-      editMode: false,
+      boxIsDrawn: props.editMode ? true : false,
+      editMode: props.editMode || false,
       coords: {
         id: props.box.id,
         label: props.box.label,
@@ -35,7 +35,7 @@ class BoxDetail extends React.Component {
         ...prev.coords,
         [name]: name === 'label' ? value : parseFloat(value) || 0
       }
-    }), () => this.props.onCheckIconClick(this.state.coords));
+    }), () => this.props.onInputChange(this.state.coords));
   }
 
   handleEyeIconClick() {
@@ -118,7 +118,9 @@ class BoxDetail extends React.Component {
 
 BoxDetail.propTypes = {
   box: PropTypes.object.isRequired,
-  onEyeIconClick: PropTypes.func.isRequired
+  onInputChange: PropTypes.func.isRequired,
+  onEyeIconClick: PropTypes.func.isRequired,
+  onCheckIconClick: PropTypes.func.isRequired
 };
 
 export default BoxDetail;

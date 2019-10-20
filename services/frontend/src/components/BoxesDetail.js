@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BoxDetail from './BoxDetail';
 
-function BoxesDetail({ boxes, onEyeIconClick, onCheckIconClick }) {
+function BoxesDetail({ boxes, editModes, onInputChange, onEyeIconClick, onCheckIconClick }) {
   return (
     <div className='ui segments'>
-      { boxes.map(box => (
+      { boxes.map((box, i) => (
         <BoxDetail
           key={ box.id }
           box={ box }
+          editMode= { editModes[i] }
           onEyeIconClick={ onEyeIconClick }
           onCheckIconClick={ onCheckIconClick }
+          onInputChange={ onInputChange }
         />
       ))}
     </div>
@@ -19,6 +21,7 @@ function BoxesDetail({ boxes, onEyeIconClick, onCheckIconClick }) {
 
 BoxesDetail.propTypes = {
   boxes: PropTypes.array.isRequired,
+  onInputChange: PropTypes.func.isRequired,
   onEyeIconClick: PropTypes.func.isRequired,
   onCheckIconClick: PropTypes.func.isRequired
 };
