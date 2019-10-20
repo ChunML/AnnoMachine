@@ -94,6 +94,19 @@ function ImageDetail({ image }) {
     setEditModes([ ...oldBoxes.map(box => false) ]);
   }
 
+  const downloadBoxesAsCSV = () => {
+    const { parse } = require('json2csv');
+    const fields = ['label', 'x_min', 'y_min', 'x_max', 'y_max'];
+
+    const csv = 'data:text/csv;charset=utf-8,' + parse(boxes, { fields });
+
+    let hiddenElement = document.createElement('a');
+    hiddenElement.setAttribute('href', encodeURI(csv));
+    hiddenElement.setAttribute('target', '_blank');
+    hiddenElement.setAttribute('download', image.name.replace('jpg', 'csv'));
+    hiddenElement.click();
+  }
+
   return (
     <div className="ui center aligned stackable two column grid">
       <div className="row">
@@ -108,9 +121,14 @@ function ImageDetail({ image }) {
             name={ image.name }
           />
           <p></p>
-          <a href={`${process.env.REACT_APP_API_URL}/api/annotations/kitti/${image.name.replace('.jpg', '.txt')}`}>
-            <button className="ui primary button">Download annotation</button>
-          </a>
+
+          <button
+            className="ui primary button"
+            onClick={ downloadBoxesAsCSV }
+          >
+            Download annotation
+          </button>
+
         </div>
         <div className="column">
           <UploadInfo username={ image.user.username } uploaded_at={ image.uploaded_at } />
