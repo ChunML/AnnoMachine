@@ -21,7 +21,7 @@ exports[`Display landscape image ImageAnnoDisplay renders a snapshot properly 1`
     }
     width={100}
     x="0"
-    xlinkHref="http://localhost/api/uploads/testName"
+    xlinkHref="undefined/api/uploads/testName"
     y="0"
   />
   <rect
@@ -74,7 +74,7 @@ exports[`Display portrait image ImageAnnoDisplay renders a snapshot properly 1`]
     }
     width={100}
     x="0"
-    xlinkHref="http://localhost/api/uploads/testName"
+    xlinkHref="undefined/api/uploads/testName"
     y="0"
   />
   <rect

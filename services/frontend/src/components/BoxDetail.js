@@ -25,6 +25,7 @@ class BoxDetail extends React.Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleEyeIconClick = this.handleEyeIconClick.bind(this);
     this.handleCheckIconClick = this.handleCheckIconClick.bind(this);
+    this.handleTrashIconClick = this.handleTrashIconClick.bind(this);
     this.toggleEditMode = this.toggleEditMode.bind(this);
   }
 
@@ -50,6 +51,10 @@ class BoxDetail extends React.Component {
   handleCheckIconClick() {
     this.toggleEditMode();
     this.props.onCheckIconClick(this.state.coords);
+  }
+
+  handleTrashIconClick() {
+    this.props.onTrashIconClick(this.state.coords.id);
   }
 
   toggleEditMode() {
@@ -100,6 +105,14 @@ class BoxDetail extends React.Component {
                     <i className="edit icon"></i>
                   </button>
                 )}
+                <button
+                  className='ui circular red icon button'
+                  onClick={ this.handleTrashIconClick }
+                >
+                  <i
+                    className="trash alternate icon"
+                  ></i>
+                </button>
               </span>
             </div>
           </div>
@@ -120,7 +133,8 @@ BoxDetail.propTypes = {
   box: PropTypes.object.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onEyeIconClick: PropTypes.func.isRequired,
-  onCheckIconClick: PropTypes.func.isRequired
+  onCheckIconClick: PropTypes.func.isRequired,
+  onTrashIconClick: PropTypes.func.isRequired
 };
 
 export default BoxDetail;

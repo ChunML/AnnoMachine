@@ -19,6 +19,7 @@ const component = (
     onInputChange={ jest.fn() }
     onEyeIconClick={ jest.fn() }
     onCheckIconClick={ jest.fn() }
+    onTrashIconClick={ jest.fn() }
   />
 );
 
@@ -30,7 +31,15 @@ it('BoxDetail renders properly', () => {
   expect(rows.length).toBe(2);
   const columns = rows.at(0).find('.column');
   expect(columns.length).toBe(2);
-  expect(columns.at(1).find('button').length).toBe(2);
+  const buttons = columns.find('button');
+  expect(buttons.length).toBe(3);
+  expect(component.props.onEyeIconClick).toHaveBeenCalledTimes(0);
+  expect(component.props.onCheckIconClick).toHaveBeenCalledTimes(0);
+  expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(0);
+  buttons.at(0).simulate('click');
+  expect(component.props.onEyeIconClick).toHaveBeenCalledTimes(1);
+  buttons.at(2).simulate('click');
+  expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(1);
 });
 
 it('BoxDetail renders a snapshot properly', () => {

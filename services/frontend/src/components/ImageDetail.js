@@ -56,6 +56,13 @@ function ImageDetail({ image }) {
     updateBoxes(box);
   }
 
+  const onTrashIconClick = id => {
+    const otherBoxes = boxes.filter(box => box.id !== id);
+    setBoxes(otherBoxes);
+    const otherDrawBoxes = drawBoxes.filter(box => box.id !== id);
+    setDrawBoxes(otherDrawBoxes);
+  }
+
   const updateBoxes = box => {
     const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
     const newBoxes = [ ...otherBoxes, box ];
@@ -137,6 +144,7 @@ function ImageDetail({ image }) {
             editModes= { editModes || [] }
             onEyeIconClick={ onEyeIconClick }
             onCheckIconClick={ onCheckIconClick }
+            onTrashIconClick={ onTrashIconClick }
             onInputChange={ onInputChange }
           />
           { addBoxMode ? (

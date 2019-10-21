@@ -32,6 +32,7 @@ const component = (
     onInputChange={ jest.fn() }
     onEyeIconClick={ jest.fn() }
     onCheckIconClick={ jest.fn() }
+    onTrashIconClick={ jest.fn() }
   />
 );
 

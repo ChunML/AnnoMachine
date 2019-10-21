@@ -30,20 +30,17 @@ exports[`ImageDetail renders a snapshot properly 1`] = `
           }
           width={0}
           x="0"
-          xlinkHref="http://localhost/api/uploads/testImage"
+          xlinkHref="undefined/api/uploads/testImage"
           y="0"
         />
       </svg>
       <p />
-      <a
-        href="http://localhost/api/annotations/kitti/testImage"
+      <button
+        className="ui primary button"
+        onClick={[Function]}
       >
-        <button
-          className="ui primary button"
-        >
-          Download annotation
-        </button>
-      </a>
+        Download annotation
+      </button>
     </div>
     <div
       className="column"

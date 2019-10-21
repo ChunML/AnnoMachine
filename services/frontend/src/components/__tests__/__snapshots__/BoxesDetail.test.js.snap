@@ -53,6 +53,14 @@ exports[`BoxesDetail renders a snapshot properly 1`] = `
                 className="edit icon"
               />
             </button>
+            <button
+              className="ui circular red icon button"
+              onClick={[Function]}
+            >
+              <i
+                className="trash alternate icon"
+              />
+            </button>
           </span>
         </div>
       </div>
@@ -170,6 +178,14 @@ exports[`BoxesDetail renders a snapshot properly 1`] = `
             >
               <i
                 className="edit icon"
+              />
+            </button>
+            <button
+              className="ui circular red icon button"
+              onClick={[Function]}
+            >
+              <i
+                className="trash alternate icon"
               />
             </button>
           </span>
