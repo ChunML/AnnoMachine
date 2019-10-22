@@ -1,12 +1,14 @@
 ## AnnoMachine
 
+[![Build Status](https://travis-ci.org/ChunML/AnnoMachine.svg?branch=master)](https://travis-ci.org/ChunML/AnnoMachine)
+
 ### What is AnnoMachine?
-AnnoMachine is an application that aims to provide a user-friendly way to visualize and iteract with object detection results.
+AnnoMachine is an application that aims to provide a user-friendly way to visualize and interact with object detection results.
 
 ### Use Cases
 Below are two main use cases of AnnoMachine:
 - A photo sharing app with automatic tagging and object-based searching
-- A smart annotation marker: get a first rough annotation => iteractively finetune & download the updated annotation
+- A smart annotation marker: get a first rough annotation => interactively finetune & download the updated annotation
 
 ### Introduction Video
 Here is the video illustrating the two use cases mentioned above:
@@ -16,7 +18,7 @@ Here is the video illustrating the two use cases mentioned above:
 Stack:
 - Object detection model: SSD (implemented on Tensorflow 2)
 - Backend: Flask
-- Frontend: ReactJS
+- Frontend: ReactJS (SVG for displaying image and drawing bounding boxes)
 - Database: PostgreSQL
 - Web server: Nginx
 
