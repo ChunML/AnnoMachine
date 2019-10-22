@@ -33,6 +33,7 @@ services:
       - 8081:8080
     volumes:
       - ./services/frontend:/usr/src/app
+      - /usr/src/node_modules
     environment:
       - NODE_ENV=development
       - REACT_APP_API_URL=http://localhost
