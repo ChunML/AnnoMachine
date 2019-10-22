@@ -19,7 +19,6 @@ before_install:
 
 before_script:
   - export REACT_APP_API_URL=http://127.0.0.1
-  - yarn
 
 script:
   - bash test.sh
