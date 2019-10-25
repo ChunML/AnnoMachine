@@ -8,7 +8,7 @@ import '../../setupTests';
 const image = {
   name: 'test.jpg',
   user: {
-    username: 'testUser'
+    username: 'testUser',
   },
   uploaded_at: '2000/01/01 01:02',
   boxes: [
@@ -19,18 +19,18 @@ const image = {
       label: 'cat',
     },
     {
-      label: 'dog'
-    }
-  ]
+      label: 'dog',
+    },
+  ],
 };
 
 const imageNoBox = {
   name: 'test.jpg',
   user: {
-    username: 'testUser'
+    username: 'testUser',
   },
   uploaded_at: '2000/01/01 01:02',
-  boxes: []
+  boxes: [],
 };
 
 const currentUser = ['testUser', 'testUser_2'];
@@ -40,9 +40,9 @@ describe('current user is the author of the image', () => {
     const onDeleteImage = jest.fn();
     const wrapper = shallow(
       <Card
-        image={ image }
-        onDeleteImage={ onDeleteImage }
-        currentUser={ currentUser[0] }
+        image={image}
+        onDeleteImage={onDeleteImage}
+        currentUser={currentUser[0]}
       />
     );
     const card = wrapper.find('.column').find('.ui.card');
@@ -60,19 +60,23 @@ describe('current user is the author of the image', () => {
     const description = card.find('.description');
     expect(description.text()).toEqual('This image may contain: dogcat');
     const extraContent = card.find('.extra.content');
-    expect(extraContent.text()).toBe(`Uploaded by ${image.user.username} at ${image.uploaded_at}`);
+    expect(extraContent.text()).toBe(
+      `Uploaded by ${image.user.username} at ${image.uploaded_at}`
+    );
   });
 
   it('Card renders a snapshot properly', () => {
-    const tree = renderer.create(
-      <Router location='/'>
-        <Card
-          image={ image }
-          onDeleteImage={ jest.fn() }
-          currentUser={ currentUser[0] }
-        />
-      </Router>
-    ).toJSON();
+    const tree = renderer
+      .create(
+        <Router location="/">
+          <Card
+            image={image}
+            onDeleteImage={jest.fn()}
+            currentUser={currentUser[0]}
+          />
+        </Router>
+      )
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
@@ -81,9 +85,9 @@ describe('current user is not the author of the image', () => {
   it('Card renders properly', () => {
     const wrapper = shallow(
       <Card
-        image={ image }
-        onDeleteImage={ jest.fn() }
-        currentUser={ currentUser[1] }
+        image={image}
+        onDeleteImage={jest.fn()}
+        currentUser={currentUser[1]}
       />
     );
     const card = wrapper.find('.column').find('.ui.card');
@@ -98,19 +102,23 @@ describe('current user is not the author of the image', () => {
     const description = card.find('.description');
     expect(description.text()).toEqual('This image may contain: dogcat');
     const extraContent = card.find('.extra.content');
-    expect(extraContent.text()).toBe(`Uploaded by ${image.user.username} at ${image.uploaded_at}`);
+    expect(extraContent.text()).toBe(
+      `Uploaded by ${image.user.username} at ${image.uploaded_at}`
+    );
   });
 
   it('Card renders a snapshot properly', () => {
-    const tree = renderer.create(
-      <Router location='/'>
-        <Card
-          image={ image }
-          onDeleteImage={ jest.fn() }
-          currentUser={ currentUser[1] }
-        />
-      </Router>
-    ).toJSON();
+    const tree = renderer
+      .create(
+        <Router location="/">
+          <Card
+            image={image}
+            onDeleteImage={jest.fn()}
+            currentUser={currentUser[1]}
+          />
+        </Router>
+      )
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
@@ -120,9 +128,9 @@ describe('Image has no boxes', () => {
     const onDeleteImage = jest.fn();
     const wrapper = shallow(
       <Card
-        image={ imageNoBox }
-        onDeleteImage={ onDeleteImage }
-        currentUser={ currentUser[0] }
+        image={imageNoBox}
+        onDeleteImage={onDeleteImage}
+        currentUser={currentUser[0]}
       />
     );
     const card = wrapper.find('.column').find('.ui.card');
@@ -140,19 +148,23 @@ describe('Image has no boxes', () => {
     const description = card.find('.description');
     expect(description.text()).toEqual('This image may contain: nothing');
     const extraContent = card.find('.extra.content');
-    expect(extraContent.text()).toBe(`Uploaded by ${image.user.username} at ${image.uploaded_at}`);
+    expect(extraContent.text()).toBe(
+      `Uploaded by ${image.user.username} at ${image.uploaded_at}`
+    );
   });
 
   it('Card renders a snapshot properly', () => {
-    const tree = renderer.create(
-      <Router location='/'>
-        <Card
-          image={ image }
-          onDeleteImage={ jest.fn() }
-          currentUser={ currentUser[0] }
-        />
-      </Router>
-    ).toJSON();
+    const tree = renderer
+      .create(
+        <Router location="/">
+          <Card
+            image={image}
+            onDeleteImage={jest.fn()}
+            currentUser={currentUser[0]}
+          />
+        </Router>
+      )
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

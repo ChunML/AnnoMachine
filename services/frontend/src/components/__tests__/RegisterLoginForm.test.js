@@ -6,10 +6,7 @@ import '../../setupTests';
 
 describe('Register form', () => {
   const component = (
-    <RegisterLoginForm
-      formType='register'
-      onButtonClick={ jest.fn() }
-    />
+    <RegisterLoginForm formType="register" onButtonClick={jest.fn()} />
   );
 
   it('RegisterForm renders properly', () => {
@@ -22,26 +19,26 @@ describe('Register form', () => {
     instance.handleInputChange({
       target: {
         name: 'username',
-        value: 'testName'
-      }
+        value: 'testName',
+      },
     });
     expect(wrapper.state()).toEqual({
       username: 'testName',
-      password: ''
+      password: '',
     });
     inputs.at(1).simulate('change', {
       target: {
         name: 'password',
-        value: 'test'
-      }
+        value: 'test',
+      },
     });
     expect(wrapper.state()).toEqual({
       username: 'testName',
-      password: 'test'
+      password: 'test',
     });
     const button = form.find('button');
     expect(button.text()).toEqual('Register');
-    const onButtonClick = component.props.onButtonClick;
+    const { onButtonClick } = component.props;
     expect(onButtonClick).toHaveBeenCalledTimes(0);
     button.simulate('click', { preventDefault: jest.fn() });
     expect(onButtonClick).toHaveBeenCalledTimes(1);
@@ -55,10 +52,7 @@ describe('Register form', () => {
 
 describe('Log In form', () => {
   const component = (
-    <RegisterLoginForm
-      formType='login'
-      onButtonClick={ jest.fn() }
-    />
+    <RegisterLoginForm formType="login" onButtonClick={jest.fn()} />
   );
 
   it('RegisterForm renders properly', () => {
@@ -71,26 +65,26 @@ describe('Log In form', () => {
     instance.handleInputChange({
       target: {
         name: 'username',
-        value: 'testName'
-      }
+        value: 'testName',
+      },
     });
     expect(wrapper.state()).toEqual({
       username: 'testName',
-      password: ''
+      password: '',
     });
     inputs.at(1).simulate('change', {
       target: {
         name: 'password',
-        value: 'test'
-      }
+        value: 'test',
+      },
     });
     expect(wrapper.state()).toEqual({
       username: 'testName',
-      password: 'test'
+      password: 'test',
     });
     const button = form.find('button');
     expect(button.text()).toEqual('Log In');
-    const onButtonClick = component.props.onButtonClick;
+    const { onButtonClick } = component.props;
     expect(onButtonClick).toHaveBeenCalledTimes(0);
     button.simulate('click', { preventDefault: jest.fn() });
     expect(onButtonClick).toHaveBeenCalledTimes(1);
@@ -105,13 +99,13 @@ describe('Log In form', () => {
 describe('User is already logged in', () => {
   const component = (
     <RegisterLoginForm
-      isAuthenticated={ true }
-      formType='login'
-      onButtonClick={ jest.fn() }
+      isAuthenticated
+      formType="login"
+      onButtonClick={jest.fn()}
     />
   );
   it('Form renders properly', () => {
     const wrapper = shallow(component);
     expect(wrapper.find('Redirect')).toHaveLength(1);
   });
-})
+});

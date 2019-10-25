@@ -10,20 +10,20 @@ const box = {
   x_min: 10,
   y_min: 10,
   x_max: 20,
-  y_max: 20
+  y_max: 20,
 };
 
 describe('Not in edit mode', () => {
   const component = (
     <BoxDetail
-      box={ box }
-      onInputChange={ jest.fn() }
-      onEyeIconClick={ jest.fn() }
-      onCheckIconClick={ jest.fn() }
-      onTrashIconClick={ jest.fn() }
+      box={box}
+      onInputChange={jest.fn()}
+      onEyeIconClick={jest.fn()}
+      onCheckIconClick={jest.fn()}
+      onTrashIconClick={jest.fn()}
     />
   );
-  
+
   it('BoxDetail renders properly', () => {
     const wrapper = shallow(component);
     const grid = wrapper.find('.grid');
@@ -34,9 +34,24 @@ describe('Not in edit mode', () => {
     expect(columns.length).toBe(2);
     const buttons = columns.find('button');
     expect(buttons.length).toBe(3);
-    expect(buttons.at(0).find('i').get(0).props.className).toBe('eye icon');
-    expect(buttons.at(1).find('i').get(0).props.className).toBe('edit icon');
-    expect(buttons.at(2).find('i').get(0).props.className).toBe('trash alternate icon');
+    expect(
+      buttons
+        .at(0)
+        .find('i')
+        .get(0).props.className
+    ).toBe('eye icon');
+    expect(
+      buttons
+        .at(1)
+        .find('i')
+        .get(0).props.className
+    ).toBe('edit icon');
+    expect(
+      buttons
+        .at(2)
+        .find('i')
+        .get(0).props.className
+    ).toBe('trash alternate icon');
     expect(component.props.onEyeIconClick).toHaveBeenCalledTimes(0);
     expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(0);
     buttons.at(0).simulate('click');
@@ -44,7 +59,7 @@ describe('Not in edit mode', () => {
     buttons.at(2).simulate('click');
     expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(1);
   });
-  
+
   it('BoxDetail renders a snapshot properly', () => {
     const tree = renderer.create(component).toJSON();
     expect(tree).toMatchSnapshot();
@@ -54,15 +69,15 @@ describe('Not in edit mode', () => {
 describe('In edit mode', () => {
   const component = (
     <BoxDetail
-      editMode={ true }
-      box={ box }
-      onInputChange={ jest.fn() }
-      onEyeIconClick={ jest.fn() }
-      onCheckIconClick={ jest.fn() }
-      onTrashIconClick={ jest.fn() }
+      editMode
+      box={box}
+      onInputChange={jest.fn()}
+      onEyeIconClick={jest.fn()}
+      onCheckIconClick={jest.fn()}
+      onTrashIconClick={jest.fn()}
     />
   );
-  
+
   it('BoxDetail renders properly', () => {
     const wrapper = shallow(component);
     const instance = wrapper.instance();
@@ -74,28 +89,43 @@ describe('In edit mode', () => {
     expect(columns.length).toBe(2);
     const buttons = columns.find('button');
     expect(buttons.length).toBe(3);
-    expect(buttons.at(0).find('i').get(0).props.className).toBe('eye icon');
-    expect(buttons.at(1).find('i').get(0).props.className).toBe('check icon');
-    expect(buttons.at(2).find('i').get(0).props.className).toBe('trash alternate icon');
+    expect(
+      buttons
+        .at(0)
+        .find('i')
+        .get(0).props.className
+    ).toBe('eye icon');
+    expect(
+      buttons
+        .at(1)
+        .find('i')
+        .get(0).props.className
+    ).toBe('check icon');
+    expect(
+      buttons
+        .at(2)
+        .find('i')
+        .get(0).props.className
+    ).toBe('trash alternate icon');
     expect(component.props.onEyeIconClick).toHaveBeenCalledTimes(0);
     expect(component.props.onCheckIconClick).toHaveBeenCalledTimes(0);
     expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(0);
     instance.handleInputChange({
       target: {
         name: 'x_min',
-        value: 20
-      }
+        value: 20,
+      },
     });
     instance.handleInputChange({
       target: {
         name: 'label',
-        value: 'cat'
-      }
+        value: 'cat',
+      },
     });
     expect(wrapper.state()).toEqual({
       boxIsDrawn: true,
       editMode: true,
-      coords: { ...box, x_min: 20, label: 'cat' }
+      coords: { ...box, x_min: 20, label: 'cat' },
     });
     buttons.at(0).simulate('click');
     expect(component.props.onEyeIconClick).toHaveBeenCalledTimes(1);
@@ -104,9 +134,9 @@ describe('In edit mode', () => {
     buttons.at(2).simulate('click');
     expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(1);
   });
-  
+
   it('BoxDetail renders a snapshot properly', () => {
     const tree = renderer.create(component).toJSON();
     expect(tree).toMatchSnapshot();
   });
-})
+});

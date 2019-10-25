@@ -13,16 +13,16 @@ function BoxCoord({ coords }) {
 
   return (
     <React.Fragment>
-      <span style={ coordStyle }>{ Math.floor(coords.x_min) }</span>
-      <span style={ coordStyle }>{ Math.floor(coords.y_min) }</span>
-      <span style={ coordStyle }>{ Math.floor(coords.x_max) }</span>
-      <span style={ coordStyle }>{ Math.floor(coords.y_max) }</span>
+      <span style={coordStyle}>{Math.floor(coords.x_min)}</span>
+      <span style={coordStyle}>{Math.floor(coords.y_min)}</span>
+      <span style={coordStyle}>{Math.floor(coords.x_max)}</span>
+      <span style={coordStyle}>{Math.floor(coords.y_max)}</span>
     </React.Fragment>
   );
 }
 
 BoxCoord.propTypes = {
-  coords: PropTypes.object.isRequired
+  coords: PropTypes.object.isRequired,
 };
 
 export default BoxCoord;

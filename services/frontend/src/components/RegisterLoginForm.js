@@ -8,7 +8,7 @@ class RegisterLoginForm extends React.Component {
 
     this.state = {
       username: '',
-      password: ''
+      password: '',
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -16,51 +16,55 @@ class RegisterLoginForm extends React.Component {
   }
 
   handleInputChange(e) {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   }
 
   handleButtonClick(e) {
     e.preventDefault();
+    const { onButtonClick, formType } = this.props;
 
-    this.props.onButtonClick(this.state, this.props.formType);
+    onButtonClick(this.state, formType);
   }
 
   render() {
-    if (this.props.isAuthenticated) {
-      return <Redirect to = '/' />;
+    const { isAuthenticated, formType } = this.props;
+    const { username, password } = this.state;
+    if (isAuthenticated) {
+      return <Redirect to="/" />;
     }
 
     return (
-      <div className='ui container' style={{margin: '30px auto',}}>
+      <div className="ui container" style={{ margin: '30px auto' }}>
         <div className="ui center aligned grid">
-          <div className='eight wide column'>
-            <div className='ui form'>
-              <div className='field'>
+          <div className="eight wide column">
+            <div className="ui form">
+              <div className="field">
                 <input
-                  name='username'
-                  type='text'
-                  placeholder='Enter a username'
-                  value={this.state.username}
+                  name="username"
+                  type="text"
+                  placeholder="Enter a username"
+                  value={username}
                   onChange={this.handleInputChange}
                 />
               </div>
-              <div className='field'>
+              <div className="field">
                 <input
-                  name='password'
-                  type='password'
-                  placeholder='Enter a secure password'
-                  value={this.state.password}
+                  name="password"
+                  type="password"
+                  placeholder="Enter a secure password"
+                  value={password}
                   onChange={this.handleInputChange}
                 />
               </div>
               <button
-                className='ui primary button'
+                type="submit"
+                className="ui primary button"
                 onClick={this.handleButtonClick}
               >
-                { this.props.formType === 'register' ? 'Register' : 'Log In' }
+                {formType === 'register' ? 'Register' : 'Log In'}
               </button>
             </div>
           </div>
@@ -71,8 +75,13 @@ class RegisterLoginForm extends React.Component {
 }
 
 RegisterLoginForm.propTypes = {
+  isAuthenticated: PropTypes.bool,
   formType: PropTypes.string.isRequired,
-  onButtonClick: PropTypes.func.isRequired
+  onButtonClick: PropTypes.func.isRequired,
+};
+
+RegisterLoginForm.defaultProps = {
+  isAuthenticated: false,
 };
 
 export default RegisterLoginForm;

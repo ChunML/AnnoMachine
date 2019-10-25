@@ -13,7 +13,7 @@ export PRETRAINED_TYPE=none
 docker-compose up -d --build
 docker-compose exec backend python manage.py test
 inspect $? backend
-docker-compose exec frontend yarn test --coverage --watchAll=false
+docker-compose exec frontend yarn test -u --coverage --watchAll=false
 inspect $? frontend
 docker-compose down
 

@@ -11,7 +11,7 @@ const boxes = [
     x_min: 10,
     y_min: 10,
     x_max: 20,
-    y_max: 20
+    y_max: 20,
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const boxes = [
     x_min: 10,
     y_min: 10,
     x_max: 20,
-    y_max: 20
+    y_max: 20,
   },
 ];
 
@@ -27,12 +27,12 @@ const editModes = [false, false];
 
 const component = (
   <BoxesDetail
-    boxes={ boxes }
-    editModes={ editModes }
-    onInputChange={ jest.fn() }
-    onEyeIconClick={ jest.fn() }
-    onCheckIconClick={ jest.fn() }
-    onTrashIconClick={ jest.fn() }
+    boxes={boxes}
+    editModes={editModes}
+    onInputChange={jest.fn()}
+    onEyeIconClick={jest.fn()}
+    onCheckIconClick={jest.fn()}
+    onTrashIconClick={jest.fn()}
   />
 );
 

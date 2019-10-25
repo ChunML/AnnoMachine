@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 function BoxEditForm({ coords, onInputChange }) {
@@ -7,45 +7,49 @@ function BoxEditForm({ coords, onInputChange }) {
     outline: 'none',
     borderBottom: '1px solid #38ACEC',
     borderRadius: '0',
-    color: '#38ACEC'
+    color: '#38ACEC',
   };
 
   const { x_min, y_min, x_max, y_max } = coords;
 
   return (
-    <div className='ui form'>
-      <div className='fields' style={{ justifyContent: 'center' }}>
-        <div className='two wide field'>
+    <div className="ui form">
+      <div className="fields" style={{ justifyContent: 'center' }}>
+        <div className="two wide field">
           <input
             style={inputStyle}
-            type='text'
-            name='x_min'
-            value={ x_min }
-            onChange={ onInputChange } />
+            type="text"
+            name="x_min"
+            value={x_min}
+            onChange={onInputChange}
+          />
         </div>
-        <div className='two wide field'>
+        <div className="two wide field">
           <input
             style={inputStyle}
-            type='text'
-            name='y_min'
-            value={ y_min }
-            onChange={ onInputChange } />
+            type="text"
+            name="y_min"
+            value={y_min}
+            onChange={onInputChange}
+          />
         </div>
-        <div className='two wide field'>
+        <div className="two wide field">
           <input
             style={inputStyle}
-            type='text'
-            name='x_max'
-            value={ x_max }
-            onChange={ onInputChange } />
+            type="text"
+            name="x_max"
+            value={x_max}
+            onChange={onInputChange}
+          />
         </div>
-        <div className='two wide field'>
+        <div className="two wide field">
           <input
             style={inputStyle}
-            type='text'
-            name='y_max'
-            value={ y_max }
-            onChange={ onInputChange } />
+            type="text"
+            name="y_max"
+            value={y_max}
+            onChange={onInputChange}
+          />
         </div>
       </div>
     </div>
@@ -54,7 +58,7 @@ function BoxEditForm({ coords, onInputChange }) {
 
 BoxEditForm.propTypes = {
   coords: PropTypes.object.isRequired,
-  onInputChange: PropTypes.func.isRequired
+  onInputChange: PropTypes.func.isRequired,
 };
 
 export default BoxEditForm;

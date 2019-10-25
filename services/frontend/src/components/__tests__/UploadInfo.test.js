@@ -5,10 +5,7 @@ import UploadInfo from '../UploadInfo';
 import '../../setupTests';
 
 const component = (
-  <UploadInfo
-    username='testUser'
-    uploaded_at='2000/01/01 01:02'
-  />
+  <UploadInfo username="testUser" uploaded_at="2000/01/01 01:02" />
 );
 
 it('UploadInfo renders properly', () => {

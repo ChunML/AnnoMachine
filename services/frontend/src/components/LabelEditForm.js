@@ -9,27 +9,27 @@ function LabelEditForm({ label, onInputChange }) {
     borderRadius: '0',
     color: '#38ACEC',
     textAlign: 'center',
-    fontSize: '1.2rem'
+    fontSize: '1.2rem',
   };
 
   return (
-    <div className='ui form'>
-      <div className='field'>
+    <div className="ui form">
+      <div className="field">
         <input
-          type='text'
-          name='label'
-          value={ label }
-          onChange={ onInputChange }
-          style={ inputStyle }
+          type="text"
+          name="label"
+          value={label}
+          onChange={onInputChange}
+          style={inputStyle}
         />
       </div>
     </div>
-  )
-};
+  );
+}
 
 LabelEditForm.propTypes = {
   label: PropTypes.string.isRequired,
-  onInputChange: PropTypes.func.isRequired
+  onInputChange: PropTypes.func.isRequired,
 };
 
 export default LabelEditForm;
