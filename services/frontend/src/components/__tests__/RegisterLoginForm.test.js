@@ -53,7 +53,7 @@ describe('Register form', () => {
   });
 });
 
-describe('Register form', () => {
+describe('Log In form', () => {
   const component = (
     <RegisterLoginForm
       formType='login'
@@ -101,3 +101,17 @@ describe('Register form', () => {
     expect(tree).toMatchSnapshot();
   });
 });
+
+describe('User is already logged in', () => {
+  const component = (
+    <RegisterLoginForm
+      isAuthenticated={ true }
+      formType='login'
+      onButtonClick={ jest.fn() }
+    />
+  );
+  it('Form renders properly', () => {
+    const wrapper = shallow(component);
+    expect(wrapper.find('Redirect')).toHaveLength(1);
+  });
+})
