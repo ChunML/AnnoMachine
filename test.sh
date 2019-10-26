@@ -15,6 +15,8 @@ docker-compose exec backend python manage.py test
 inspect $? backend
 docker-compose exec frontend yarn test -u --coverage --watchAll=false
 inspect $? frontend
+docker-compose exec frontend yarn lint
+inspect $? frontend_lint
 docker-compose down
 
 if [ -n "${fails}" ]; then
