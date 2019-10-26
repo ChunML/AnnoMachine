@@ -5,25 +5,23 @@ import { Link } from 'react-router-dom';
 function NavBar({ title, isAuthenticated }) {
   return (
     <div className="ui inverted menu">
-      <div className="header item">
-        { title }
-      </div>
+      <div className="header item">{title}</div>
       <div className="active item">
-          <Link to='/'>Home</Link>
+        <Link to="/">Home</Link>
       </div>
       <div className="right menu">
-        { isAuthenticated && (
+        {isAuthenticated && (
           <div className="item">
-            <Link to='/logout'>Log Out</Link>
+            <Link to="/logout">Log Out</Link>
           </div>
         )}
-        { !isAuthenticated && (
+        {!isAuthenticated && (
           <React.Fragment>
             <div className="item">
-              <Link to='/register'>Register</Link>
+              <Link to="/register">Register</Link>
             </div>
             <div className="item">
-              <Link to='/login'>Log In</Link>
+              <Link to="/login">Log In</Link>
             </div>
           </React.Fragment>
         )}
@@ -35,11 +33,12 @@ function NavBar({ title, isAuthenticated }) {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 NavBar.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
+  title: PropTypes.string.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default NavBar;

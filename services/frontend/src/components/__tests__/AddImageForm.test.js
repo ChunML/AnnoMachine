@@ -8,7 +8,7 @@ import '../../setupTests';
 const onButtonClick = jest.fn();
 
 it('AddImageForm renders properly', () => {
-  const wrapper = shallow(<AddImageForm onButtonClick={ onButtonClick } />);
+  const wrapper = shallow(<AddImageForm onButtonClick={onButtonClick} />);
   const form = wrapper.find('form');
   expect(form.length).toBe(1);
   const fields = form.find('.field');
@@ -20,22 +20,25 @@ it('AddImageForm renders properly', () => {
   expect(onButtonClick).toHaveBeenCalledTimes(0);
 
   const image_url = form.find('input[name="image_url"]');
-  image_url.simulate('change', { target: {name: 'image_url', value: 'abc' }});
+  image_url.simulate('change', { target: { name: 'image_url', value: 'abc' } });
   const button = form.find('button');
   button.simulate('click', { preventDefault: () => {} });
   expect(onButtonClick).toHaveBeenCalledTimes(1);
 
   const image_file = form.find('input[name="image_file"]');
-  image_file.simulate('change', { target: {files: ['file_1'] }});
-  image_url.simulate('change', { target: {name: 'image_url', value: '' }});
+  image_file.simulate('change', { target: { files: ['file_1'] } });
+  image_url.simulate('change', { target: { name: 'image_url', value: '' } });
   button.simulate('click', { preventDefault: () => {} });
   expect(onButtonClick).toHaveBeenCalledTimes(2);
 });
 
 it('AddImageForm renders a snapshot properly', () => {
-  const tree = renderer.create(
-    <Router location='/'>
-      <AddImageForm onButtonClick={ jest.fn() }/>
-    </Router>).toJSON();
+  const tree = renderer
+    .create(
+      <Router location="/">
+        <AddImageForm onButtonClick={jest.fn()} />
+      </Router>
+    )
+    .toJSON();
   expect(tree).toMatchSnapshot();
 });

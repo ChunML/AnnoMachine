@@ -31,149 +31,160 @@ class App extends React.Component {
   }
 
   getLoginStatus() {
-    const authToken = window.localStorage.authToken;
-    fetch(
-      `${process.env.REACT_APP_API_URL}/api/auth/check-status`, {
-        method: 'POST',
-        body: JSON.stringify({}),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`,
+    const { authToken } = window.localStorage;
+    fetch(`${process.env.REACT_APP_API_URL}/api/auth/check-status`, {
+      method: 'POST',
+      body: JSON.stringify({}),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === 'success') {
+          this.setState({
+            isAuthenticated: true,
+            currentUser: res.username,
+          });
+        } else {
+          window.localStorage.removeItem('authToken');
         }
-      }).then(res => res.json())
-        .then(res => {
-          if (res.status === 'success') {
-            this.setState({
-              isAuthenticated: true,
-              currentUser: res.username
-            });
-          } else {
-            window.localStorage.removeItem('authToken');
-          }
-        });
+      });
   }
 
   getImages() {
     fetch(`${process.env.REACT_APP_API_URL}/api/images/`)
       .then(res => res.json())
-      .then(res => this.setState({images: res.data, isLoading: false}))
+      .then(res => this.setState({ images: res.data, isLoading: false }));
   }
 
   handleImageUpload({ image_url, image_file }) {
     const data = new FormData();
     data.append('image_file', image_file);
     data.append('image_url', image_url);
-    this.setState({isLoading: true});
-    const authToken = window.localStorage.authToken;
-    fetch(
-      `${process.env.REACT_APP_API_URL}/api/images/`, {
-        method: 'POST',
-        body: data,
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
-        }
-      }).then(res => res.json())
-        .then(res => {
-          this.getImages();
+    this.setState({ isLoading: true });
+    const { authToken } = window.localStorage;
+    fetch(`${process.env.REACT_APP_API_URL}/api/images/`, {
+      method: 'POST',
+      body: data,
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        this.getImages();
       })
-        .catch(err => this.setState({isLoading: false}));
+      .catch(err => this.setState({ isLoading: false }));
   }
 
   handleDeleteImage(imageName) {
-    const authToken = window.localStorage.authToken;
-    fetch(
-      `${process.env.REACT_APP_API_URL}/api/images/${imageName}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${authToken}`,
+    const { authToken } = window.localStorage;
+    fetch(`${process.env.REACT_APP_API_URL}/api/images/${imageName}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.status === 'success') {
+          this.getImages();
         }
-      }).then(res => res.json())
-        .then(res => {
-          if (res.status === 'success') {
-            this.getImages();
-          }
       });
   }
 
   handleTabChange(selectedTab) {
-    this.setState({ selectedTab })
+    this.setState({ selectedTab });
   }
 
   handleRegisterLoginUser(formData, formType) {
-    fetch(
-      `${process.env.REACT_APP_API_URL}/api/auth/${formType}`, {
-        method: 'POST',
-        body: JSON.stringify(formData),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+    fetch(`${process.env.REACT_APP_API_URL}/api/auth/${formType}`, {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (res.auth_token !== undefined) {
+          window.localStorage.setItem('authToken', res.auth_token);
+          this.setState({
+            isAuthenticated: true,
+            currentUser: res.username,
+          });
         }
-      }).then(res => res.json())
-        .then(res => {
-          if (res.auth_token !== undefined) {
-            window.localStorage.setItem('authToken', res.auth_token);
-            this.setState({
-              isAuthenticated: true,
-              currentUser: res.username
-            });
-          }
-        })
-        .catch(err => console.log(err));
+      })
+      .catch(err => console.log(err));
   }
 
   handleLogoutUser() {
     window.localStorage.removeItem('authToken');
     this.setState({
       isAuthenticated: false,
-      currentUser: ''
+      currentUser: '',
     });
   }
 
   render() {
+    const {
+      isAuthenticated,
+      images,
+      isLoading,
+      selectedTab,
+      currentUser,
+    } = this.state;
     return (
       <React.Fragment>
-        <NavBar
-          title="AnnoMachine"
-          isAuthenticated={ this.state.isAuthenticated }
-        />
+        <NavBar title="AnnoMachine" isAuthenticated={isAuthenticated} />
         <Switch>
-          <Route path='/images' render={() => (
-            <Container
-              onButtonClick={ this.handleImageUpload }
-              images={ this.state.images }
-              isLoading={ this.state.isLoading }
-              isAuthenticated={ this.state.isAuthenticated }
-              selectedTab={ this.state.selectedTab }
-              currentUser={ this.state.currentUser }
-              onTabChange={ this.handleTabChange }
-              onDeleteImage={ this.handleDeleteImage }
-            />
-          )} />
-          <Route exact path='/register' render={() => (
-            <RegisterLoginForm
-              isAuthenticated={this.state.isAuthenticated}
-              formType='register'
-              onButtonClick={ this.handleRegisterLoginUser }
-            />
-          )} />
-          <Route exact path='/login' render={() => (
-            <RegisterLoginForm
-              isAuthenticated={this.state.isAuthenticated}
-              formType='login'
-              onButtonClick={ this.handleRegisterLoginUser }
-            />
-          )} />
-          <Route exact path='/logout' render={() => (
-            <LogOut
-              onLogoutUser={this.handleLogoutUser}
-            />
-          )} />
-          <Route exact path='/' render={() => (
-            <Redirect
-              to='/images'
-            />
-          )} />
+          <Route
+            path="/images"
+            render={() => (
+              <Container
+                onButtonClick={this.handleImageUpload}
+                images={images}
+                isLoading={isLoading}
+                isAuthenticated={isAuthenticated}
+                selectedTab={selectedTab}
+                currentUser={currentUser}
+                onTabChange={this.handleTabChange}
+                onDeleteImage={this.handleDeleteImage}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/register"
+            render={() => (
+              <RegisterLoginForm
+                isAuthenticated={isAuthenticated}
+                formType="register"
+                onButtonClick={this.handleRegisterLoginUser}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/login"
+            render={() => (
+              <RegisterLoginForm
+                isAuthenticated={isAuthenticated}
+                formType="login"
+                onButtonClick={this.handleRegisterLoginUser}
+              />
+            )}
+          />
+          <Route
+            exact
+            path="/logout"
+            render={() => <LogOut onLogoutUser={this.handleLogoutUser} />}
+          />
+          <Route exact path="/" render={() => <Redirect to="/images" />} />
         </Switch>
       </React.Fragment>
     );

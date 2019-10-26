@@ -6,10 +6,7 @@ import '../../setupTests';
 
 describe('Tab all images selected', () => {
   const component = (
-    <ImageTabNavBar
-      selectedTab='all'
-      onTabChange={ jest.fn() }
-    />
+    <ImageTabNavBar selectedTab="all" onTabChange={jest.fn()} />
   );
 
   it('ImageTabNavBar renders properly', () => {
@@ -35,10 +32,7 @@ describe('Tab all images selected', () => {
 
 describe('Tab your images selected', () => {
   const component = (
-    <ImageTabNavBar
-      selectedTab='yours'
-      onTabChange={ jest.fn() }
-    />
+    <ImageTabNavBar selectedTab="yours" onTabChange={jest.fn()} />
   );
 
   it('ImageTabNavBar renders properly', () => {

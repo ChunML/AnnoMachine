@@ -10,32 +10,32 @@ const images = [
     id: 1,
     user: { username: 'user1' },
     name: 'testImage1.jpg',
-    boxes: []
+    boxes: [],
   },
   {
     id: 2,
     user: { username: 'user2' },
     name: 'testImage2.jpg',
-    boxes: []
+    boxes: [],
   },
   {
     id: 3,
     user: { username: 'user1' },
     name: 'testImage3.jpg',
-    boxes: []
-  }
+    boxes: [],
+  },
 ];
 
 describe('On all tab', () => {
   const component = (
     <CardList
-      isLoading={ false }
-      selectedTab='all'
-      currentUser=''
-      images={ images }
-      onDeleteImage={ () => {} }
+      isLoading={false}
+      selectedTab="all"
+      currentUser=""
+      images={images}
+      onDeleteImage={() => {}}
     />
-  )
+  );
   it('CardList renders properly', () => {
     const wrapper = shallow(component);
     const loader = wrapper.find('Loader');
@@ -45,36 +45,35 @@ describe('On all tab', () => {
   });
 
   it('CardList renders a snapshot properly', () => {
-    const tree = renderer.create(
-      <Router initialEntries={['/images']}>
-        { component }
-      </Router>).toJSON();
+    const tree = renderer
+      .create(<Router initialEntries={['/images']}>{component}</Router>)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
-})
-
+});
 
 describe('On your tab, anonymous user', () => {
   const component = (
     <CardList
-      isLoading={ true }
-      selectedTab='yours'
-      currentUser=''
-      images={ images }
-      onDeleteImage={ () => {} }
+      isLoading
+      selectedTab="yours"
+      currentUser=""
+      images={images}
+      onDeleteImage={() => {}}
     />
   );
 
   it('CardList renders properly with anonymous user', () => {
     const wrapper = shallow(component);
-    expect(wrapper.text()).toEqual('In order to see your images, log in first at here.')
+    expect(wrapper.text()).toEqual(
+      'In order to see your images, log in first at here.'
+    );
   });
 
   it('CardList renders a snapshot properly', () => {
-    const tree = renderer.create(
-      <Router initialEntries={['/images']}>
-        { component }
-      </Router>).toJSON();
+    const tree = renderer
+      .create(<Router initialEntries={['/images']}>{component}</Router>)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
@@ -82,11 +81,11 @@ describe('On your tab, anonymous user', () => {
 describe('On your tab, logged in user', () => {
   const component = (
     <CardList
-      isLoading={ true }
-      selectedTab='yours'
-      currentUser='user1'
-      images={ images }
-      onDeleteImage={ () => {} }
+      isLoading
+      selectedTab="yours"
+      currentUser="user1"
+      images={images}
+      onDeleteImage={() => {}}
     />
   );
 
@@ -99,10 +98,9 @@ describe('On your tab, logged in user', () => {
   });
 
   it('CardList renders a snapshot properly', () => {
-    const tree = renderer.create(
-      <Router initialEntries={['/images']}>
-        { component }
-      </Router>).toJSON();
+    const tree = renderer
+      .create(<Router initialEntries={['/images']}>{component}</Router>)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
-})
+});

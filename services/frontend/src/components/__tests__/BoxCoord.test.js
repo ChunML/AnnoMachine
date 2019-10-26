@@ -8,7 +8,7 @@ const coords = {
   x_min: 10,
   y_min: 10,
   x_max: 20,
-  y_max: 20
+  y_max: 20,
 };
 
 it('BoxCoord renders properly', () => {
