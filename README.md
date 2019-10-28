@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/ChunML/AnnoMachine.svg?branch=master)](https://travis-ci.org/ChunML/AnnoMachine)
 
+[![CircleCI](https://circleci.com/gh/ChunML/AnnoMachine.svg?style=svg)](https://circleci.com/gh/ChunML/AnnoMachine)
+
 ### What is AnnoMachine?
 AnnoMachine is an application that aims to provide a user-friendly way to visualize and interact with object detection results.
 
