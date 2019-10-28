@@ -31,7 +31,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8081:8080
-    # volumes:
+    volumes:
       # - ./services/frontend:/usr/src/app
       - /usr/src/app/node_modules
     environment:
