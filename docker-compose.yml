@@ -7,8 +7,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 5001:5000
-    volumes:
-      - ./services/backend:/usr/src/app
+    # volumes:
+      # - ./services/backend:/usr/src/app
     environment:
       - FLASK_ENV=development
       - SECRET_KEY=hahaha
@@ -31,8 +31,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8081:8080
-    volumes:
-      - ./services/frontend:/usr/src/app
+    # volumes:
+      # - ./services/frontend:/usr/src/app
       - /usr/src/app/node_modules
     environment:
       - NODE_ENV=development
