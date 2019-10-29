@@ -28,6 +28,7 @@ class App extends React.Component {
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleRegisterLoginUser = this.handleRegisterLoginUser.bind(this);
     this.handleLogoutUser = this.handleLogoutUser.bind(this);
+    this.resetMessage = this.resetMessage.bind(this);
   }
 
   componentDidMount() {
@@ -87,7 +88,7 @@ class App extends React.Component {
         this.createMessage('success', 'Image has been successfully uploaded.');
       })
       .catch(err => {
-        this.createMessage('fail', 'Something went wrong with the uploading.');
+        this.createMessage('error', 'Something went wrong with the uploading.');
         this.setState({ isLoading: false });
       });
   }
@@ -148,12 +149,25 @@ class App extends React.Component {
   }
 
   createMessage(type, text) {
-    const { message } = this.state;
+    this.setState(
+      {
+        message: {
+          type,
+          text,
+        },
+      },
+      () =>
+        setTimeout(() => {
+          this.resetMessage();
+        }, 5000)
+    );
+  }
+
+  resetMessage() {
     this.setState({
       message: {
-        ...message,
-        type,
-        text,
+        type: null,
+        text: null,
       },
     });
   }
@@ -179,7 +193,11 @@ class App extends React.Component {
       <React.Fragment>
         <NavBar title="AnnoMachine" isAuthenticated={isAuthenticated} />
         {message.type && message.text && (
-          <Message type={message.type} text={message.text} />
+          <Message
+            type={message.type}
+            text={message.text}
+            onCloseMessage={this.resetMessage}
+          />
         )}
         <Switch>
           <Route
