@@ -25,16 +25,18 @@ describe('Register form', () => {
     expect(wrapper.state()).toEqual({
       username: 'testName',
       password: '',
+      valid: false,
     });
     inputs.at(1).simulate('change', {
       target: {
         name: 'password',
-        value: 'test',
+        value: 'ninechars',
       },
     });
     expect(wrapper.state()).toEqual({
       username: 'testName',
-      password: 'test',
+      password: 'ninechars',
+      valid: true,
     });
     const button = form.find('button');
     expect(button.text()).toEqual('Register');
@@ -71,16 +73,18 @@ describe('Log In form', () => {
     expect(wrapper.state()).toEqual({
       username: 'testName',
       password: '',
+      valid: false,
     });
     inputs.at(1).simulate('change', {
       target: {
         name: 'password',
-        value: 'test',
+        value: 'ninechars',
       },
     });
     expect(wrapper.state()).toEqual({
       username: 'testName',
-      password: 'test',
+      password: 'ninechars',
+      valid: true,
     });
     const button = form.find('button');
     expect(button.text()).toEqual('Log In');

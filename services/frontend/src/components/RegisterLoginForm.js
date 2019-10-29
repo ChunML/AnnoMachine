@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
+import validator from 'validator';
+import { formRules } from './utils/form-rules';
 
 class RegisterLoginForm extends React.Component {
   constructor(props) {
@@ -9,17 +11,34 @@ class RegisterLoginForm extends React.Component {
     this.state = {
       username: '',
       password: '',
+      valid: false,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleButtonClick = this.handleButtonClick.bind(this);
   }
 
+  validateForm() {
+    const { username, password } = this.state;
+
+    formRules[0].valid = !!validator.isLength(username, { min: 5 });
+    formRules[1].valid = !!validator.isHalfWidth(username);
+    formRules[2].valid = !!validator.isLength(password, { min: 8 });
+
+    this.setState({
+      valid: formRules.reduce((res, cur) => ({ valid: res.valid && cur.valid }))
+        .valid,
+    });
+  }
+
   handleInputChange(e) {
     const { name, value } = e.target;
-    this.setState({
-      [name]: value,
-    });
+    this.setState(
+      {
+        [name]: value,
+      },
+      () => this.validateForm()
+    );
   }
 
   handleButtonClick(e) {
@@ -31,7 +50,7 @@ class RegisterLoginForm extends React.Component {
 
   render() {
     const { isAuthenticated, formType } = this.props;
-    const { username, password } = this.state;
+    const { username, password, valid } = this.state;
     if (isAuthenticated) {
       return <Redirect to="/" />;
     }
@@ -40,6 +59,17 @@ class RegisterLoginForm extends React.Component {
       <div className="ui container" style={{ margin: '30px auto' }}>
         <div className="ui center aligned grid">
           <div className="eight wide column">
+            <ul style={{ listStyle: 'none', display: 'block' }}>
+              {formRules.map(rule => (
+                <li
+                  key={rule.id}
+                  style={{ color: rule.valid ? '#11CC11' : '#EE1233' }}
+                >
+                  {rule.valid && '✔'}
+                  {rule.message}
+                </li>
+              ))}
+            </ul>
             <div className="ui form">
               <div className="field">
                 <input
@@ -63,6 +93,7 @@ class RegisterLoginForm extends React.Component {
                 type="submit"
                 className="ui primary button"
                 onClick={this.handleButtonClick}
+                disabled={!valid}
               >
                 {formType === 'register' ? 'Register' : 'Log In'}
               </button>

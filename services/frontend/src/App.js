@@ -4,6 +4,7 @@ import NavBar from './components/NavBar';
 import Container from './components/Container';
 import RegisterLoginForm from './components/RegisterLoginForm';
 import LogOut from './components/LogOut';
+import Message from './components/Message';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,10 @@ class App extends React.Component {
       isAuthenticated: false,
       isLoading: false,
       selectedTab: 'all',
+      message: {
+        type: null,
+        text: null,
+      },
     };
 
     this.getImages = this.getImages.bind(this);
@@ -76,8 +81,15 @@ class App extends React.Component {
       .then(res => res.json())
       .then(res => {
         this.getImages();
+        if (res.status === 'fail') {
+          throw new Error('Upload failed');
+        }
+        this.createMessage('success', 'Image has been successfully uploaded.');
       })
-      .catch(err => this.setState({ isLoading: false }));
+      .catch(err => {
+        this.createMessage('fail', 'Something went wrong with the uploading.');
+        this.setState({ isLoading: false });
+      });
   }
 
   handleDeleteImage(imageName) {
@@ -117,9 +129,33 @@ class App extends React.Component {
             isAuthenticated: true,
             currentUser: res.username,
           });
+          this.createMessage(
+            'success',
+            `Successfully ${
+              formType === 'register' ? 'registered' : 'logged in'
+            }.`
+          );
+        } else {
+          throw new Error('Error with authentication');
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        this.createMessage(
+          'error',
+          `Something went wrong. Could not ${formType}.`
+        );
+      });
+  }
+
+  createMessage(type, text) {
+    const { message } = this.state;
+    this.setState({
+      message: {
+        ...message,
+        type,
+        text,
+      },
+    });
   }
 
   handleLogoutUser() {
@@ -135,12 +171,16 @@ class App extends React.Component {
       isAuthenticated,
       images,
       isLoading,
+      message,
       selectedTab,
       currentUser,
     } = this.state;
     return (
       <React.Fragment>
         <NavBar title="AnnoMachine" isAuthenticated={isAuthenticated} />
+        {message.type && message.text && (
+          <Message type={message.type} text={message.text} />
+        )}
         <Switch>
           <Route
             path="/images"
@@ -149,6 +189,7 @@ class App extends React.Component {
                 onButtonClick={this.handleImageUpload}
                 images={images}
                 isLoading={isLoading}
+                message={message}
                 isAuthenticated={isAuthenticated}
                 selectedTab={selectedTab}
                 currentUser={currentUser}
