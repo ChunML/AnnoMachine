@@ -5,9 +5,7 @@ import Message from '../Message';
 import '../../setupTests';
 
 describe('Error message', () => {
-  const component = (
-    <Message type="error" text="Some error message" />
-  );
+  const component = <Message type="error" text="Some error message" />;
 
   it('Error message renders properly', () => {
     const wrapper = shallow(component);
@@ -22,9 +20,7 @@ describe('Error message', () => {
 });
 
 describe('Success message', () => {
-  const component = (
-    <Message type="success" text="Some success message" />
-  );
+  const component = <Message type="success" text="Some success message" />;
 
   it('Success message renders properly', () => {
     const wrapper = shallow(component);
