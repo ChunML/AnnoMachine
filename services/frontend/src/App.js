@@ -28,6 +28,7 @@ class App extends React.Component {
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleRegisterLoginUser = this.handleRegisterLoginUser.bind(this);
     this.handleLogoutUser = this.handleLogoutUser.bind(this);
+    this.resetMessage = this.resetMessage.bind(this);
   }
 
   componentDidMount() {
@@ -158,7 +159,7 @@ class App extends React.Component {
       () =>
         setTimeout(() => {
           this.resetMessage();
-        }, 3000)
+        }, 5000)
     );
   }
 
@@ -192,7 +193,11 @@ class App extends React.Component {
       <React.Fragment>
         <NavBar title="AnnoMachine" isAuthenticated={isAuthenticated} />
         {message.type && message.text && (
-          <Message type={message.type} text={message.text} />
+          <Message
+            type={message.type}
+            text={message.text}
+            onCloseMessage={this.resetMessage}
+          />
         )}
         <Switch>
           <Route

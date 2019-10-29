@@ -5,12 +5,27 @@ import Message from '../Message';
 import '../../setupTests';
 
 describe('Error message', () => {
-  const component = <Message type="error" text="Some error message" />;
+  const onCloseMessage = jest.fn();
+  const component = (
+    <Message
+      type="error"
+      text="Some error message"
+      onCloseMessage={onCloseMessage}
+    />
+  );
 
   it('Error message renders properly', () => {
     const wrapper = shallow(component);
-    expect(wrapper.find('.ui.error.message')).toHaveLength(1);
-    expect(wrapper.text()).toEqual('Some error message');
+    const messageDiv = wrapper.find('.ui.error.message');
+    expect(messageDiv).toHaveLength(1);
+    expect(messageDiv.find('.header')).toHaveLength(1);
+    expect(messageDiv.find('.header').text()).toEqual('ERROR');
+    expect(messageDiv.find('i')).toHaveLength(1);
+    expect(messageDiv.find('i').get(0).props.className).toEqual('close icon');
+    expect(wrapper.find('p').text()).toEqual('Some error message');
+    expect(onCloseMessage).toHaveBeenCalledTimes(0);
+    messageDiv.find('i').simulate('click');
+    expect(onCloseMessage).toHaveBeenCalledTimes(1);
   });
 
   it('Error message renders a snapshot properly', () => {
@@ -20,12 +35,27 @@ describe('Error message', () => {
 });
 
 describe('Success message', () => {
-  const component = <Message type="success" text="Some success message" />;
+  const onCloseMessage = jest.fn();
+  const component = (
+    <Message
+      type="success"
+      text="Some success message"
+      onCloseMessage={onCloseMessage}
+    />
+  );
 
   it('Success message renders properly', () => {
     const wrapper = shallow(component);
-    expect(wrapper.find('.ui.success.message')).toHaveLength(1);
-    expect(wrapper.text()).toEqual('Some success message');
+    const messageDiv = wrapper.find('.ui.success.message');
+    expect(messageDiv).toHaveLength(1);
+    expect(messageDiv.find('.header')).toHaveLength(1);
+    expect(messageDiv.find('.header').text()).toEqual('SUCCESS');
+    expect(messageDiv.find('i')).toHaveLength(1);
+    expect(messageDiv.find('i').get(0).props.className).toEqual('close icon');
+    expect(wrapper.find('p').text()).toEqual('Some success message');
+    expect(onCloseMessage).toHaveBeenCalledTimes(0);
+    messageDiv.find('i').simulate('click');
+    expect(onCloseMessage).toHaveBeenCalledTimes(1);
   });
 
   it('Success message renders a snapshot properly', () => {
