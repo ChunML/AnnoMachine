@@ -87,7 +87,7 @@ class App extends React.Component {
         this.createMessage('success', 'Image has been successfully uploaded.');
       })
       .catch(err => {
-        this.createMessage('fail', 'Something went wrong with the uploading.');
+        this.createMessage('error', 'Something went wrong with the uploading.');
         this.setState({ isLoading: false });
       });
   }
