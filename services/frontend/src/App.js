@@ -148,12 +148,25 @@ class App extends React.Component {
   }
 
   createMessage(type, text) {
-    const { message } = this.state;
+    this.setState(
+      {
+        message: {
+          type,
+          text,
+        },
+      },
+      () =>
+        setTimeout(() => {
+          this.resetMessage();
+        }, 3000)
+    );
+  }
+
+  resetMessage() {
     this.setState({
       message: {
-        ...message,
-        type,
-        text,
+        type: null,
+        text: null,
       },
     });
   }
