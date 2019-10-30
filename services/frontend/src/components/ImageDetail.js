@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import BoxesDetail from './BoxesDetail';
 import UploadInfo from './UploadInfo';
 import ImageAnnoDisplay from './ImageAnnoDisplay';
+import { convertIdStrToInt } from './utils/helpers';
 
 function ImageDetail({ image, createMessage }) {
   const [drawBoxes, setDrawBoxes] = useState([]);
@@ -49,11 +50,7 @@ function ImageDetail({ image, createMessage }) {
     const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
     const newBoxes = [...otherBoxes, box];
     setBoxes(
-      newBoxes.sort(
-        (a, b) =>
-          a.id.toString().replace(/_[0-9]*/g, '') -
-          b.id.toString().replace(/_[0-9]*/g, '')
-      )
+      newBoxes.sort((a, b) => convertIdStrToInt(a.id) - convertIdStrToInt(b.id))
     );
     setDrawBoxes(
       drawBoxes.map(drawBox => {
@@ -70,10 +67,14 @@ function ImageDetail({ image, createMessage }) {
   };
 
   const onCheckIconClick = currentBox => {
-    if (currentBox.id === Math.max(...boxes.map(box => box.id))) {
+    const currentId = convertIdStrToInt(currentBox.id);
+    if (
+      currentId === Math.max(...boxes.map(box => convertIdStrToInt(box.id)))
+    ) {
       setAddBoxMode(false);
     }
     updateBoxes(currentBox);
+    setEditModes([...editModes.slice(0, editModes.length - 1), false]);
   };
 
   const onTrashIconClick = id => {
@@ -87,7 +88,7 @@ function ImageDetail({ image, createMessage }) {
   const onAddBoxButtonClick = () => {
     setAddBoxMode(true);
     const newBox = {
-      id: Math.max(...boxes.map(box => box.id)) + 1,
+      id: Math.max(...boxes.map(box => convertIdStrToInt(box.id))) + 1,
       label: '',
       x_min: 0,
       y_min: 0,
@@ -114,11 +115,7 @@ function ImageDetail({ image, createMessage }) {
     newBox.id = `${newBox.id}_${new Date().getTime()}`;
     const newBoxes = [newBox, ...otherBoxes];
     setBoxes(
-      newBoxes.sort(
-        (a, b) =>
-          a.id.toString().replace(/_[0-9]*/g, '') -
-          b.id.toString().replace(/_[0-9]*/g, '')
-      )
+      newBoxes.sort((a, b) => convertIdStrToInt(a.id) - convertIdStrToInt(b.id))
     );
     const newDrawBoxes = [newBox, ...otherDrawBoxes];
     setDrawBoxes(newDrawBoxes);
