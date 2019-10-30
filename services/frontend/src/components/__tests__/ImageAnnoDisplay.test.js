@@ -62,12 +62,13 @@ describe('Display landscape image with one box', () => {
     expect(image.get(0).props.style.width).toEqual('100%');
     expect(onImageClick).toHaveBeenCalledTimes(0);
     expect(createMessage).toHaveBeenCalledTimes(0);
-    image.simulate('click', {
+    svg.simulate('click');
+    wrapper.find('image').simulate('mouseMove', {
       target: {
         getBoundingClientRect: () => ({ x: 100, y: 100 }),
       },
-      clientX: 10,
-      clientY: 10,
+      clientX: 20,
+      clientY: 20,
     });
     expect(onImageClick).toHaveBeenCalledTimes(1);
     expect(createMessage).toHaveBeenCalledTimes(0);
@@ -110,12 +111,12 @@ describe('Display landscape image with two boxes', () => {
     expect(image.get(0).props.style.width).toEqual('100%');
     expect(onImageClick).toHaveBeenCalledTimes(0);
     expect(createMessage).toHaveBeenCalledTimes(0);
-    image.simulate('click', {
+    image.simulate('mouseMove', {
       target: {
         getBoundingClientRect: () => ({ x: 100, y: 100 }),
       },
-      clientX: 10,
-      clientY: 10,
+      clientX: 20,
+      clientY: 20,
     });
     expect(onImageClick).toHaveBeenCalledTimes(0);
     expect(createMessage).toHaveBeenCalledTimes(1);
@@ -158,12 +159,13 @@ describe('Display portrait image', () => {
     expect(image.get(0).props.style.height).toEqual('100%');
     expect(onImageClick).toHaveBeenCalledTimes(0);
     expect(createMessage).toHaveBeenCalledTimes(0);
-    image.simulate('click', {
+    svg.simulate('click');
+    wrapper.find('image').simulate('mouseMove', {
       target: {
         getBoundingClientRect: () => ({ x: 100, y: 100 }),
       },
-      clientX: 10,
-      clientY: 10,
+      clientX: 20,
+      clientY: 20,
     });
     expect(onImageClick).toHaveBeenCalledTimes(1);
     expect(createMessage).toHaveBeenCalledTimes(0);

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function ImageAnnoDisplay(props) {
@@ -14,7 +14,9 @@ function ImageAnnoDisplay(props) {
     createMessage,
   } = props;
 
-  const handleImageClick = e => {
+  const [moveable, setMoveable] = useState(false);
+
+  const handleMouseMove = e => {
     if (drawBoxes.length > 1) {
       createMessage(
         'error',
@@ -25,27 +27,29 @@ function ImageAnnoDisplay(props) {
     if (drawBoxes.length === 0) {
       return;
     }
-    const rect = e.target.getBoundingClientRect();
-    const clickX = e.clientX - rect.x;
-    const clickY = e.clientY - rect.y;
-    const newBox = { ...drawBoxes[0] };
-    if (
-      Math.abs(clickX - drawBoxes[0].x_min) >
-      Math.abs(clickX - drawBoxes[0].x_max)
-    ) {
-      newBox.x_max = clickX;
-    } else {
-      newBox.x_min = clickX;
+    if (moveable) {
+      const rect = e.target.getBoundingClientRect();
+      const clickX = e.clientX - rect.x;
+      const clickY = e.clientY - rect.y;
+      const newBox = { ...drawBoxes[0] };
+      if (
+        Math.abs(clickX - drawBoxes[0].x_min) >
+        Math.abs(clickX - drawBoxes[0].x_max)
+      ) {
+        newBox.x_max = clickX;
+      } else {
+        newBox.x_min = clickX;
+      }
+      if (
+        Math.abs(clickY - drawBoxes[0].y_min) >
+        Math.abs(clickY - drawBoxes[0].y_max)
+      ) {
+        newBox.y_max = clickY;
+      } else {
+        newBox.y_min = clickY;
+      }
+      onImageClick(newBox);
     }
-    if (
-      Math.abs(clickY - drawBoxes[0].y_min) >
-      Math.abs(clickY - drawBoxes[0].y_max)
-    ) {
-      newBox.y_max = clickY;
-    } else {
-      newBox.y_min = clickY;
-    }
-    onImageClick(newBox);
   };
 
   return (
@@ -55,6 +59,7 @@ function ImageAnnoDisplay(props) {
       width={svgWidth}
       height={svgHeight}
       style={{ marginLeft: '-14px' }}
+      onClick={() => setMoveable(!moveable)}
     >
       <image
         xlinkHref={`${process.env.REACT_APP_API_URL}/api/uploads/${name}`}
@@ -65,7 +70,7 @@ function ImageAnnoDisplay(props) {
         style={
           imageWidth > imageHeight ? { width: '100%' } : { height: '100%' }
         }
-        onClick={handleImageClick}
+        onMouseMove={handleMouseMove}
       />
       {drawBoxes.length > 0 &&
         drawBoxes.map(box => (
