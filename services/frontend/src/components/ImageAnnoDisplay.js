@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 function ImageAnnoDisplay(props) {
@@ -10,7 +10,47 @@ function ImageAnnoDisplay(props) {
     drawBoxes,
     scale,
     name,
+    onImageClick,
+    createMessage,
   } = props;
+
+  const [moveable, setMoveable] = useState(false);
+
+  const handleMouseMove = e => {
+    if (drawBoxes.length > 1) {
+      createMessage(
+        'error',
+        'Only one box can be editted by clicking at a time.'
+      );
+      return;
+    }
+    if (drawBoxes.length === 0) {
+      return;
+    }
+    if (moveable) {
+      const rect = e.target.getBoundingClientRect();
+      const clickX = e.clientX - rect.x;
+      const clickY = e.clientY - rect.y;
+      const newBox = { ...drawBoxes[0] };
+      if (
+        Math.abs(clickX - drawBoxes[0].x_min) >
+        Math.abs(clickX - drawBoxes[0].x_max)
+      ) {
+        newBox.x_max = clickX;
+      } else {
+        newBox.x_min = clickX;
+      }
+      if (
+        Math.abs(clickY - drawBoxes[0].y_min) >
+        Math.abs(clickY - drawBoxes[0].y_max)
+      ) {
+        newBox.y_max = clickY;
+      } else {
+        newBox.y_min = clickY;
+      }
+      onImageClick(newBox);
+    }
+  };
 
   return (
     <svg
@@ -19,6 +59,7 @@ function ImageAnnoDisplay(props) {
       width={svgWidth}
       height={svgHeight}
       style={{ marginLeft: '-14px' }}
+      onClick={() => setMoveable(!moveable)}
     >
       <image
         xlinkHref={`${process.env.REACT_APP_API_URL}/api/uploads/${name}`}
@@ -29,6 +70,7 @@ function ImageAnnoDisplay(props) {
         style={
           imageWidth > imageHeight ? { width: '100%' } : { height: '100%' }
         }
+        onMouseMove={handleMouseMove}
       />
       {drawBoxes.length > 0 &&
         drawBoxes.map(box => (
@@ -53,6 +95,8 @@ ImageAnnoDisplay.propTypes = {
   name: PropTypes.string.isRequired,
   scale: PropTypes.number.isRequired,
   drawBoxes: PropTypes.array.isRequired,
+  onImageClick: PropTypes.func.isRequired,
+  createMessage: PropTypes.func.isRequired,
 };
 
 export default ImageAnnoDisplay;

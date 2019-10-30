@@ -17,6 +17,7 @@ describe('Not in edit mode', () => {
   const component = (
     <BoxDetail
       box={box}
+      boxIsDrawn={false}
       onInputChange={jest.fn()}
       onEyeIconClick={jest.fn()}
       onCheckIconClick={jest.fn()}
@@ -71,6 +72,7 @@ describe('In edit mode', () => {
     <BoxDetail
       editMode
       box={box}
+      boxIsDrawn={false}
       onInputChange={jest.fn()}
       onEyeIconClick={jest.fn()}
       onCheckIconClick={jest.fn()}
@@ -123,7 +125,7 @@ describe('In edit mode', () => {
       },
     });
     expect(wrapper.state()).toEqual({
-      boxIsDrawn: true,
+      boxIsDrawn: false,
       editMode: true,
       coords: { ...box, x_min: 20, label: 'cat' },
     });

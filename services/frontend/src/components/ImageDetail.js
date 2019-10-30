@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import BoxesDetail from './BoxesDetail';
 import UploadInfo from './UploadInfo';
 import ImageAnnoDisplay from './ImageAnnoDisplay';
+import { convertIdStrToInt } from './utils/helpers';
 
-function ImageDetail({ image }) {
+function ImageDetail({ image, createMessage }) {
   const [drawBoxes, setDrawBoxes] = useState([]);
   const [boxes, setBoxes] = useState([]);
   const [editModes, setEditModes] = useState([]);
@@ -48,7 +49,9 @@ function ImageDetail({ image }) {
   const updateBoxes = box => {
     const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
     const newBoxes = [...otherBoxes, box];
-    setBoxes(newBoxes.sort((a, b) => a.id - b.id));
+    setBoxes(
+      newBoxes.sort((a, b) => convertIdStrToInt(a.id) - convertIdStrToInt(b.id))
+    );
     setDrawBoxes(
       drawBoxes.map(drawBox => {
         if (drawBox.id === box.id) {
@@ -64,10 +67,14 @@ function ImageDetail({ image }) {
   };
 
   const onCheckIconClick = currentBox => {
-    if (currentBox.id === Math.max(...boxes.map(box => box.id))) {
+    const currentId = convertIdStrToInt(currentBox.id);
+    if (
+      currentId === Math.max(...boxes.map(box => convertIdStrToInt(box.id)))
+    ) {
       setAddBoxMode(false);
     }
     updateBoxes(currentBox);
+    setEditModes([...editModes.slice(0, editModes.length - 1), false]);
   };
 
   const onTrashIconClick = id => {
@@ -81,7 +88,7 @@ function ImageDetail({ image }) {
   const onAddBoxButtonClick = () => {
     setAddBoxMode(true);
     const newBox = {
-      id: Math.max(...boxes.map(box => box.id)) + 1,
+      id: Math.max(...boxes.map(box => convertIdStrToInt(box.id))) + 1,
       label: '',
       x_min: 0,
       y_min: 0,
@@ -100,6 +107,18 @@ function ImageDetail({ image }) {
     const oldDrawBoxes = drawBoxes.slice(0, drawBoxes.length - 1);
     setDrawBoxes([...oldDrawBoxes]);
     setEditModes(Array(oldBoxes.length).fill(false));
+  };
+
+  const onImageClick = newBox => {
+    const otherBoxes = boxes.filter(box => box.id !== newBox.id);
+    const otherDrawBoxes = drawBoxes.filter(box => box.id !== newBox.id);
+    newBox.id = `${newBox.id}_${new Date().getTime()}`;
+    const newBoxes = [newBox, ...otherBoxes];
+    setBoxes(
+      newBoxes.sort((a, b) => convertIdStrToInt(a.id) - convertIdStrToInt(b.id))
+    );
+    const newDrawBoxes = [newBox, ...otherDrawBoxes];
+    setDrawBoxes(newDrawBoxes);
   };
 
   const downloadBoxesAsCSV = () => {
@@ -126,6 +145,8 @@ function ImageDetail({ image }) {
             scale={scale}
             drawBoxes={drawBoxes}
             name={image.name}
+            onImageClick={onImageClick}
+            createMessage={createMessage}
           />
           <p></p>
 
@@ -140,6 +161,7 @@ function ImageDetail({ image }) {
           />
           <BoxesDetail
             boxes={boxes || []}
+            drawList={drawBoxes.map(box => box.id)}
             editModes={editModes || []}
             onEyeIconClick={onEyeIconClick}
             onCheckIconClick={onCheckIconClick}
@@ -169,6 +191,7 @@ function ImageDetail({ image }) {
 
 ImageDetail.propTypes = {
   image: PropTypes.object,
+  createMessage: PropTypes.func.isRequired,
 };
 
 export default ImageDetail;
