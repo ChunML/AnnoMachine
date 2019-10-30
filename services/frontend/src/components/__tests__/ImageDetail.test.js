@@ -34,19 +34,23 @@ const image = {
 
 describe('No image is passed', () => {
   it('ImageDetail renders properly', () => {
-    const wrapper = shallow(<ImageDetail />);
+    const wrapper = shallow(<ImageDetail createMessage={jest.fn()} />);
     expect(wrapper.text()).toEqual('Loading...');
   });
 
   it('ImageDetail renders a snapshot properly', () => {
-    const tree = renderer.create(<ImageDetail />).toJSON();
+    const tree = renderer
+      .create(<ImageDetail createMessage={jest.fn()} />)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });
 
 describe('One image is properly passed', () => {
   it('ImageDetail renders properly', () => {
-    const wrapper = shallow(<ImageDetail image={image} />);
+    const wrapper = shallow(
+      <ImageDetail image={image} createMessage={jest.fn()} />
+    );
     const columns = wrapper.find('.row > .column');
     expect(columns.length).toBe(2);
     expect(columns.at(0).find('ImageAnnoDisplay')).toHaveLength(1);
@@ -80,7 +84,9 @@ describe('One image is properly passed', () => {
   });
 
   it('ImageDetail renders a snapshot properly', () => {
-    const tree = renderer.create(<ImageDetail image={image} />).toJSON();
+    const tree = renderer
+      .create(<ImageDetail image={image} createMessage={jest.fn()} />)
+      .toJSON();
     expect(tree).toMatchSnapshot();
   });
 });

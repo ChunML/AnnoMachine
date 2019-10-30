@@ -19,6 +19,7 @@ function Container(props) {
             image={props.images.find(
               image => image.name === `${match.params.imageName}.jpg`
             )}
+            createMessage={props.createMessage}
           />
         )}
       />
@@ -61,6 +62,7 @@ Container.propTypes = {
   onTabChange: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   onDeleteImage: PropTypes.func.isRequired,
+  createMessage: PropTypes.func.isRequired,
 };
 
 export default Container;

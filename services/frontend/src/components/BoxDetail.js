@@ -10,7 +10,7 @@ class BoxDetail extends React.Component {
     super(props);
 
     this.state = {
-      boxIsDrawn: !!props.editMode,
+      boxIsDrawn: props.boxIsDrawn,
       editMode: props.editMode || false,
       coords: {
         id: props.box.id,
@@ -145,6 +145,7 @@ class BoxDetail extends React.Component {
 
 BoxDetail.propTypes = {
   box: PropTypes.object.isRequired,
+  boxIsDrawn: PropTypes.bool.isRequired,
   editMode: PropTypes.bool,
   onInputChange: PropTypes.func.isRequired,
   onEyeIconClick: PropTypes.func.isRequired,

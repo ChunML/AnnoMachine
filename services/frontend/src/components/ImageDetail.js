@@ -5,7 +5,7 @@ import BoxesDetail from './BoxesDetail';
 import UploadInfo from './UploadInfo';
 import ImageAnnoDisplay from './ImageAnnoDisplay';
 
-function ImageDetail({ image }) {
+function ImageDetail({ image, createMessage }) {
   const [drawBoxes, setDrawBoxes] = useState([]);
   const [boxes, setBoxes] = useState([]);
   const [editModes, setEditModes] = useState([]);
@@ -48,7 +48,13 @@ function ImageDetail({ image }) {
   const updateBoxes = box => {
     const otherBoxes = boxes.filter(originalBox => originalBox.id !== box.id);
     const newBoxes = [...otherBoxes, box];
-    setBoxes(newBoxes.sort((a, b) => a.id - b.id));
+    setBoxes(
+      newBoxes.sort(
+        (a, b) =>
+          a.id.toString().replace(/_[0-9]*/g, '') -
+          b.id.toString().replace(/_[0-9]*/g, '')
+      )
+    );
     setDrawBoxes(
       drawBoxes.map(drawBox => {
         if (drawBox.id === box.id) {
@@ -102,6 +108,22 @@ function ImageDetail({ image }) {
     setEditModes(Array(oldBoxes.length).fill(false));
   };
 
+  const onImageClick = newBox => {
+    const otherBoxes = boxes.filter(box => box.id !== newBox.id);
+    const otherDrawBoxes = drawBoxes.filter(box => box.id !== newBox.id);
+    newBox.id = `${newBox.id}_${new Date().getTime()}`;
+    const newBoxes = [newBox, ...otherBoxes];
+    setBoxes(
+      newBoxes.sort(
+        (a, b) =>
+          a.id.toString().replace(/_[0-9]*/g, '') -
+          b.id.toString().replace(/_[0-9]*/g, '')
+      )
+    );
+    const newDrawBoxes = [newBox, ...otherDrawBoxes];
+    setDrawBoxes(newDrawBoxes);
+  };
+
   const downloadBoxesAsCSV = () => {
     const fields = ['label', 'x_min', 'y_min', 'x_max', 'y_max'];
 
@@ -126,6 +148,8 @@ function ImageDetail({ image }) {
             scale={scale}
             drawBoxes={drawBoxes}
             name={image.name}
+            onImageClick={onImageClick}
+            createMessage={createMessage}
           />
           <p></p>
 
@@ -140,6 +164,7 @@ function ImageDetail({ image }) {
           />
           <BoxesDetail
             boxes={boxes || []}
+            drawList={drawBoxes.map(box => box.id)}
             editModes={editModes || []}
             onEyeIconClick={onEyeIconClick}
             onCheckIconClick={onCheckIconClick}
@@ -169,6 +194,7 @@ function ImageDetail({ image }) {
 
 ImageDetail.propTypes = {
   image: PropTypes.object,
+  createMessage: PropTypes.func.isRequired,
 };
 
 export default ImageDetail;

@@ -28,6 +28,7 @@ class App extends React.Component {
     this.handleTabChange = this.handleTabChange.bind(this);
     this.handleRegisterLoginUser = this.handleRegisterLoginUser.bind(this);
     this.handleLogoutUser = this.handleLogoutUser.bind(this);
+    this.createMessage = this.createMessage.bind(this);
     this.resetMessage = this.resetMessage.bind(this);
   }
 
@@ -207,12 +208,12 @@ class App extends React.Component {
                 onButtonClick={this.handleImageUpload}
                 images={images}
                 isLoading={isLoading}
-                message={message}
                 isAuthenticated={isAuthenticated}
                 selectedTab={selectedTab}
                 currentUser={currentUser}
                 onTabChange={this.handleTabChange}
                 onDeleteImage={this.handleDeleteImage}
+                createMessage={this.createMessage}
               />
             )}
           />

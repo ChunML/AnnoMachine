@@ -5,6 +5,7 @@ import BoxDetail from './BoxDetail';
 function BoxesDetail({
   boxes,
   editModes,
+  drawList,
   onInputChange,
   onEyeIconClick,
   onCheckIconClick,
@@ -16,6 +17,7 @@ function BoxesDetail({
         <BoxDetail
           key={box.id}
           box={box}
+          boxIsDrawn={drawList.includes(box.id)}
           editMode={editModes[i]}
           onEyeIconClick={onEyeIconClick}
           onCheckIconClick={onCheckIconClick}
@@ -29,6 +31,7 @@ function BoxesDetail({
 
 BoxesDetail.propTypes = {
   boxes: PropTypes.array.isRequired,
+  drawList: PropTypes.array.isRequired,
   editModes: PropTypes.array.isRequired,
   onInputChange: PropTypes.func.isRequired,
   onEyeIconClick: PropTypes.func.isRequired,

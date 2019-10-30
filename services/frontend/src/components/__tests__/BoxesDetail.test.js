@@ -28,6 +28,7 @@ const editModes = [false, false];
 const component = (
   <BoxesDetail
     boxes={boxes}
+    drawList={[1]}
     editModes={editModes}
     onInputChange={jest.fn()}
     onEyeIconClick={jest.fn()}
