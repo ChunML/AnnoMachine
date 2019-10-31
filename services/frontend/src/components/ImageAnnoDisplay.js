@@ -17,6 +17,7 @@ function ImageAnnoDisplay(props) {
   const [moveable, setMoveable] = useState(false);
 
   const handleMouseMove = e => {
+    if (!moveable) return;
     if (drawBoxes.length > 1) {
       createMessage(
         'error',
@@ -27,29 +28,27 @@ function ImageAnnoDisplay(props) {
     if (drawBoxes.length === 0) {
       return;
     }
-    if (moveable) {
-      const rect = e.target.getBoundingClientRect();
-      const clickX = (e.clientX - rect.x) / scale;
-      const clickY = (e.clientY - rect.y) / scale;
-      const newBox = { ...drawBoxes[0] };
-      if (
-        Math.abs(clickX - drawBoxes[0].x_min) >
-        Math.abs(clickX - drawBoxes[0].x_max)
-      ) {
-        newBox.x_max = clickX;
-      } else {
-        newBox.x_min = clickX;
-      }
-      if (
-        Math.abs(clickY - drawBoxes[0].y_min) >
-        Math.abs(clickY - drawBoxes[0].y_max)
-      ) {
-        newBox.y_max = clickY;
-      } else {
-        newBox.y_min = clickY;
-      }
-      onImageClick(newBox);
+    const rect = e.target.getBoundingClientRect();
+    const clickX = (e.clientX - rect.x) / scale;
+    const clickY = (e.clientY - rect.y) / scale;
+    const newBox = { ...drawBoxes[0] };
+    if (
+      Math.abs(clickX - drawBoxes[0].x_min) >
+      Math.abs(clickX - drawBoxes[0].x_max)
+    ) {
+      newBox.x_max = clickX;
+    } else {
+      newBox.x_min = clickX;
     }
+    if (
+      Math.abs(clickY - drawBoxes[0].y_min) >
+      Math.abs(clickY - drawBoxes[0].y_max)
+    ) {
+      newBox.y_max = clickY;
+    } else {
+      newBox.y_min = clickY;
+    }
+    onImageClick(newBox);
   };
 
   return (
