@@ -29,8 +29,8 @@ function ImageAnnoDisplay(props) {
     }
     if (moveable) {
       const rect = e.target.getBoundingClientRect();
-      const clickX = e.clientX - rect.x;
-      const clickY = e.clientY - rect.y;
+      const clickX = (e.clientX - rect.x) / scale;
+      const clickY = (e.clientY - rect.y) / scale;
       const newBox = { ...drawBoxes[0] };
       if (
         Math.abs(clickX - drawBoxes[0].x_min) >
