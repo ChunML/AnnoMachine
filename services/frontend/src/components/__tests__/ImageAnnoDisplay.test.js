@@ -111,7 +111,8 @@ describe('Display landscape image with two boxes', () => {
     expect(image.get(0).props.style.width).toEqual('100%');
     expect(onImageClick).toHaveBeenCalledTimes(0);
     expect(createMessage).toHaveBeenCalledTimes(0);
-    image.simulate('mouseMove', {
+    svg.simulate('click');
+    wrapper.find('image').simulate('mouseMove', {
       target: {
         getBoundingClientRect: () => ({ x: 100, y: 100 }),
       },
