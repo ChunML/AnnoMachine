@@ -27,13 +27,13 @@ function Container(props) {
         exact
         path="/images"
         render={() => (
-          <div className="ui center aligned three column stackable grid">
-            <div className="row">
+          <div className="grid space-around">
+            <div className="grid-row">
               {props.isAuthenticated && (
                 <AddImageForm onButtonClick={props.onButtonClick} />
               )}
             </div>
-            <div className="row">
+            <div className="grid-row">
               <ImageTabNavBar
                 selectedTab={props.selectedTab}
                 onTabChange={props.onTabChange}

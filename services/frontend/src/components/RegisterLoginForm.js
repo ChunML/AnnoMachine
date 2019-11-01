@@ -56,48 +56,46 @@ class RegisterLoginForm extends React.Component {
     }
 
     return (
-      <div className="container flex-center column" style={{ margin: '30px auto' }}>
-        {/* <div className=""> */}
-          <ul style={{ listStyle: 'none', display: 'block' }}>
-            {formRules.map(rule => (
-              <li
-                key={rule.id}
-                style={{ color: rule.valid ? '#11CC11' : '#EE1233' }}
-              >
-                {rule.valid && '✔'}
-                {rule.message}
-              </li>
-            ))}
-          </ul>
-          <div className="form">
-            <div className="input-field">
-              <input
-                name="username"
-                type="text"
-                placeholder="Enter a username"
-                value={username}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="input-field">
-              <input
-                name="password"
-                type="password"
-                placeholder="Enter a secure password"
-                value={password}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <button
-              type="submit"
-              className={`button${valid ? ' primary' : ''}`}
-              onClick={this.handleButtonClick}
-              disabled={!valid}
+      <div className="container column" style={{ margin: '30px auto' }}>
+        <ul style={{ listStyle: 'none', display: 'block' }}>
+          {formRules.map(rule => (
+            <li
+              key={rule.id}
+              style={{ color: rule.valid ? '#11CC11' : '#EE1233' }}
             >
-              {formType === 'register' ? 'Register' : 'Log In'}
-            </button>
+              {rule.valid && '✔'}
+              {rule.message}
+            </li>
+          ))}
+        </ul>
+        <div className="form">
+          <div className="input-field">
+            <input
+              name="username"
+              type="text"
+              placeholder="Enter a username"
+              value={username}
+              onChange={this.handleInputChange}
+            />
           </div>
-        {/* </div> */}
+          <div className="input-field">
+            <input
+              name="password"
+              type="password"
+              placeholder="Enter a secure password"
+              value={password}
+              onChange={this.handleInputChange}
+            />
+          </div>
+          <button
+            type="submit"
+            className={`button${valid ? ' primary' : ''}`}
+            onClick={this.handleButtonClick}
+            disabled={!valid}
+          >
+            {formType === 'register' ? 'Register' : 'Log In'}
+          </button>
+        </div>
       </div>
     );
   }

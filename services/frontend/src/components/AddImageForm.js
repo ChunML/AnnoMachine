@@ -48,8 +48,8 @@ class AddImageForm extends React.Component {
   render() {
     const { image_url } = this.state;
     return (
-      <form className="ui form" encType="multipart/form-data">
-        <div className="field">
+      <form className="form" encType="multipart/form-data">
+        <div className="input-field">
           <input
             name="image_file"
             type="file"
@@ -57,7 +57,7 @@ class AddImageForm extends React.Component {
             ref={this.fileInput}
           />
         </div>
-        <div className="field">
+        <div className="input-field">
           <input
             name="image_url"
             type="text"
@@ -67,7 +67,7 @@ class AddImageForm extends React.Component {
           />
         </div>
         <button
-          className="ui primary button"
+          className="primary button"
           type="submit"
           onClick={this.handleButtonClick}
         >

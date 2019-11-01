@@ -6,11 +6,11 @@ function Card({ image, currentUser, onDeleteImage }) {
   const [detectImage, toggleDetectImage] = useState(true);
 
   return (
-    <div className="column" style={{ textAlign: 'left' }}>
-      <div className="ui card" style={{ margin: 'auto' }}>
+    <div className="grid-item" style={{ textAlign: 'left' }}>
+      <div className="card">
         <Link
           to={`/images/${image.name.replace('.jpg', '')}`}
-          className="ui image"
+          className="image"
         >
           <img
             src={`${process.env.REACT_APP_API_URL}/api/${
@@ -48,17 +48,13 @@ function Card({ image, currentUser, onDeleteImage }) {
             {image.boxes.length > 0 ? (
               [...new Set(image.boxes.map(box => box.label))].map(
                 (label, id) => (
-                  <div
-                    key={id}
-                    className="ui label"
-                    style={{ background: '#11ee66' }}
-                  >
+                  <span key={id} className="label">
                     {label}
-                  </div>
+                  </span>
                 )
               )
             ) : (
-              <div className="ui label">nothing</div>
+              <div className="label">nothing</div>
             )}
           </div>
         </div>
