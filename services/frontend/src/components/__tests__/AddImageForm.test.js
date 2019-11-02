@@ -11,7 +11,7 @@ it('AddImageForm renders properly', () => {
   const wrapper = shallow(<AddImageForm onButtonClick={onButtonClick} />);
   const form = wrapper.find('form');
   expect(form.length).toBe(1);
-  const fields = form.find('.field');
+  const fields = form.find('.input-field');
   expect(fields.length).toBe(2);
   expect(fields.get(0).props.children.type).toBe('input');
   expect(fields.get(0).props.children.props.name).toBe('image_file');

@@ -10,16 +10,15 @@ const title = 'Hi, there!';
 describe('When not authenticated', () => {
   it('Navbar renders properly', () => {
     const wrapper = shallow(<NavBar title={title} isAuthenticated={false} />);
-    const header = wrapper.find('div.header.item');
+    const header = wrapper.find('.nav-header');
     expect(header.length).toBe(1);
     expect(header.get(0).props.children).toBe(title);
 
-    const rightMenu = wrapper.find('div.right.menu');
-    expect(rightMenu.length).toBe(1);
-    const items = rightMenu.find('div.item');
-    expect(items.length).toBe(3);
-    expect(items.get(0).props.children.props.children).toBe('Register');
-    expect(items.get(1).props.children.props.children).toBe('Log In');
+    const items = wrapper.find('.nav-link');
+    expect(items.length).toBe(4);
+    expect(items.get(0).props.children.props.children).toBe('Home');
+    expect(items.get(1).props.children.props.children).toBe('Register');
+    expect(items.get(2).props.children.props.children).toBe('Log In');
   });
 
   it('Navbar renders a snapshot properly', () => {
@@ -37,15 +36,14 @@ describe('When not authenticated', () => {
 describe('When authenticated', () => {
   it('Navbar renders properly', () => {
     const wrapper = shallow(<NavBar title={title} isAuthenticated />);
-    const header = wrapper.find('div.header.item');
+    const header = wrapper.find('.nav-header');
     expect(header.length).toBe(1);
     expect(header.get(0).props.children).toBe(title);
 
-    const rightMenu = wrapper.find('div.right.menu');
-    expect(rightMenu.length).toBe(1);
-    const items = rightMenu.find('div.item');
-    expect(items.length).toBe(2);
-    expect(items.get(0).props.children.props.children).toBe('Log Out');
+    const items = wrapper.find('.nav-link');
+    expect(items.length).toBe(3);
+    expect(items.get(0).props.children.props.children).toBe('Home');
+    expect(items.get(1).props.children.props.children).toBe('Log Out');
   });
 
   it('Navbar renders a snapshot properly', () => {

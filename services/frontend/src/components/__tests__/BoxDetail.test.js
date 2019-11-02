@@ -29,30 +29,15 @@ describe('Not in edit mode', () => {
     const wrapper = shallow(component);
     const grid = wrapper.find('.grid');
     expect(grid.length).toBe(1);
-    const rows = grid.find('.row');
+    const rows = grid.find('.grid-row');
     expect(rows.length).toBe(2);
-    const columns = rows.at(0).find('.column');
+    const columns = rows.at(0).find('.flex-center > div');
     expect(columns.length).toBe(2);
     const buttons = columns.find('button');
     expect(buttons.length).toBe(3);
-    expect(
-      buttons
-        .at(0)
-        .find('i')
-        .get(0).props.className
-    ).toBe('eye icon');
-    expect(
-      buttons
-        .at(1)
-        .find('i')
-        .get(0).props.className
-    ).toBe('edit icon');
-    expect(
-      buttons
-        .at(2)
-        .find('i')
-        .get(0).props.className
-    ).toBe('trash alternate icon');
+    expect(buttons.at(0).find('FaEye').length).toBe(1);
+    expect(buttons.at(1).find('FaEdit').length).toBe(1);
+    expect(buttons.at(2).find('FaTrash').length).toBe(1);
     expect(component.props.onEyeIconClick).toHaveBeenCalledTimes(0);
     expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(0);
     buttons.at(0).simulate('click');
@@ -85,30 +70,15 @@ describe('In edit mode', () => {
     const instance = wrapper.instance();
     const grid = wrapper.find('.grid');
     expect(grid.length).toBe(1);
-    const rows = grid.find('.row');
+    const rows = grid.find('.grid-row');
     expect(rows.length).toBe(2);
-    const columns = rows.at(0).find('.column');
+    const columns = rows.at(0).find('.flex-center > div');
     expect(columns.length).toBe(2);
     const buttons = columns.find('button');
     expect(buttons.length).toBe(3);
-    expect(
-      buttons
-        .at(0)
-        .find('i')
-        .get(0).props.className
-    ).toBe('eye icon');
-    expect(
-      buttons
-        .at(1)
-        .find('i')
-        .get(0).props.className
-    ).toBe('check icon');
-    expect(
-      buttons
-        .at(2)
-        .find('i')
-        .get(0).props.className
-    ).toBe('trash alternate icon');
+    expect(buttons.at(0).find('FaEye').length).toBe(1);
+    expect(buttons.at(1).find('FaCheck').length).toBe(1);
+    expect(buttons.at(2).find('FaTrash').length).toBe(1);
     expect(component.props.onEyeIconClick).toHaveBeenCalledTimes(0);
     expect(component.props.onCheckIconClick).toHaveBeenCalledTimes(0);
     expect(component.props.onTrashIconClick).toHaveBeenCalledTimes(0);

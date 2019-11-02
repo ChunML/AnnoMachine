@@ -17,7 +17,7 @@ it('BoxEditForm renders properly', () => {
   const wrapper = shallow(
     <BoxEditForm coords={coords} onInputChange={onInputChange} />
   );
-  const form = wrapper.find('.form');
+  const form = wrapper.find('.row');
   expect(form.length).toBe(1);
   const inputs = form.find('input');
   expect(inputs.length).toBe(4);

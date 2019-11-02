@@ -6,7 +6,7 @@ import '../../setupTests';
 
 it('Loader renders properly', () => {
   const wrapper = shallow(<Loader />);
-  expect(wrapper.find('.active.loader')).toHaveLength(1);
+  expect(wrapper.find('.segment.loader')).toHaveLength(1);
 });
 
 it('Loader renders a snapshot properly', () => {
