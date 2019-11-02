@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaEye, FaCheck, FaEdit, FaTrash } from 'react-icons/fa';
 import BoxCoord from './BoxCoord';
 import BoxEditForm from './BoxEditForm';
 import Label from './Label';
@@ -80,54 +81,54 @@ class BoxDetail extends React.Component {
     const { boxIsDrawn, editMode, coords } = this.state;
 
     return (
-      <div className="ui segment" key={box.id}>
-        <div className="ui center aligned two column divided grid">
-          <div className="row" style={{ alignItems: 'center' }}>
-            <div className="column">
-              {editMode ? (
-                <LabelEditForm
-                  label={box.label}
-                  onInputChange={this.handleInputChange}
-                />
-              ) : (
-                <Label label={box.label} />
-              )}
-            </div>
-            <div className="column">
-              <span>
-                <button
-                  className={`circular ${
-                    boxIsDrawn ? 'positive' : 'grey'
-                  } ui icon button`}
-                  onClick={this.handleEyeIconClick}
-                >
-                  <i className="eye icon"></i>
-                </button>
+      <div className="segment" key={box.id}>
+        <div className="grid">
+          <div className="grid-row space-vertical">
+            <div className="flex-center space-around">
+              <div>
                 {editMode ? (
-                  <button
-                    className="circular positive ui icon button"
-                    onClick={this.handleCheckIconClick}
-                  >
-                    <i className="check icon"></i>
-                  </button>
+                  <LabelEditForm
+                    label={box.label}
+                    onInputChange={this.handleInputChange}
+                  />
                 ) : (
-                  <button
-                    className="circular red ui icon button"
-                    onClick={this.toggleEditMode}
-                  >
-                    <i className="edit icon"></i>
-                  </button>
+                  <Label label={box.label} />
                 )}
-                <button
-                  className="ui circular red icon button"
-                  onClick={this.handleTrashIconClick}
-                >
-                  <i className="trash alternate icon"></i>
-                </button>
-              </span>
+              </div>
+              <div>
+                <span>
+                  <button
+                    className={`circular ${boxIsDrawn ? 'primary' : ''} button`}
+                    onClick={this.handleEyeIconClick}
+                  >
+                    <FaEye />
+                  </button>
+                  {editMode ? (
+                    <button
+                      className="circular primary button"
+                      onClick={this.handleCheckIconClick}
+                    >
+                      <FaCheck />
+                    </button>
+                  ) : (
+                    <button
+                      className="circular red button"
+                      onClick={this.toggleEditMode}
+                    >
+                      <FaEdit color="white" />
+                    </button>
+                  )}
+                  <button
+                    className="circular red button"
+                    onClick={this.handleTrashIconClick}
+                  >
+                    <FaTrash color="white" />
+                  </button>
+                </span>
+              </div>
             </div>
           </div>
-          <div className="row" style={{ paddingTop: '0' }}>
+          <div className="grid-row space-vertical">
             {editMode ? (
               <BoxEditForm
                 coords={coords}

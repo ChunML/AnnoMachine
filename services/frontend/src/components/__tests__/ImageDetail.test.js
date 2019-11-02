@@ -51,7 +51,7 @@ describe('One image is properly passed', () => {
     const wrapper = shallow(
       <ImageDetail image={image} createMessage={jest.fn()} />
     );
-    const columns = wrapper.find('.row > .column');
+    const columns = wrapper.find('.row > .half-width-item');
     expect(columns.length).toBe(2);
     expect(columns.at(0).find('ImageAnnoDisplay')).toHaveLength(1);
     expect(columns.at(0).find('.button')).toHaveLength(1);
@@ -76,11 +76,11 @@ describe('One image is properly passed', () => {
       .simulate('click');
     expect(
       wrapper
-        .find('.row > .column')
+        .find('.row > .half-width-item')
         .at(1)
         .find('.button')
-        .get(0).props.children.props.className
-    ).toContain('trash alternate');
+        .get(0).props.children
+    ).toContain('Undo');
   });
 
   it('ImageDetail renders a snapshot properly', () => {

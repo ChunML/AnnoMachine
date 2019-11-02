@@ -11,12 +11,12 @@ describe('Tab all images selected', () => {
 
   it('ImageTabNavBar renders properly', () => {
     const wrapper = shallow(component);
-    const menu = wrapper.find('.menu');
+    const menu = wrapper.find('.image-nav');
     expect(menu.length).toBe(1);
-    const tabs = menu.find('a');
+    const tabs = menu.find('.image-nav-link');
     expect(tabs.length).toBe(2);
-    expect(tabs.get(0).props.className).toEqual('active item');
-    expect(tabs.get(1).props.className).toEqual(' item');
+    expect(tabs.get(0).props.className).toEqual('active image-nav-link');
+    expect(tabs.get(1).props.className).toEqual(' image-nav-link');
     expect(component.props.onTabChange).toHaveBeenCalledTimes(0);
     tabs.at(0).simulate('click');
     expect(component.props.onTabChange).toHaveBeenCalledTimes(1);
@@ -37,12 +37,12 @@ describe('Tab your images selected', () => {
 
   it('ImageTabNavBar renders properly', () => {
     const wrapper = shallow(component);
-    const menu = wrapper.find('.menu');
+    const menu = wrapper.find('.image-nav');
     expect(menu.length).toBe(1);
-    const tabs = menu.find('a');
+    const tabs = menu.find('.image-nav-link');
     expect(tabs.length).toBe(2);
-    expect(tabs.get(0).props.className).toEqual(' item');
-    expect(tabs.get(1).props.className).toEqual('active item');
+    expect(tabs.get(0).props.className).toEqual(' image-nav-link');
+    expect(tabs.get(1).props.className).toEqual('active image-nav-link');
     expect(component.props.onTabChange).toHaveBeenCalledTimes(0);
     tabs.at(0).simulate('click');
     expect(component.props.onTabChange).toHaveBeenCalledTimes(1);

@@ -3,19 +3,22 @@ import PropTypes from 'prop-types';
 
 function ImageTabNavbar({ selectedTab, onTabChange }) {
   return (
-    <div className="ui tabular menu" style={{ width: '100%' }}>
-      <a
-        className={`${selectedTab === 'all' ? 'active' : ''} item`}
+    <div
+      className="image-nav flex-center space-around"
+      style={{ width: '100%' }}
+    >
+      <div
+        className={`${selectedTab === 'all' ? 'active' : ''} image-nav-link`}
         onClick={() => onTabChange('all')}
       >
         All Images
-      </a>
-      <a
-        className={`${selectedTab === 'yours' ? 'active' : ''} item`}
+      </div>
+      <div
+        className={`${selectedTab === 'yours' ? 'active' : ''} image-nav-link`}
         onClick={() => onTabChange('yours')}
       >
         Yours
-      </a>
+      </div>
     </div>
   );
 }

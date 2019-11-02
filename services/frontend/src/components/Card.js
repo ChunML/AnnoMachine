@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { FaClone, FaInfoCircle, FaTrashAlt } from 'react-icons/fa';
 
 function Card({ image, currentUser, onDeleteImage }) {
   const [detectImage, toggleDetectImage] = useState(true);
 
   return (
-    <div className="column" style={{ textAlign: 'left' }}>
-      <div className="ui card" style={{ margin: 'auto' }}>
+    <div className="grid-item" style={{ textAlign: 'left' }}>
+      <div className="card">
         <Link
           to={`/images/${image.name.replace('.jpg', '')}`}
-          className="ui image"
+          className="image"
         >
           <img
             src={`${process.env.REACT_APP_API_URL}/api/${
@@ -20,27 +21,22 @@ function Card({ image, currentUser, onDeleteImage }) {
           />
         </Link>
         <div className="content">
-          <div style={{ marginBottom: '5px' }}>
-            <i
-              className="clone icon"
-              style={detectImage ? { color: '#33ff33' } : {}}
+          <div>
+            <FaClone
+              color={detectImage ? '#33ff33' : ''}
               onClick={() => toggleDetectImage(!detectImage)}
-            ></i>
+            />
             <Link
               to={`/images/${image.name.replace('.jpg', '')}`}
               className="ui image"
             >
-              <i
-                className="hand point up outline icon"
-                style={{ color: '#33ff33' }}
-              ></i>
+              <FaInfoCircle color="#33ff33" />
             </Link>
             {currentUser === image.user.username && (
-              <i
-                className="trash alternate outline icon"
-                style={{ color: 'red' }}
+              <FaTrashAlt
+                color="red"
                 onClick={() => onDeleteImage(image.name.replace('.jpg', ''))}
-              ></i>
+              />
             )}
           </div>
           <div className="description">
@@ -48,21 +44,17 @@ function Card({ image, currentUser, onDeleteImage }) {
             {image.boxes.length > 0 ? (
               [...new Set(image.boxes.map(box => box.label))].map(
                 (label, id) => (
-                  <div
-                    key={id}
-                    className="ui label"
-                    style={{ background: '#11ee66' }}
-                  >
+                  <span key={id} className="label">
                     {label}
-                  </div>
+                  </span>
                 )
               )
             ) : (
-              <div className="ui label">nothing</div>
+              <div className="label">nothing</div>
             )}
           </div>
         </div>
-        <div className="extra content">
+        <div className="extra-content">
           <div>
             Uploaded by{' '}
             <span style={{ color: 'red' }}>{image.user.username}</span> at{' '}

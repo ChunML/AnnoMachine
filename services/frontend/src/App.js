@@ -194,11 +194,7 @@ class App extends React.Component {
       <React.Fragment>
         <NavBar title="AnnoMachine" isAuthenticated={isAuthenticated} />
         {message.type && message.text && (
-          <Message
-            type={message.type}
-            text={message.text}
-            onCloseMessage={this.resetMessage}
-          />
+          <Message type={message.type} text={message.text} />
         )}
         <Switch>
           <Route

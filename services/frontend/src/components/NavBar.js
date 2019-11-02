@@ -4,32 +4,29 @@ import { Link } from 'react-router-dom';
 
 function NavBar({ title, isAuthenticated }) {
   return (
-    <div className="ui inverted menu">
-      <div className="header item">{title}</div>
-      <div className="active item">
+    <div className="nav flex-center space-around text-center">
+      <div className="nav-header">{title}</div>
+      <div className="nav-link">
         <Link to="/">Home</Link>
       </div>
-      <div className="right menu">
-        {isAuthenticated && (
-          <div className="item">
-            <Link to="/logout">Log Out</Link>
+      {isAuthenticated && (
+        <div className="nav-link">
+          <Link to="/logout">Log Out</Link>
+        </div>
+      )}
+      {!isAuthenticated && (
+        <React.Fragment>
+          <div className="nav-link">
+            <Link to="/register">Register</Link>
           </div>
-        )}
-        {!isAuthenticated && (
-          <React.Fragment>
-            <div className="item">
-              <Link to="/register">Register</Link>
-            </div>
-            <div className="item">
-              <Link to="/login">Log In</Link>
-            </div>
-          </React.Fragment>
-        )}
-        <div className="item">
-          <div className="ui icon input">
-            <input type="text" placeholder="Search tag..." />
-            <i className="search icon"></i>
+          <div className="nav-link">
+            <Link to="/login">Log In</Link>
           </div>
+        </React.Fragment>
+      )}
+      <div className="nav-link">
+        <div className="input-field-dark">
+          <input type="text" placeholder="Search tag..." />
         </div>
       </div>
     </div>

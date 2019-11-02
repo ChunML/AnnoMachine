@@ -45,21 +45,24 @@ describe('current user is the author of the image', () => {
         currentUser={currentUser[0]}
       />
     );
-    const card = wrapper.find('.column').find('.ui.card');
+    const card = wrapper.find('.grid-item').find('.card');
     expect(card.length).toBe(1);
     const img = card.find('img');
     expect(img.length).toBe(1);
     expect(img.get(0).props.src).toContain(image.name);
-    const icons = card.find('.icon');
-    expect(icons.length).toBe(3);
-    icons.at(0).simulate('click');
+    const faIcon = card.find('FaClone');
+    expect(faIcon.length).toBe(1);
+    faIcon.simulate('click');
     expect(wrapper.find('img').get(0).props.src).toContain('uploads');
+    const faInfoCircle = card.find('FaInfoCircle');
+    expect(faInfoCircle.length).toBe(1);
+    const faTrashAlt = card.find('FaTrashAlt');
     expect(onDeleteImage).toHaveBeenCalledTimes(0);
-    icons.at(2).simulate('click');
+    faTrashAlt.simulate('click');
     expect(onDeleteImage).toHaveBeenCalledTimes(1);
     const description = card.find('.description');
     expect(description.text()).toEqual('This image may contain: dogcat');
-    const extraContent = card.find('.extra.content');
+    const extraContent = card.find('.extra-content');
     expect(extraContent.text()).toBe(
       `Uploaded by ${image.user.username} at ${image.uploaded_at}`
     );
@@ -90,18 +93,21 @@ describe('current user is not the author of the image', () => {
         currentUser={currentUser[1]}
       />
     );
-    const card = wrapper.find('.column').find('.ui.card');
+    const card = wrapper.find('.grid-item').find('.card');
     expect(card.length).toBe(1);
     const img = card.find('img');
     expect(img.length).toBe(1);
     expect(img.get(0).props.src).toContain(image.name);
-    const icons = card.find('.icon');
-    expect(icons.length).toBe(2);
-    icons.at(0).simulate('click');
+    const faIcon = card.find('FaClone');
+    expect(faIcon.length).toBe(1);
+    faIcon.simulate('click');
+    expect(wrapper.find('img').get(0).props.src).toContain('uploads');
+    const faInfoCircle = card.find('FaInfoCircle');
+    expect(faInfoCircle.length).toBe(1);
     expect(wrapper.find('img').get(0).props.src).toContain('uploads');
     const description = card.find('.description');
     expect(description.text()).toEqual('This image may contain: dogcat');
-    const extraContent = card.find('.extra.content');
+    const extraContent = card.find('.extra-content');
     expect(extraContent.text()).toBe(
       `Uploaded by ${image.user.username} at ${image.uploaded_at}`
     );
@@ -133,21 +139,24 @@ describe('Image has no boxes', () => {
         currentUser={currentUser[0]}
       />
     );
-    const card = wrapper.find('.column').find('.ui.card');
+    const card = wrapper.find('.grid-item').find('.card');
     expect(card.length).toBe(1);
     const img = card.find('img');
     expect(img.length).toBe(1);
     expect(img.get(0).props.src).toContain(image.name);
-    const icons = card.find('.icon');
-    expect(icons.length).toBe(3);
-    icons.at(0).simulate('click');
+    const faIcon = card.find('FaClone');
+    expect(faIcon.length).toBe(1);
+    faIcon.simulate('click');
     expect(wrapper.find('img').get(0).props.src).toContain('uploads');
+    const faInfoCircle = card.find('FaInfoCircle');
+    expect(faInfoCircle.length).toBe(1);
+    const faTrashAlt = card.find('FaTrashAlt');
     expect(onDeleteImage).toHaveBeenCalledTimes(0);
-    icons.at(2).simulate('click');
+    faTrashAlt.simulate('click');
     expect(onDeleteImage).toHaveBeenCalledTimes(1);
     const description = card.find('.description');
     expect(description.text()).toEqual('This image may contain: nothing');
-    const extraContent = card.find('.extra.content');
+    const extraContent = card.find('.extra-content');
     expect(extraContent.text()).toBe(
       `Uploaded by ${image.user.username} at ${image.uploaded_at}`
     );

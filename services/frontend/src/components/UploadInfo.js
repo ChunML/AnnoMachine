@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 function UploadInfo({ username, uploaded_at }) {
   return (
-    <div className="ui left aligned red segment">
+    <div className="segment">
       <p>
         Author:{' '}
         <span style={{ color: 'tomato', fontSize: '1.6rem' }}>{username}</span>
