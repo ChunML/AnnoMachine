@@ -9,13 +9,15 @@ function ImageTabNavbar({ selectedTab, onTabChange }) {
     >
       <div
         className={`${selectedTab === 'all' ? 'active' : ''} image-nav-link`}
+        onClick={() => onTabChange('all')}
       >
-        <a onClick={() => onTabChange('all')}>All Images</a>
+        All Images
       </div>
       <div
         className={`${selectedTab === 'yours' ? 'active' : ''} image-nav-link`}
+        onClick={() => onTabChange('yours')}
       >
-        <a onClick={() => onTabChange('yours')}>Yours</a>
+        Yours
       </div>
     </div>
   );

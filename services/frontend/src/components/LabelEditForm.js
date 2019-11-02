@@ -13,14 +13,14 @@ function LabelEditForm({ label, onInputChange }) {
   };
 
   return (
-    <div className="ui form">
-      <div className="field">
+    <div className="form">
+      <div className="input-field text-center">
         <input
           type="text"
           name="label"
           value={label}
           onChange={onInputChange}
-          style={inputStyle}
+          // style={inputStyle}
         />
       </div>
     </div>

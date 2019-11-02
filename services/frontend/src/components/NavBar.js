@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function NavBar({ title, isAuthenticated }) {
   return (
-    <div className="nav flex-center space-around">
+    <div className="nav flex-center space-around text-center">
       <div className="nav-header">{title}</div>
       <div className="nav-link">
         <Link to="/">Home</Link>
@@ -24,8 +24,10 @@ function NavBar({ title, isAuthenticated }) {
           </div>
         </React.Fragment>
       )}
-      <div className="input-field-dark">
-        <input type="text" placeholder="Search tag..." />
+      <div className="nav-link">
+        <div className="input-field-dark">
+          <input type="text" placeholder="Search tag..." />
+        </div>
       </div>
     </div>
   );

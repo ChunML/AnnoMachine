@@ -134,56 +134,54 @@ function ImageDetail({ image, createMessage }) {
   };
 
   return (
-    <div className="ui center aligned stackable two column grid">
-      <div className="row">
-        <div className="column" ref={ref}>
-          <ImageAnnoDisplay
-            svgWidth={svgWidth || 0}
-            svgHeight={svgHeight || 0}
-            imageWidth={image.width}
-            imageHeight={image.height}
-            scale={scale}
-            drawBoxes={drawBoxes}
-            name={image.name}
-            onImageClick={onImageClick}
-            createMessage={createMessage}
-          />
-          <p></p>
+    <div className="row space-around">
+      <div className="half-width-item text-center" ref={ref}>
+        <ImageAnnoDisplay
+          svgWidth={svgWidth || 0}
+          svgHeight={svgHeight || 0}
+          imageWidth={image.width}
+          imageHeight={image.height}
+          scale={scale}
+          drawBoxes={drawBoxes}
+          name={image.name}
+          onImageClick={onImageClick}
+          createMessage={createMessage}
+        />
+        <p></p>
 
-          <button className="ui primary button" onClick={downloadBoxesAsCSV}>
-            Download annotation
+        <button className="primary button" onClick={downloadBoxesAsCSV}>
+          Download annotation
+        </button>
+      </div>
+      <div className="half-width-item text-center">
+        <UploadInfo
+          username={image.user.username}
+          uploaded_at={image.uploaded_at}
+        />
+        <BoxesDetail
+          boxes={boxes || []}
+          drawList={drawBoxes.map(box => box.id)}
+          editModes={editModes || []}
+          onEyeIconClick={onEyeIconClick}
+          onCheckIconClick={onCheckIconClick}
+          onTrashIconClick={onTrashIconClick}
+          onInputChange={onInputChange}
+        />
+        {addBoxMode ? (
+          <button
+            className="circular red button"
+            onClick={onUndoBoxAddingButtonClick}
+          >
+            Undo
           </button>
-        </div>
-        <div className="column">
-          <UploadInfo
-            username={image.user.username}
-            uploaded_at={image.uploaded_at}
-          />
-          <BoxesDetail
-            boxes={boxes || []}
-            drawList={drawBoxes.map(box => box.id)}
-            editModes={editModes || []}
-            onEyeIconClick={onEyeIconClick}
-            onCheckIconClick={onCheckIconClick}
-            onTrashIconClick={onTrashIconClick}
-            onInputChange={onInputChange}
-          />
-          {addBoxMode ? (
-            <button
-              className="ui red circular icon button"
-              onClick={onUndoBoxAddingButtonClick}
-            >
-              <i className="trash alternate outline icon"></i>
-            </button>
-          ) : (
-            <button
-              className="ui circular primary button"
-              onClick={onAddBoxButtonClick}
-            >
-              Add
-            </button>
-          )}
-        </div>
+        ) : (
+          <button
+            className="circular primary button"
+            onClick={onAddBoxButtonClick}
+          >
+            Add
+          </button>
+        )}
       </div>
     </div>
   );

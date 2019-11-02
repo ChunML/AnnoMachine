@@ -8,10 +8,7 @@ import ImageDetail from './ImageDetail';
 
 function Container(props) {
   return (
-    <div
-      className="ui center aligned container"
-      style={{ margin: '30px auto' }}
-    >
+    <div className="container" style={{ margin: '30px auto' }}>
       <Route
         path="/images/:imageName"
         render={({ match }) => (

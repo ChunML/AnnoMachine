@@ -48,7 +48,7 @@ function CardList(props) {
   return (
     <React.Fragment>
       {isLoading && (
-        <div className="column">
+        <div className="grid-item">
           <Loader />
         </div>
       )}

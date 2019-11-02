@@ -2,13 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Label({ label }) {
-  const labelStyle = {
-    color: 'firebrick',
-    letterSpacing: '0.25rem',
-  };
-
   return (
-    <span className="ui header" style={labelStyle}>
+    <span className="box-label">
       {label}
     </span>
   );

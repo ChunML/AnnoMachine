@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 
 const Message = ({ type, text, onCloseMessage }) => (
   <div
-    className={`ui ${type} message`}
-    style={{ width: '80%', margin: 'auto' }}
+    className={`${type} message`}
   >
     <div className="header">{type.toUpperCase()}</div>
     <i className="close icon" onClick={onCloseMessage}></i>
