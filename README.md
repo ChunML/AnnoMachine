@@ -7,14 +7,18 @@
 ### What is AnnoMachine?
 AnnoMachine is an application that aims to provide a user-friendly way to visualize and interact with object detection results.
 
-### Use Cases
-Below are two main use cases of AnnoMachine:
-- A photo sharing app with automatic tagging and object-based searching
-- A smart annotation marker: get a first rough annotation => interactively finetune & download the updated annotation
+AnnoMachine fulfills that mission by:
+- Running a deep learning model under the hood to get a rough estimation of the annotation
 
-### Introduction Video
-Here is the video illustrating the two use cases mentioned above:
-[![AnnoMachine](https://raw.githubusercontent.com/ChunML/ChunML.github.io/master/images/projects/annomachine/annomachine.png)](https://youtu.be/NBO1acBqBlo)
+<p align="center" style="width: 100%;">
+  <img src="https://github.com/ChunML/ChunML.github.io/blob/master/images/projects/annomachine/objectdetection.gif" />
+</p>
+
+- Providing a user-friendly interface which user can easily visualize and interactively update the annotation
+
+<p align="center" style="width: 100%;">
+  <img src="https://github.com/ChunML/ChunML.github.io/blob/master/images/projects/annomachine/image.gif" />
+</p>
 
 ### Development Tools:
 Stack:
