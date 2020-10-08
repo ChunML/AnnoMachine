@@ -27,12 +27,13 @@ services:
 
   frontend:
     build:
-      context: ./services/frontend
+      context: ./services/ts-frontend
       dockerfile: Dockerfile
+    stdin_open: true
     ports:
-      - 8081:8080
+      - 3001:3000
     volumes:
-      # - ./services/frontend:/usr/src/app
+      - ./services/ts-frontend:/usr/src/app
       - /usr/src/app/node_modules
     environment:
       - NODE_ENV=development
