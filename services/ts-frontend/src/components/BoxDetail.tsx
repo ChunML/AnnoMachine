@@ -48,11 +48,11 @@ function BoxDetail(props: BoxDetailProps) {
   const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
     const { onInputChange } = props;
-    setCoords({
+    const newCoords = {
       ...coords,
       [name]: name === "label" ? value : parseFloat(value) || 0,
-    });
-    onInputChange(coords);
+    };
+    onInputChange(newCoords);
   };
 
   const handleEyeIconClick = () => {

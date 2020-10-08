@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from "react";
+import PropTypes from 'prop-types';
 
 interface AddImageFormProps {
   onButtonClick(data: AddImageFormStates): void;
@@ -9,82 +10,67 @@ interface AddImageFormStates {
   image_file: null | File;
 }
 
-class AddImageForm extends React.Component<AddImageFormProps, AddImageFormStates> {
-  fileInput: React.RefObject<HTMLInputElement>;
-  constructor(props: AddImageFormProps) {
-    super(props);
+function AddImageForm(props: AddImageFormProps) {
+  // fileInput: React.RefObject<HTMLInputElement>;
+  const fileInput = React.createRef<HTMLInputElement>();
+  const [image_url, setImageUrl] = useState("");
+  const [image_file, setImageFile] = useState<File | null>(null);
 
-    this.state = {
-      image_url: '',
-      image_file: null,
-    };
+  const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setImageUrl(e.currentTarget.value);
+  };
 
-    this.fileInput = React.createRef();
-
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleFileUpload = this.handleFileUpload.bind(this);
-    this.handleButtonClick = this.handleButtonClick.bind(this);
-  }
-
-  handleInputChange(e: React.FormEvent<HTMLInputElement>) {
-    this.setState({
-      image_url: e.currentTarget.value,
-    });
-  }
-
-  handleFileUpload(e: React.FormEvent<HTMLInputElement>) {
+  const handleFileUpload = (e: React.FormEvent<HTMLInputElement>) => {
     if (!e.currentTarget.files?.length) return;
     const file = e.currentTarget.files[0];
-    this.setState({
-      image_file: file,
-    });
-  }
+    setImageFile(file);
+  };
 
-  handleButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const { onButtonClick } = this.props;
-    const data = { ...this.state };
-    if (this.fileInput.current) {
-      this.fileInput.current.value = '';
+    const { onButtonClick } = props;
+    const data = { image_url, image_file };
+    setImageUrl("");
+    setImageFile(null);
+    if (fileInput.current) {
+      fileInput.current.value = "";
     }
-    this.setState({
-      image_url: '',
-      image_file: null,
-    });
     onButtonClick(data);
-  }
+  };
 
-  render() {
-    const { image_url } = this.state;
-    return (
-      <form className="form" encType="multipart/form-data">
-        <div className="input-field">
-          <input
-            name="image_file"
-            type="file"
-            onChange={this.handleFileUpload}
-            ref={this.fileInput}
-          />
-        </div>
-        <div className="input-field">
-          <input
-            name="image_url"
-            type="text"
-            placeholder="Or enter an image URL"
-            value={image_url}
-            onChange={this.handleInputChange}
-          />
-        </div>
-        <button
-          className="primary button"
-          type="submit"
-          onClick={this.handleButtonClick}
-        >
-          Submit
-        </button>
-      </form>
-    );
-  }
+  return (
+    <form className="form" encType="multipart/form-data">
+      <div className="input-field">
+        <input
+          name="image_file"
+          type="file"
+          onChange={handleFileUpload}
+          ref={fileInput}
+        />
+      </div>
+      <div className="input-field">
+        <input
+          name="image_url"
+          type="text"
+          placeholder="Or enter an image URL"
+          value={image_url}
+          onChange={handleInputChange}
+        />
+      </div>
+      <button
+        className="primary button"
+        type="submit"
+        onClick={handleButtonClick}
+      >
+        Submit
+      </button>
+    </form>
+  );
 }
+
+AddImageForm.propTypes = {
+  onButtonClick: PropTypes.func.isRequired,
+};
+
 
 export default AddImageForm;

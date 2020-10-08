@@ -1,10 +1,10 @@
-import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-import NavBar from './components/NavBar';
-import Container from './components/Container';
-import RegisterLoginForm from './components/RegisterLoginForm';
-import LogOut from './components/LogOut';
-import Message from './components/Message';
+import React, { useEffect, useState } from "react";
+import { Switch, Route, Redirect } from "react-router-dom";
+import NavBar from "./components/NavBar";
+import Container from "./components/Container";
+import RegisterLoginForm from "./components/RegisterLoginForm";
+import LogOut from "./components/LogOut";
+import Message from "./components/Message";
 
 export interface MessageType {
   type: null | string;
@@ -43,246 +43,205 @@ export interface ImageType {
   uploaded_at: string;
 }
 
-class App extends React.Component {
-  state: AppState;
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      images: [],
-      currentUser: '',
-      isAuthenticated: false,
-      isLoading: false,
-      selectedTab: 'all',
-      message: {
-        type: null,
-        text: null,
-      },
-    };
+function App(props: any) {
+  const [images, setImages] = useState<ImageType[]>([]);
+  const [currentUser, setCurrentUser] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedTab, setSelectedTab] = useState("all");
+  const [message, setMessage] = useState<MessageType>({
+    type: null,
+    text: null,
+  });
 
-    this.getImages = this.getImages.bind(this);
-    this.getLoginStatus = this.getLoginStatus.bind(this);
-    this.handleImageUpload = this.handleImageUpload.bind(this);
-    this.handleDeleteImage = this.handleDeleteImage.bind(this);
-    this.handleTabChange = this.handleTabChange.bind(this);
-    this.handleRegisterLoginUser = this.handleRegisterLoginUser.bind(this);
-    this.handleLogoutUser = this.handleLogoutUser.bind(this);
-    this.createMessage = this.createMessage.bind(this);
-    this.resetMessage = this.resetMessage.bind(this);
-  }
+  useEffect(() => {
+    getLoginStatus();
+    getImages();
+  }, [currentUser]);
 
-  componentDidMount() {
-    this.getLoginStatus();
-    this.getImages();
-  }
-
-  getLoginStatus() {
+  const getLoginStatus = () => {
     const { authToken } = window.localStorage;
     fetch(`${process.env.REACT_APP_API_URL}/api/auth/check-status`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({}),
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: `Bearer ${authToken}`,
       },
     })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status === 'success') {
-          this.setState({
-            isAuthenticated: true,
-            currentUser: res.username,
-          });
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === "success") {
+          setIsAuthenticated(true);
+          setCurrentUser(res.username);
         } else {
-          window.localStorage.removeItem('authToken');
+          window.localStorage.removeItem("authToken");
         }
       });
-  }
+  };
 
-  getImages() {
+  const getImages = () => {
     fetch(`${process.env.REACT_APP_API_URL}/api/images/`)
-      .then(res => res.json())
-      .then(res => this.setState({ images: res.data, isLoading: false }));
-  }
+      .then((res) => res.json())
+      .then((res) => {
+        setImages(res.data);
+        setIsLoading(false);
+      });
+  };
 
-  handleImageUpload({ image_url, image_file }: {image_url: string, image_file: File}) {
+  const handleImageUpload = ({
+    image_url,
+    image_file,
+  }: {
+    image_url: string;
+    image_file: File;
+  }) => {
     const data = new FormData();
-    data.append('image_file', image_file);
-    data.append('image_url', image_url);
-    this.setState({ isLoading: true });
+    data.append("image_file", image_file);
+    data.append("image_url", image_url);
+    setIsLoading(true);
     const { authToken } = window.localStorage;
     fetch(`${process.env.REACT_APP_API_URL}/api/images/`, {
-      method: 'POST',
+      method: "POST",
       body: data,
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     })
-      .then(res => res.json())
-      .then(res => {
-        this.getImages();
-        if (res.status === 'fail') {
-          throw new Error('Upload failed');
+      .then((res) => res.json())
+      .then((res) => {
+        getImages();
+        if (res.status === "fail") {
+          throw new Error("Upload failed");
         }
-        this.createMessage('success', 'Image has been successfully uploaded.');
+        createMessage("success", "Image has been successfully uploaded.");
       })
-      .catch(err => {
-        this.createMessage('error', 'Something went wrong with the uploading.');
-        this.setState({ isLoading: false });
+      .catch((err) => {
+        createMessage("error", "Something went wrong with the uploading.");
+        setIsLoading(false);
       });
-  }
+  };
 
-  handleDeleteImage(imageName: string) {
+  const handleDeleteImage = (imageName: string) => {
     const { authToken } = window.localStorage;
     fetch(`${process.env.REACT_APP_API_URL}/api/images/${imageName}`, {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${authToken}`,
       },
     })
-      .then(res => res.json())
-      .then(res => {
-        if (res.status === 'success') {
-          this.getImages();
+      .then((res) => res.json())
+      .then((res) => {
+        if (res.status === "success") {
+          getImages();
         }
       });
-  }
+  };
 
-  handleTabChange(selectedTab: string) {
-    this.setState({ selectedTab });
-  }
+  const handleTabChange = (selectedTab: string) => {
+    setSelectedTab(selectedTab);
+  };
 
-  handleRegisterLoginUser(formData: any, formType: string) {
+  const handleRegisterLoginUser = (formData: any, formType: string) => {
     fetch(`${process.env.REACT_APP_API_URL}/api/auth/${formType}`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify(formData),
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
     })
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         if (res.auth_token !== undefined) {
-          window.localStorage.setItem('authToken', res.auth_token);
-          this.setState({
-            isAuthenticated: true,
-            currentUser: res.username,
-          });
-          this.createMessage(
-            'success',
+          window.localStorage.setItem("authToken", res.auth_token);
+          setIsAuthenticated(true);
+          setCurrentUser(res.username);
+          createMessage(
+            "success",
             `Successfully ${
-              formType === 'register' ? 'registered' : 'logged in'
+              formType === "register" ? "registered" : "logged in"
             }.`
           );
         } else {
-          throw new Error('Error with authentication');
+          throw new Error("Error with authentication");
         }
       })
-      .catch(err => {
-        this.createMessage(
-          'error',
-          `Something went wrong. Could not ${formType}.`
-        );
+      .catch((err) => {
+        createMessage("error", `Something went wrong. Could not ${formType}.`);
       });
-  }
+  };
 
-  createMessage(type: string, text: string) {
-    this.setState(
-      {
-        message: {
-          type,
-          text,
-        },
-      },
-      () =>
-        setTimeout(() => {
-          this.resetMessage();
-        }, 5000)
-    );
-  }
+  const createMessage = (type: string, text: string) => {
+    setMessage({ type, text });
+    setTimeout(() => resetMessage(), 5000);
+  };
 
-  resetMessage() {
-    this.setState({
-      message: {
-        type: null,
-        text: null,
-      },
-    });
-  }
+  const resetMessage = () => {
+    setMessage({ type: null, text: null });
+  };
 
-  handleLogoutUser() {
-    window.localStorage.removeItem('authToken');
-    this.setState({
-      isAuthenticated: false,
-      currentUser: '',
-    });
-  }
+  const handleLogoutUser = () => {
+    window.localStorage.removeItem("authToken");
+    setCurrentUser("");
+    setIsAuthenticated(false);
+  };
 
-  render() {
-    const {
-      isAuthenticated,
-      images,
-      isLoading,
-      message,
-      selectedTab,
-      currentUser,
-    } = this.state;
-    return (
-      <React.Fragment>
-        <NavBar title="AnnoMachine" isAuthenticated={isAuthenticated} />
-        {message.type && message.text && (
-          <Message type={message.type} text={message.text} />
-        )}
-        <Switch>
-          <Route
-            path="/images"
-            render={() => (
-              <Container
-                onButtonClick={this.handleImageUpload}
-                images={images}
-                isLoading={isLoading}
-                isAuthenticated={isAuthenticated}
-                selectedTab={selectedTab}
-                currentUser={currentUser}
-                onTabChange={this.handleTabChange}
-                onDeleteImage={this.handleDeleteImage}
-                createMessage={this.createMessage}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/register"
-            render={() => (
-              <RegisterLoginForm
-                isAuthenticated={isAuthenticated}
-                formType="register"
-                onButtonClick={this.handleRegisterLoginUser}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/login"
-            render={() => (
-              <RegisterLoginForm
-                isAuthenticated={isAuthenticated}
-                formType="login"
-                onButtonClick={this.handleRegisterLoginUser}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/logout"
-            render={() => <LogOut onLogoutUser={this.handleLogoutUser} />}
-          />
-          <Route exact path="/" render={() => <Redirect to="/images" />} />
-        </Switch>
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      <NavBar title="AnnoMachine" isAuthenticated={isAuthenticated} />
+      {message.type && message.text && (
+        <Message type={message.type} text={message.text} />
+      )}
+      <Switch>
+        <Route
+          path="/images"
+          render={() => (
+            <Container
+              onButtonClick={handleImageUpload}
+              images={images}
+              isLoading={isLoading}
+              isAuthenticated={isAuthenticated}
+              selectedTab={selectedTab}
+              currentUser={currentUser}
+              onTabChange={handleTabChange}
+              onDeleteImage={handleDeleteImage}
+              createMessage={createMessage}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/register"
+          render={() => (
+            <RegisterLoginForm
+              isAuthenticated={isAuthenticated}
+              formType="register"
+              onButtonClick={handleRegisterLoginUser}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/login"
+          render={() => (
+            <RegisterLoginForm
+              isAuthenticated={isAuthenticated}
+              formType="login"
+              onButtonClick={handleRegisterLoginUser}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/logout"
+          render={() => <LogOut onLogoutUser={handleLogoutUser} />}
+        />
+        <Route exact path="/" render={() => <Redirect to="/images" />} />
+      </Switch>
+    </React.Fragment>
+  );
 }
 
 export default App;

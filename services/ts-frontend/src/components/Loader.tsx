@@ -1,42 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
-class Loader extends React.Component {
-  state: { text: string; };
-  interval: any;
-  constructor(props: any) {
-    super(props);
+function Loader(props: any) {
+  const [text, setText] = useState("Uploading");
 
-    this.state = {
-      text: 'Uploading',
-    };
-
-    this.interval = 0;
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      const { text } = this.state;
-      this.setState({
-        text: text === 'Uploading...' ? 'Uploading' : `${text}.`,
-      });
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setText(text === "Uploading..." ? "Uploading" : `${text}.`);
     }, 500);
-  }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+    return () => clearInterval(interval);
+  }, []);
 
-  render() {
-    const { text } = this.state;
-    return (
-      <div className="segment loader">
-        <p>{text}</p>
-        <br />
-        <br />
-        <br />
-      </div>
-    );
-  }
+  return (
+    <div className="segment loader">
+      <p>{text}</p>
+      <br />
+      <br />
+      <br />
+    </div>
+  );
 }
 
 export default Loader;
